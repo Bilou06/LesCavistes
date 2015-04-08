@@ -7,7 +7,13 @@
     overflow: auto;
 }
 
-#logo {
+#logo{
+   width:314px;
+    display: inline-block;
+    float:left;
+}
+
+#logo_img {
     float:left;
     padding:5px;
     display: inline-block;
@@ -16,6 +22,7 @@
 #title {
     padding:10px;
     display: inline-block;
+    text:center;
 }
 
 #actions {
