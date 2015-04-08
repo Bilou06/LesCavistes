@@ -7,6 +7,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
 
 from trouvetonvin.settings import DEBUG
 
@@ -101,6 +102,37 @@ def register_confirm(request, activation_key):
 def register_success(request):
     return render(request, 'user_profile/register_success.html')
 
-def login(request):
-    pass
-#TODO
+
+
+def log_in(request):
+    args = {}
+    args.update(csrf(request))
+    if request.method == 'POST':
+        form = PickyAuthenticationForm(data=request.POST)
+        args['form'] = form
+        if form.is_valid():
+
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/')
+                else:
+                    return HttpResponse('compte inactif')
+            else:
+                # Return an 'invalid login' error message.
+                args['errors'] = 'L\'identifiant et le mot de passe ne correspondent pas'
+    else:
+        args['form'] = PickyAuthenticationForm()
+
+    return render(request, 'user_profile/login.html', args)
+
+
+def log_out(request):
+    return HttpResponse('logout')
+
+def account(request):
+    return HttpResponse('account')

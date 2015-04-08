@@ -16,8 +16,13 @@
         </div>
         <div id="title"><h1>Les Cavistes</h1></div>
         <div id="actions">
-            <a id="login" class = "button" href="{% url 'user_profile:login' %}">Connexion</a>
-            <a id="sign_up" class = "button" href="{% url 'user_profile:register'  %}">Ajoutez votre cave</a>
+            {% if user.is_authenticated %}
+                <a id="logout" class = "button" href="{% url 'user_profile:logout' %}">Déconnexion</a>
+                <a id="my_account" class = "button" href="{% url 'user_profile:acccount' %}">Mon compte</a>
+            {% else %}
+                <a id="login" class = "button" href="{% url 'user_profile:login' %}">Connexion</a>
+                <a id="sign_up" class = "button" href="{% url 'user_profile:register'  %}">Ajoutez votre cave</a>
+            {% endif %}
         </div>
     </div>
 

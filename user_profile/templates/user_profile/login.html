@@ -1,0 +1,32 @@
+{% extends "user_profile/base_user.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'user_profile/registerform.css' %}" />
+
+<div id="fheader">
+<form id="form-signup" action="/user_profile/login/" method="post">{% csrf_token %}
+
+    <h2>Identifiez vous</h2>
+    {{ errors }}
+    <div class="fieldWrapper">
+        {{ form.username.errors }}
+        <label>Identifiant</label><br>
+        {{ form.username }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        {{ form.password.errors }}
+        <label>Mot de passe</label><br>
+        {{ form.password }}
+    </div>
+
+    <br/>
+    <input type="submit" name="submit" class="btn btn-primary" value="Entrer">
+</form>
+<div class="fclear"></div>
+</div>
+
+
+{% endblock %}

@@ -1,40 +1,56 @@
+{% extends "user_profile/base_user.html" %}
+{% load staticfiles %}
+
 {% block content %}
-<form class="form-signup" action="/user/sign_up/" method="post">{% csrf_token %}
-    <h2>Create your account</h2>
+
+<link rel="stylesheet" href="{% static 'user_profile/registerform.css' %}" />
+
+<div id="fheader">
+<form id="form-signup" action="/user_profile/sign_up/" method="post">{% csrf_token %}
+
+    <h2>Créer votre compte</h2>
     <div class="fieldWrapper">
-        <label>First name</label><br>
+        <label>Nom</label><br>
         {{ form.first_name }}
-    </div>    
+    </div>
     <br>
     <div class="fieldWrapper">
-        <label>Last name</label><br>
+        <label>Prénom</label><br>
         {{ form.last_name }}
-    </div>    
-    <br>
-    <div class="fieldWrapper">    
-        {{ form.email.errors }}            
-        <label>E-mail</label><br>
-        {{ form.email }}
-    </div>    
+    </div>
     <br>
     <div class="fieldWrapper">
-    {{form.errors.values.0}}                
-        <label>Username</label><br>
+        {{ form.email.errors }}
+        <label>Adresse e-mail</label><br>
+        {{ form.email }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+    {{form.errors.values.0}}
+        {{ form.username.errors }}
+        <label>Identifiant</label><br>
         {{ form.username }}
     </div>
     <br>
-    <div class="fieldWrapper">        
-        {{form.errors.values.1}}            
-        <label>Password</label><br>                    
+    <div class="fieldWrapper">
+        {{form.errors.values.1}}
+        {{ form.password1.errors }}
+        <label>Mot de passe</label><br>
         {{ form.password1 }}
     </div>
     <br>
-    <div class="fieldWrapper">           
-        <label>Password again</label><br>
+
+    <div class="fieldWrapper">
+        {{ form.password2.errors }}
+        <label>Confirmation du mot de passe</label><br>
         {{ form.password2 }}
-    </div>            
-    <br></br>
-    <input type="submit" name="submit" class="btn btn-primary" value="Create account">
+    </div>
+
+    <br/>
+    <input type="submit" name="submit" class="btn btn-primary" value="Créer">
 </form>
+<div class="fclear"></div>
+</div>
+
 
 {% endblock %}

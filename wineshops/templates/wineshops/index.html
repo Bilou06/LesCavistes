@@ -1,21 +1,18 @@
 {% extends "wineshops/base_wineshops.html" %}
 {% load staticfiles %}
-{% block title %} Les Cavistes {% endblock %}
-
 
 
 
 {% block content %}
 
-
 <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}" />
-    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <!-- JAVASCRIPT to clear search text when the field is clicked -->
 <script type="text/javascript">
 $(function() {
 	$("#tfq2b").click(function() {
-		if ($("#tfq2b").val() == "Trouvez votre vin"){
+		if ($("#tfq2b").val() == "Trouvez votre vin près de chez vous"){
 			$("#tfq2b").val("");
 		}
 	});
@@ -28,8 +25,6 @@ $(function() {
     </form>
     <div class="tfclear"></div>
 </div>
-
-
 
 
 
