@@ -1,0 +1,77 @@
+<h1>Ajouter un magasin</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'shop:add' user.id %}" method="post" id="shop_form" novalidate="">
+    {% csrf_token %}
+<div>
+  <fieldset class="module aligned ">
+      <div class="form-row field-name">
+          <div>
+              <label class="required" for="id_name">Nom :</label>
+              <input class="vTextField" id="id_name" maxlength="100" name="name" type="text">
+          </div>
+      </div>
+
+      <div class="form-row field-address">
+          <div>
+              <label class="required" for="id_address">Adresse :</label>
+              <input class="vTextField" id="id_address" maxlength="250" name="address" type="text">
+          </div>
+      </div>
+
+      <div class="form-row field-city">
+          <div>
+              <label class="required" for="id_city">Ville :</label>
+              <input class="vTextField" id="id_city" maxlength="100" name="city" type="text">
+          </div>
+      </div>
+
+      <div class="form-row field-zip_code">
+          <div>
+              <label class="required" for="id_zip_code">Code postal :</label>
+              <input class="vIntegerField" id="id_zip_code" name="zip_code" type="text">
+          </div>
+      </div>
+
+      <div class="form-row field-country">
+          <div>
+              <label class="required" for="id_country">Pays :</label>
+              <input class="vTextField" id="id_country" maxlength="100" name="country" type="text" value="France">
+          </div>
+      </div>
+
+      <div class="form-row field-description">
+          <div>
+              <label for="id_description">Description :</label>
+              <textarea class="vLargeTextField" cols="40" id="id_description" maxlength="500" name="description" rows="10"></textarea>
+          </div>
+      </div>
+
+      <div class="form-row field-phone">
+          <div>
+              <label for="id_phone">Téléphone :</label>
+              <input class="vTextField" id="id_phone" maxlength="20" name="phone" type="text">
+          </div>
+      </div>
+
+      <div class="form-row field-mail">
+          <div>
+              <label for="id_mail">E-mail :</label>
+              <input class="vTextField" id="id_mail" maxlength="254" name="mail" type="email">
+          </div>
+      </div>
+
+      <div class="form-row field-web">
+          <div>
+              <label for="id_web">Site web :</label>
+              <input class="vTextField" id="id_web" maxlength="50" name="web" type="text">
+          </div>
+      </div>
+  </fieldset>
+
+    <div class="submit-row">
+        <input type="submit" value="Ajouter" class="default" name="_save">
+    </div>
+</div>
+</form>

@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'wineshops/style.css' %}" />
+    <title>Les Cavistes</title>
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo">
+            <img src="{% static 'wineshops/images/logo_127_159.png' %}">
+        </div>
+        <div id="title"><h1>Les Cavistes</h1></div>
+        <div id="actions">
+            <a id="login" class = "button" href="{% url 'user_profile:login' %}">Connexion</a>
+            <a id="sign_up" class = "button" href="{% url 'user_profile:register'  %}">Ajoutez votre cave</a>
+        </div>
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+<div id="footer">
+contact blahblah
+</div>
+</body>
+</html>
