@@ -8,7 +8,7 @@
 }
 
 #logo{
-   width:314px;
+    width:314px;
     display: inline-block;
     float:left;
 }
@@ -30,6 +30,7 @@
     padding:5px;
     display: inline-block;
     overflow: auto;
+    width:314px;
 }
 
 

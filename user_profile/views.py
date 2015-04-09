@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from trouvetonvin.settings import DEBUG
 
@@ -132,7 +132,8 @@ def log_in(request):
 
 
 def log_out(request):
-    return HttpResponse('logout')
+    logout(request)
+    return HttpResponseRedirect('/')
 
 def account(request):
     return HttpResponse('account')
