@@ -1,7 +1,10 @@
+# -*- coding: utf8 -*-
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -13,3 +16,6 @@ class UserProfile(models.Model):
 
     class Meta:
         verbose_name_plural=u'User profiles'
+
+
+

@@ -1,0 +1,59 @@
+{% extends "wineshops/base_edit.html" %}
+
+{% block form %}
+
+    <ol id="toc">
+        <li class="current"><a href="/edit/user" class="active">Mon compte</a></li>
+        <li><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
+        <li><a href="/edit/catalog" class="inactive">Mes vins</a></li>
+    </ol>
+
+    <div id="fheader">
+        <form action="/wineshops/edit/user/" method="post">{% csrf_token %}
+
+
+            <h2>Mon compte</h2>
+
+                <div class="fieldWrapper">
+        <label>Identifiant :</label><br>
+        {{ form.username }}
+        </div>
+        <br>
+
+                <div class="fieldWrapper">
+        <label>Adresse e-mail :</label><br>
+        {{ form.email }}
+    </div>
+    <br>
+
+                <div class="fieldWrapper">
+        <label>Dernière connection :</label><br>
+        {{ form.last_login }}
+    </div>
+     <br>
+                <div class="fieldWrapper">
+        {{ form.last_name.errors }}
+        <label>Nom :</label><br>
+        {{ form.last_name }}
+    </div>
+      <br>
+                            <div class="fieldWrapper">
+        {{ form.first_name.errors }}
+        <label>Prénom :</label><br>
+        {{ form.first_name }}
+    </div>
+    <br>
+    <br>
+
+            <br>
+            <a href="password">Changer le mot de passe</a>
+            <br>
+            <br>
+
+
+            <input type="submit" value="Valider" />
+
+        </form>
+    </div>
+
+{% endblock %}

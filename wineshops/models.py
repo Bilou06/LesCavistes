@@ -1,18 +1,21 @@
+# -*- coding: utf8 -*-
+
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class Shop(models.Model):
-    name        = models.CharField(max_length = 100)
-    address     = models.CharField(max_length = 250)
-    city        = models.CharField(max_length = 100)
-    zip_code    = models.IntegerField()
-    country     = models.CharField(max_length = 100, default = 'France')
-    description = models.TextField(max_length = 500, blank = True)
-    phone       = models.CharField(max_length = 20, blank = True)
-    mail        = models.EmailField(blank = True)
-    web         = models.CharField(max_length = 50, blank = True)
+    name        = models.CharField(max_length = 100, verbose_name="Nom")
+    address     = models.CharField(max_length = 250, verbose_name="Adresse")
+    city        = models.CharField(max_length = 100, verbose_name="Ville")
+    zip_code    = models.IntegerField(verbose_name="Code postal")
+    country     = models.CharField(max_length = 100, default = 'France', verbose_name="Pays")
+    description = models.TextField(max_length = 500, blank = True, verbose_name="Déscription")
+    phone       = models.CharField(max_length = 20, blank = True, verbose_name="Téléphone")
+    mail        = models.EmailField(blank = True, verbose_name="E-mail")
+    web         = models.CharField(max_length = 50, blank = True, verbose_name="Site web")
+    user        = models.ForeignKey(User)
 
     def __str__(self):
         return self.name

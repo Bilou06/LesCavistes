@@ -1,0 +1,20 @@
+{% extends "wineshops/base_edit.html" %}
+
+{% block form %}
+
+    <ol id="toc">
+        <li><a href="/edit/user" class="active">Mon compte</a></li>
+        <li class="current"><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
+        <li><a href="/edit/catalog" class="inactive">Mes vins</a></li>
+    </ol>
+
+    <div id="fheader">
+
+        <form action="/wineshops/edit_wineshop.html" method="post">{% csrf_token %}
+            <h2>Mon magasin</h2>
+            {{ form.as_p }}
+            <input type="submit" value="Valider" />
+        </form>
+    </div>
+
+{% endblock %}

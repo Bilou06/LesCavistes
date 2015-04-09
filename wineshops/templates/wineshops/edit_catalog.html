@@ -1,0 +1,15 @@
+{% extends "wineshops/base_edit.html" %}
+
+{% block form %}
+
+    <ol id="toc">
+        <li><a href="/edit/user" class="active">Mon compte</a></li>
+        <li><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
+        <li class="current"><a href="/edit/catalog" class="inactive">Mes vins</a></li>
+    </ol>
+
+    <div id="fheader">
+        Mon catalog
+    </div>
+
+{% endblock %}

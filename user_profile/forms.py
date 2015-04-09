@@ -3,7 +3,8 @@ __author__ = 'Sylvain'
 
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.utils import timezone
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
@@ -58,7 +59,36 @@ class RegistrationForm(UserCreationForm):
 
         return user
 
+class EditUserForm(forms.ModelForm):
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
+    first_name = forms.CharField(required=False)
+    last_name = forms.CharField(required=False)
+    username = forms.CharField(max_length=254)
+    last_login = forms.DateTimeField()
 
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'last_login', 'first_name', 'last_name')
+
+    email.widget.attrs['readonly'] = True
+    username.widget.attrs['readonly'] = True
+    last_login.widget.attrs['readonly'] = True
+
+    User._meta.get_field("username").verbose_name="Identifiant"
+
+    email.widget.attrs['verbose_name'] = "Adresse e-mail"
+
+    def __init__(self, *args, **kwargs):
+        super(EditUserForm, self).__init__(*args, **kwargs)
+        f = self.fields.get('user_permissions', None)
+        if f is not None:
+            f.queryset = f.queryset.select_related('content_type')
+
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.initial["password"]
 
 class PickyAuthenticationForm(AuthenticationForm):
     pass

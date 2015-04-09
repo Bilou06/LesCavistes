@@ -10,39 +10,39 @@
 
     <h2>Créer votre compte</h2>
     <div class="fieldWrapper">
-        <label>Nom</label><br>
+        <label>Nom :</label><br>
         {{ form.first_name }}
     </div>
     <br>
     <div class="fieldWrapper">
-        <label>Prénom</label><br>
+        <label>Prénom :</label><br>
         {{ form.last_name }}
     </div>
     <br>
     <div class="fieldWrapper">
         {{ form.email.errors }}
-        <label>Adresse e-mail</label><br>
+        <label>Adresse e-mail :</label><br>
         {{ form.email }}
     </div>
     <br>
     <div class="fieldWrapper">
     {{form.errors.values.0}}
         {{ form.username.errors }}
-        <label>Identifiant</label><br>
+        <label>Identifiant :</label><br>
         {{ form.username }}
     </div>
     <br>
     <div class="fieldWrapper">
         {{form.errors.values.1}}
         {{ form.password1.errors }}
-        <label>Mot de passe</label><br>
+        <label>Mot de passe :</label><br>
         {{ form.password1 }}
     </div>
     <br>
 
     <div class="fieldWrapper">
         {{ form.password2.errors }}
-        <label>Confirmation du mot de passe</label><br>
+        <label>Confirmation du mot de passe :</label><br>
         {{ form.password2 }}
     </div>
     <br/>

@@ -18,7 +18,7 @@
         <div id="actions">
             {% if user.is_authenticated %}
                 <a id="logout" class = "button" href="{% url 'user_profile:logout' %}">Déconnexion</a>
-                <a id="my_account" class = "button" href="{% url 'user_profile:acccount' %}">Mon compte</a>
+                <a id="my_account" class = "button" href="{% url 'wineshops:edit' %}">Mon compte</a>
             {% else %}
                 <a id="login" class = "button" href="{% url 'user_profile:login' %}">Connexion</a>
                 <a id="sign_up" class = "button" href="{% url 'user_profile:register'  %}">Ajoutez votre cave</a>
