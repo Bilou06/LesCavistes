@@ -1,5 +1,7 @@
+# -*- coding: utf8 -*-
 import hashlib
-import random, datetime
+import random
+import datetime
 
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,6 +10,7 @@ from django.template import RequestContext
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
+import logging
 
 from trouvetonvin.settings import DEBUG
 
@@ -32,24 +35,21 @@ def register_user(request):
             activation_key = hashlib.sha1(salted).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
 
-            #Get user by username
-            user=User.objects.get(username=username)
+            # Get user by username
+            user = User.objects.get(username=username)
 
             # Create and save user profile
             new_profile = UserProfile(user=user, activation_key=activation_key,
-                key_expires=key_expires)
+                                      key_expires=key_expires)
             new_profile.save()
 
             # Send email with activation key
             email_subject = 'Account confirmation'
-            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/user/confirm/%s" % (username, activation_key)
+            email_body = "Hey %s, merci de vous être inscrit. Pour activer votre compte, \
+                    cliquez sur le lien avant 48 heures http://127.0.0.1:8000/user/confirm/%s" \
+                         % (user.user.username, user.activation_key)
 
-            if (not DEBUG):
-                send_mail(email_subject, email_body, 'myemail@example.com',
-                    [email], fail_silently=False)
-            else:
-                return HttpResponse(email_body)
+            sendmail(email_subject, email_body, email)
 
             return HttpResponseRedirect('/user/register_success')
     else:
@@ -71,28 +71,34 @@ def resend_mail(request):
 
     # Send email with activation key
     email_subject = 'Account confirmation'
-    email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-    48hours http://127.0.0.1:8000/user/confirm/%s" % (user.user.username, user.activation_key)
+    email_body = "Hey %s, merci de vous être inscrit. Pour activer votre compte, cliquez sur le lien avant 48 heures\
+            http://127.0.0.1:8000/user/confirm/%s" % (user.user.username, user.activation_key)
 
-    if (not DEBUG):
-        send_mail(email_subject, email_body, 'myemail@example.com',
-                  [email], fail_silently=False)
+    sendmail(email_subject, email_body, email)
 
     return HttpResponseRedirect('/user/register_success')
 
 
+def sendmail(subject, body, email):
+    logger = logging.getLogger(__name__)
+    logger.info('|'.join(['EMAIL ', email, subject, body]))
+    if not DEBUG:
+        send_mail(subject, body, 'myemail@example.com',
+                  [email], fail_silently=False)
+
+
 def register_confirm(request, activation_key):
-    #check if user is already logged in and if he is redirect him to some other url, e.g. home
+    # check if user is already logged in and if he is redirect him to some other url, e.g. home
     if request.user.is_authenticated():
         HttpResponseRedirect('/home')
 
     # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
-    #check if the activation key has expired, if it hase then render confirm_expired.html
+    # check if the activation key has expired, if it hase then render confirm_expired.html
     if user_profile.key_expires < timezone.now():
-        return render(request, 'user_profile/confirm_expired.html', {'user':user_profile})
-    #if the key hasn't expired save user and set him as active and render some template to confirm activation
+        return render(request, 'user_profile/confirm_expired.html', {'user': user_profile})
+    # if the key hasn't expired save user and set him as active and render some template to confirm activation
     user = user_profile.user
     user.is_active = True
     user.save()
@@ -101,7 +107,6 @@ def register_confirm(request, activation_key):
 
 def register_success(request):
     return render(request, 'user_profile/register_success.html')
-
 
 
 def log_in(request):
@@ -134,6 +139,7 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect('/')
+
 
 def account(request):
     return HttpResponse('account')

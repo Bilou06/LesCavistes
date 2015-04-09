@@ -10,7 +10,7 @@
 
     <div id="fheader">
 
-        <form action="/wineshops/edit_wineshop.html" method="post">{% csrf_token %}
+        <form action="/wineshops/edit/wineshop/" method="post">{% csrf_token %}
             <h2>Mon magasin</h2>
             {{ form.as_p }}
             <input type="submit" value="Valider" />

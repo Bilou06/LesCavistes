@@ -1,20 +1,18 @@
 # -*- coding: utf8 -*-
-
-import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class Shop(models.Model):
-    name        = models.CharField(max_length = 100, verbose_name="Nom")
-    address     = models.CharField(max_length = 250, verbose_name="Adresse")
-    city        = models.CharField(max_length = 100, verbose_name="Ville")
-    zip_code    = models.IntegerField(verbose_name="Code postal")
+    name        = models.CharField(max_length = 100, verbose_name="Nom", null=True)
+    address     = models.CharField(max_length = 250, verbose_name="Adresse", null=True)
+    city        = models.CharField(max_length = 100, verbose_name="Ville", null=True)
+    zip_code    = models.IntegerField(verbose_name="Code postal", null=True)
     country     = models.CharField(max_length = 100, default = 'France', verbose_name="Pays")
-    description = models.TextField(max_length = 500, blank = True, verbose_name="Déscription")
-    phone       = models.CharField(max_length = 20, blank = True, verbose_name="Téléphone")
-    mail        = models.EmailField(blank = True, verbose_name="E-mail")
-    web         = models.CharField(max_length = 50, blank = True, verbose_name="Site web")
+    description = models.TextField(max_length = 500, blank = True, verbose_name="Déscription", null=True)
+    phone       = models.CharField(max_length = 20, blank = True, verbose_name="Téléphone", null=True)
+    mail        = models.EmailField(blank = True, verbose_name="E-mail", null=True)
+    web         = models.CharField(max_length = 50, blank = True, verbose_name="Site web", null=True)
     user        = models.ForeignKey(User)
 
     def __str__(self):
@@ -58,7 +56,7 @@ class Wine(models.Model):
     price_max   = models.FloatField(blank = True, null=True)
 
     def __str__(self):
-        return self.producer + ' ' + self.vintage
+        return self.producer
 
 
 

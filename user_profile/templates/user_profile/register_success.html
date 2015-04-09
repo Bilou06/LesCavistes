@@ -1,4 +1,14 @@
 {% extends "user_profile/base_user.html" %}
+{% load staticfiles %}
 
-Veuillez valider votre compte en cliquant sur le lien dans le mail que vous nous avons envoyé. Vous pourrez alors compléter votre inscription.
+{% block content %}
+    <link rel="stylesheet" href="{% static 'user_profile/registerform.css' %}" />
+
+<div id="fheader">
+<br><br><br>
+    Un mail a été envoyé à l'adresse que vous avez indiquée. Veuillez cliquer sur le lien qu'il contient pour compléter votre inscription.
+    <br><br><br>
 A bienôt sur notre site !
+    </div>
+
+{% endblock %}

@@ -1,9 +1,7 @@
 # -*- coding: utf8 -*-
-import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-
 
 
 class UserProfile(models.Model):
@@ -15,7 +13,5 @@ class UserProfile(models.Model):
         return self.user.username
 
     class Meta:
-        verbose_name_plural=u'User profiles'
-
-
-
+        verbose_name = u"Profile utilisateur"
+        verbose_name_plural = u'Profiles utilisateur'
