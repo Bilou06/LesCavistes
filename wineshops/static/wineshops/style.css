@@ -3,34 +3,40 @@
     background-color:black;
     color:white;
     text-align:center;
-    padding:5px;
+
     overflow: auto;
+    width: 100%;
+    position:relative;
+    height: 175px;
 }
 
 #logo{
-    width:314px;
     display: inline-block;
     float:left;
 }
 
 #logo_img {
-    float:left;
     padding:5px;
     display: inline-block;
+    position: absolute;
+    left:5px;
+    top:2px;
 }
 
 #title {
     padding:10px;
     display: inline-block;
     text:center;
+    text-align:center;
 }
 
 #actions {
     float:right;
     padding:5px;
     display: inline-block;
-    overflow: auto;
-    width:314px;
+    position: absolute;
+    right:5px;
+    top:2px;
 }
 
 

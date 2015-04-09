@@ -47,13 +47,15 @@ class Wine(models.Model):
     shop        = models.ForeignKey(Shop)
     producer    = models.CharField(max_length = 50, blank = True )
     area        = models.ForeignKey(Area)
-    vintage     = models.IntegerField()
+    vintage     = models.IntegerField(blank = True)
     classification = models.CharField(max_length = 50, blank = True )
     color       = models.ForeignKey(Color)
     capacity    = models.IntegerField(default = 75)
+    price_min   = models.FloatField(blank = True, null=True)
+    price_max   = models.FloatField(blank = True, null=True)
 
     def __str__(self):
-        return self.producer
+        return self.producer + ' ' + self.vintage
 
 
 
