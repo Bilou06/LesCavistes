@@ -7,7 +7,7 @@
     -webkit-justify-content: center;
     justify-content: center;
 
-    border: #484848 solid 3px;
+    border: #A53F4F solid 3px;
 	clear: left;
 	padding: 1em;
 }
@@ -49,7 +49,7 @@ ol#toc a {
 }
 
 ol#toc li.current {
-	background-color: #484848;
+	background-color: #A53F4F;
 	background-position: 0 -60px;
 }
 
@@ -64,4 +64,8 @@ ol#toc li {
 	float: left;
 	margin: 0 1px 0 0;
 	padding-left: 10px;
+}
+
+input[readonly], input[readonly="readonly"] {
+    color:gray;
 }
