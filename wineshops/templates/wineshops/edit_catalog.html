@@ -65,10 +65,21 @@
                                                                    style="display: inline-block;"></span></div>
                                     <div class="clear"></div>
                                 </th>
+                                <th scope="col" class="action-checkbox-column">
+                                    
+                                    <div class="clear"></div>
+                                </th>
+
                                 <th scope="col" class="sortable column-producer">
 
 
                                     <div class="text"><a href="?o=2">Producteur</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-region">
+
+
+                                    <div class="text"><a href="?o=3">Vignoble</a></div>
                                     <div class="clear"></div>
                                 </th>
                                 <th scope="col" class="sortable column-area">
@@ -91,35 +102,49 @@
                                 </th>
                                 <th scope="col" class="sortable column-vintage">
 
-
                                     <div class="text"><a href="?o=6">Millésime</a></div>
                                     <div class="clear"></div>
                                 </th>
                                 <th scope="col" class="sortable column-capacity">
 
-
                                     <div class="text"><a href="?o=7">Contenance(cl)</a></div>
                                     <div class="clear"></div>
                                 </th>
+                                <th scope="col" class="sortable column-price-min">
+
+                                    <div class="text"><a href="?o=7">Prix min.</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-price_max">
+
+                                    <div class="text"><a href="?o=7">Prix max.</a></div>
+                                    <div class="clear"></div>
+                                </th>
+
                             </tr>
                             </thead>
                             <tbody>
 
 
-                            <tr class="row1">
-                                {% for wine in wine_list %}
+                            {% for wine in shop.wine_set.all %}
+                                <tr class="row2">
                                     <td class="action-checkbox">
-                                        <input class="action-select" name="_selected_action" type="checkbox" value="2">
+                                        <input class="action-select" name="_selected_action" type="checkbox" value="{{ wine.id }}">
                                     </td>
-                                    <td class="field-producer"><a
-                                            href="/wineshops/wine/2/">{{ wine.producer.value }}</a></td>
-                                    <td class="field-area nowrap">{{ wine.area }}</td>
+                                    <td class="open"><a href="/wineshops/edit/wine/{{ wine.id }}/"><img src="{% static 'wineshops/images/go.png' %}"></a></td>
+                                    <td class="field-producer">{{ wine.producer }}</td>
+                                    <td class="field-area nowrap">{{ wine.area.region }}</td>
+                                    <td class="field-area nowrap">{{ wine.area.name }}</td>
                                     <td class="field-color nowrap">{{ wine.color }}</td>
                                     <td class="field-classification">{{ wine.classification }}</td>
-                                    <td class="field-vintage">{{ wine.vintage }}</td>
+                                    <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
                                     <td class="field-capacity">{{ wine.capacity }}</td>
-                                {% endfor %}
-                            </tr>
+                                    <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
+                                    <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
+
+                                </tr>
+                            {% endfor %}
+
 
                             </tbody>
                         </table>

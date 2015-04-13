@@ -17,9 +17,9 @@ admin.site.register(Color)
 class WineAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,  {'fields': ['shop']}),
-        ('Vin', {'fields': ['producer', 'area', 'color', 'classification', 'vintage', 'capacity']})
+        ('Vin', {'fields': ['producer', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max']})
     ]
 
-    list_display = ('shop', 'producer', 'area', 'color', 'classification', 'vintage', 'capacity')
+    list_display = ('shop', 'producer', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max')
 
 admin.site.register(Wine, WineAdmin)

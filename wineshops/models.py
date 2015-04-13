@@ -35,9 +35,10 @@ class Region(models.Model):#Bordeaux, ...
 
 class Area(models.Model):#Saint-estèphe ...
     region      = models.ForeignKey(Region)
-    name        = models.CharField(max_length = 50, unique = True)
+    name        = models.CharField(max_length = 50, unique = True, null=True)
 
     def __str__(self):
+        return str(Region.objects.get(id=self.region_id)) + '\\' + self.name
         return self.name
 
 class Color(models.Model):
@@ -48,14 +49,14 @@ class Color(models.Model):
 
 class Wine(models.Model):
     shop        = models.ForeignKey(Shop)
-    producer    = models.CharField(max_length = 50, blank = True )
-    area        = models.ForeignKey(Area)
-    vintage     = models.IntegerField(blank = True)
-    classification = models.CharField(max_length = 50, blank = True )
-    color       = models.ForeignKey(Color)
-    capacity    = models.IntegerField(default = 75)
-    price_min   = models.FloatField(blank = True, null=True)
-    price_max   = models.FloatField(blank = True, null=True)
+    producer    = models.CharField(max_length = 50, blank = True, verbose_name="Producteur")
+    area        = models.ForeignKey(Area, verbose_name="Vignoble")
+    vintage     = models.IntegerField(blank = True, null=True, verbose_name="Millésime")
+    classification = models.CharField(max_length = 50, blank = True, verbose_name="Classification" )
+    color       = models.ForeignKey(Color, verbose_name="Couleur")
+    capacity    = models.IntegerField(default = 75, verbose_name="Contenance")
+    price_min   = models.FloatField(blank = True, null=True, verbose_name="Prix minimum")
+    price_max   = models.FloatField(blank = True, null=True, verbose_name="Prix maximum")
 
     def __str__(self):
         return ''+self.producer

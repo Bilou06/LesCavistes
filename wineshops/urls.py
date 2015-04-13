@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^edit/user/$', views.edit_user, name='edit_user'),
     url(r'^edit/wineshop/$', views.edit_wineshop, name='edit_wineshop'),
     url(r'^edit/catalog/$', views.edit_catalog, name='edit_catalog'),
+    url(r'^edit/wine/(?P<wine_id>[0-9]+)/$', views.edit_wine, name='edit_wine'),
 ]
