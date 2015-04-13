@@ -14,16 +14,15 @@
     <div id="content-header" class="flex">
 
 
-
         <div id="content-main">
-<h2>Mes vins</h2>
-    <br><br>
+            <h2>Mes vins</h2>
+            <br><br>
 
             <ul class="object-tools">
 
                 <li>
 
-                    <a href="/admin/wineshops/wine/add/" class="addlink">
+                    <a href="/wineshops/wine/add/" class="addlink">
                         Ajouter un vin
                     </a>
                 </li>
@@ -112,7 +111,8 @@
                                     <td class="action-checkbox">
                                         <input class="action-select" name="_selected_action" type="checkbox" value="2">
                                     </td>
-                                    <td class="field-producer"><a href="/admin/wineshops/wine/2/">{{ wine.producer.value }}</a></td>
+                                    <td class="field-producer"><a
+                                            href="/wineshops/wine/2/">{{ wine.producer.value }}</a></td>
                                     <td class="field-area nowrap">{{ wine.area }}</td>
                                     <td class="field-color nowrap">{{ wine.color }}</td>
                                     <td class="field-classification">{{ wine.classification }}</td>
