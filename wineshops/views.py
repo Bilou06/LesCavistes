@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -55,15 +55,21 @@ def edit_wineshop(request):
 
 @login_required
 def edit_catalog(request):
+    shop, created = Shop.objects.get_or_create(user=request.user)
+
     if request.method == 'POST':
-        form = WineshopForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset = ShopFormSet(request.POST, instance=shop)
+        if formset.is_valid():
+            formset.save()
             return HttpResponseRedirect('wineshops/edit/catalog') # Redirect after POST
     else:
-        form = WineshopForm() # An unbound form
+        formset = ShopFormSet(instance=shop)  # An unbound form
 
     return render(request, 'wineshops/edit_catalog.html', {
-        'form': form,
+        'formset': formset,
     })
 
+'''
+class WineListView(generic.list.ListView):
+    model = Wine
+'''

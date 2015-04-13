@@ -3,6 +3,7 @@ __author__ = 'Sylvain'
 from django.conf.urls import url
 
 from . import views
+from .views import *
 
 urlpatterns = [
     # ex: /wineshops/

@@ -16,7 +16,9 @@ class Shop(models.Model):
     user        = models.ForeignKey(User)
 
     def __str__(self):
-        return self.name
+        if self.name:
+            return self.name
+        return ''
 
 class Country(models.Model):#France, ...
     name        = models.CharField(max_length = 50, unique = True)
@@ -56,7 +58,7 @@ class Wine(models.Model):
     price_max   = models.FloatField(blank = True, null=True)
 
     def __str__(self):
-        return self.producer
+        return ''+self.producer
 
 
 

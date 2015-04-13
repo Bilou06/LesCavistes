@@ -12,8 +12,12 @@
 
         <form action="/wineshops/edit/wineshop/" method="post">{% csrf_token %}
             <h2>Mon magasin</h2>
+            Les informations ci-dessous seront visibles sur le site
+            <br>
+            et sur les applications mobiles par tous les utilsateurs.
             {{ form.as_p }}
             <input type="submit" value="Valider" />
+
         </form>
     </div>
 

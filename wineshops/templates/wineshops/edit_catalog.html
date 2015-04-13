@@ -1,6 +1,9 @@
 {% extends "wineshops/base_edit.html" %}
+{% load staticfiles %}
+
 
 {% block form %}
+    <link rel="stylesheet" href="{% static 'wineshops/catalog-form.css' %}"/>
 
     <ol id="toc">
         <li><a href="/edit/user" class="active">Mon compte</a></li>
@@ -8,8 +11,130 @@
         <li class="current"><a href="/edit/catalog" class="inactive">Mes vins</a></li>
     </ol>
 
-    <div id="fheader">
-        Mon catalogue
-    </div>
+    <div id="content-header" class="flex">
 
+
+
+        <div id="content-main">
+<h2>Mes vins</h2>
+    <br><br>
+
+            <ul class="object-tools">
+
+                <li>
+
+                    <a href="/admin/wineshops/wine/add/" class="addlink">
+                        Ajouter un vin
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="module" id="changelist">
+
+
+                <form id="changelist-form" action="" method="post" novalidate=""><input type="hidden"
+                                                                                        name="csrfmiddlewaretoken"
+                                                                                        value="AUlVX42ZW5hgmV5HK5TDOaJXjSKNERwo">
+
+
+                    <div class="actions">
+                        <label>Action : <select name="action">
+                            <option value="" selected="selected">---------</option>
+                            <option value="delete_selected">Supprimer les vins sélectionnés</option>
+                        </select></label><input class="select-across" name="select_across" type="hidden" value="0">
+                        <button type="submit" class="form-button" title="Run the selected action" name="index"
+                                value="0">Ok
+                        </button>
+
+                        <script type="text/javascript">var _actions_icnt = "1";</script>
+                        <span class="action-counter" style="display: inline;">0 sur 1 sélectionné(s)</span>
+
+
+                    </div>
+
+
+                    <div class="results">
+                        <table id="result_list">
+                            <thead>
+                            <tr>
+
+                                <th scope="col" class="action-checkbox-column">
+
+                                    <div class="text"><span><input type="checkbox" id="action-toggle"
+                                                                   style="display: inline-block;"></span></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-producer">
+
+
+                                    <div class="text"><a href="?o=2">Producteur</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-area">
+
+
+                                    <div class="text"><a href="?o=3">Région</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-color">
+
+
+                                    <div class="text"><a href="?o=4">Couleur</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-classification">
+
+
+                                    <div class="text"><a href="?o=5">Classification</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-vintage">
+
+
+                                    <div class="text"><a href="?o=6">Millésime</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable column-capacity">
+
+
+                                    <div class="text"><a href="?o=7">Contenance(cl)</a></div>
+                                    <div class="clear"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <tr class="row1">
+                                {% for wine in wine_list %}
+                                    <td class="action-checkbox">
+                                        <input class="action-select" name="_selected_action" type="checkbox" value="2">
+                                    </td>
+                                    <td class="field-producer"><a href="/admin/wineshops/wine/2/">{{ wine.producer.value }}</a></td>
+                                    <td class="field-area nowrap">{{ wine.area }}</td>
+                                    <td class="field-color nowrap">{{ wine.color }}</td>
+                                    <td class="field-classification">{{ wine.classification }}</td>
+                                    <td class="field-vintage">{{ wine.vintage }}</td>
+                                    <td class="field-capacity">{{ wine.capacity }}</td>
+                                {% endfor %}
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <p class="paginator">
+                        {{ wine_list|length }} vin(s)
+                    </p>
+
+                </form>
+            </div>
+        </div>
+
+
+        <br class="clear">
+    </div>
 {% endblock %}
