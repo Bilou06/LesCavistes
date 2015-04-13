@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
 from .forms import *
@@ -75,7 +75,7 @@ def edit_wine(request, wine_id):
     wine = get_object_or_404(Wine, id=wine_id)
 
     if (not wine.shop.user == request.user):
-        raise Http404("Impossible de trouver la référence de ce vin")
+        raise HttpResponseForbidden()
 
     if request.method == 'POST':
         wineform = WineForm(request.POST, instance=wine)
@@ -86,3 +86,13 @@ def edit_wine(request, wine_id):
         wineform=WineForm(instance=wine)
 
     return render(request, 'wineshops/edit_wine.html', {'wineform' : wineform, 'id' : wine_id})
+
+
+class create_wine(generic.CreateView):
+    model = Wine
+    fields = ['producer', 'area', 'vintage', 'classification', 'color', 'capacity', 'price_min', 'price_max']
+    success_url = '/wineshops/edit/catalog'
+    def form_valid(self, form):
+        form.instance.shop = get_object_or_404(Shop, user=self.request.user)
+        return super(create_wine, self).form_valid(form)
+

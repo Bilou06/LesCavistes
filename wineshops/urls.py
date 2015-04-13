@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^edit/wineshop/$', views.edit_wineshop, name='edit_wineshop'),
     url(r'^edit/catalog/$', views.edit_catalog, name='edit_catalog'),
     url(r'^edit/wine/(?P<wine_id>[0-9]+)/$', views.edit_wine, name='edit_wine'),
+    url(r'^create/wine/$', views.create_wine.as_view(), name='create_wine'),
 ]
