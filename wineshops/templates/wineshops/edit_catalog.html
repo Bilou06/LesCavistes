@@ -11,6 +11,7 @@
 {% block script %}
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'wineshops/js/table-actions.js' %}"></script>
+
 {% endblock %}
 
 
@@ -79,53 +80,39 @@
                             </th>
 
                             <th scope="col" class="sortable column-producer">
-
-
-                                <div class="text"><a href="?o=2">Producteur</a></div>
+                                <div class="text"><a href="?o=1">Producteur</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-region">
-
-
-                                <div class="text"><a href="?o=3">Vignoble</a></div>
+                                <div class="text"><a href="?o=2">Vignoble</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-area">
-
-
                                 <div class="text"><a href="?o=3">Région</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-color">
-
-
                                 <div class="text"><a href="?o=4">Couleur</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-classification">
-
-
                                 <div class="text"><a href="?o=5">Classification</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-vintage">
-
                                 <div class="text"><a href="?o=6">Millésime</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-capacity">
-
                                 <div class="text"><a href="?o=7">Contenance(cl)</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price-min">
-
-                                <div class="text"><a href="?o=7">Prix min.</a></div>
+                                <div class="text"><a href="?o=8">Prix min.</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price_max">
-
-                                <div class="text"><a href="?o=7">Prix max.</a></div>
+                                <div class="text"><a href="?o=9">Prix max.</a></div>
                                 <div class="clear"></div>
                             </th>
 
@@ -178,7 +165,12 @@
             </div>
         </div>
 
-
         <br class="clear">
     </div>
+
+        {% if order %}
+    <script>
+        sort({{ order }});
+    </script>
+    {% endif %}
 {% endblock %}

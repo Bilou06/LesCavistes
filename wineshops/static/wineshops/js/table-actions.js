@@ -22,6 +22,18 @@ function removeChecked(){
     window.location.href = "/wineshops/confirm_remove/"+index.join(',')
 }
 
+function sort(order){
+    var column = ['','column-producer', 'column-region', 'column-area', 'column-color', 'column-classification', 'column-vintage', 'column-capacity', 'column-price_min', 'column-rprice_max'][Math.abs(order)];
+    $(".sortable").removeClass("sorted");
+    if (order>0) {
+        $("a[href^='?o=" + order + "']").each(function () {
+            this.href = "?o=-" + order
+        });
+        $("."+column).addClass("sorted ascending");
+    }else{
+        $("."+column).addClass("sorted descending");
+    }
+}
 
 $(document).ready(function () {
 

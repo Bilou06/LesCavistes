@@ -53,8 +53,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wineshops/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.310345" vertical-offset="898" max-vertical-offset="2295">
-              <caret line="67" column="39" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+            <state vertical-scroll-proportion="-15.931034" vertical-offset="796" max-vertical-offset="2516">
+              <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
               <folding>
                 <element signature="e#23#33#0" expanded="true" />
               </folding>
@@ -62,16 +62,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit_catalog.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="edit_catalog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wineshops/templates/wineshops/edit_catalog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6686838" vertical-offset="2448" max-vertical-offset="3213">
-              <caret line="170" column="24" selection-start-line="170" selection-start-column="24" selection-end-line="170" selection-end-column="24" />
+            <state vertical-scroll-proportion="-11.4" vertical-offset="1396" max-vertical-offset="3077">
+              <caret line="119" column="32" selection-start-line="119" selection-start-column="32" selection-end-line="119" selection-end-column="32" />
               <folding>
-                <element signature="e#1962#1986#0#HTML" expanded="true" />
-                <element signature="e#2518#2548#0#HTML" expanded="true" />
-                <element signature="e#7304#7342#0#HTML" expanded="true" />
+                <element signature="e#1963#1987#0#HTML" expanded="true" />
+                <element signature="e#2519#2549#0#HTML" expanded="true" />
+                <element signature="e#7291#7329#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="table-actions.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wineshops/static/wineshops/js/table-actions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.45945945" vertical-offset="102" max-vertical-offset="1445">
+              <caret line="25" column="196" selection-start-line="25" selection-start-column="196" selection-end-line="25" selection-end-column="196" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -80,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/wineshops/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="406" max-vertical-offset="1224">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="58" selection-end-column="89" />
+              <caret line="56" column="12" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="12" />
               <folding>
                 <element signature="e#23#51#0" expanded="true" />
               </folding>
@@ -133,7 +143,6 @@
         <option value="$PROJECT_DIR$/wineshops/static/wineshops/js/action.js" />
         <option value="$PROJECT_DIR$/wineshops/static/wineshops/js/actions.js" />
         <option value="$PROJECT_DIR$/wineshops/urls.py" />
-        <option value="$PROJECT_DIR$/wineshops/static/wineshops/js/table-actions.js" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/wineshops/templates/wineshops/edit_wine.html" />
         <option value="$PROJECT_DIR$/wineshops/static/wineshops/form.css" />
@@ -141,8 +150,9 @@
         <option value="$PROJECT_DIR$/wineshops/admin.py" />
         <option value="$PROJECT_DIR$/wineshops/forms.py" />
         <option value="$PROJECT_DIR$/wineshops/static/wineshops/pagination.css" />
-        <option value="$PROJECT_DIR$/wineshops/views.py" />
         <option value="$PROJECT_DIR$/wineshops/templates/wineshops/edit_catalog.html" />
+        <option value="$PROJECT_DIR$/wineshops/views.py" />
+        <option value="$PROJECT_DIR$/wineshops/static/wineshops/js/table-actions.js" />
       </list>
     </option>
   </component>
@@ -1049,14 +1059,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wineshops/static/wineshops/js/table-actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.310345" vertical-offset="0" max-vertical-offset="1241">
-          <caret line="21" column="71" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wineshops/templates/wineshops/confirm_remove.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="595">
@@ -1081,20 +1083,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wineshops/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#46#80#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wineshops/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="406" max-vertical-offset="1224">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="58" selection-end-column="89" />
+          <caret line="56" column="12" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="12" />
           <folding>
             <element signature="e#23#51#0" expanded="true" />
           </folding>
@@ -1109,25 +1101,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wineshops/views.py">
+    <entry file="file://$PROJECT_DIR$/wineshops/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.310345" vertical-offset="898" max-vertical-offset="2295">
-          <caret line="67" column="39" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#23#33#0" expanded="true" />
+            <element signature="e#46#80#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wineshops/templates/wineshops/edit_catalog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6686838" vertical-offset="2448" max-vertical-offset="3213">
-          <caret line="170" column="24" selection-start-line="170" selection-start-column="24" selection-end-line="170" selection-end-column="24" />
+        <state vertical-scroll-proportion="-11.4" vertical-offset="1396" max-vertical-offset="3077">
+          <caret line="119" column="32" selection-start-line="119" selection-start-column="32" selection-end-line="119" selection-end-column="32" />
           <folding>
-            <element signature="e#1962#1986#0#HTML" expanded="true" />
-            <element signature="e#2518#2548#0#HTML" expanded="true" />
-            <element signature="e#7304#7342#0#HTML" expanded="true" />
+            <element signature="e#1963#1987#0#HTML" expanded="true" />
+            <element signature="e#2519#2549#0#HTML" expanded="true" />
+            <element signature="e#7291#7329#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wineshops/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.931034" vertical-offset="796" max-vertical-offset="2516">
+          <caret line="74" column="17" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
+          <folding>
+            <element signature="e#23#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wineshops/static/wineshops/js/table-actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45945945" vertical-offset="102" max-vertical-offset="1445">
+          <caret line="25" column="196" selection-start-line="25" selection-start-column="196" selection-end-line="25" selection-end-column="196" />
+          <folding />
         </state>
       </provider>
     </entry>

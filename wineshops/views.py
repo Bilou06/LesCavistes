@@ -64,7 +64,20 @@ def edit_catalog(request):
     if request.method == 'POST':
         return HttpResponseForbidden()
     else:
-        query = Wine.objects.filter(shop_id=shop.id)
+        query = Wine.objects.filter(shop_id=shop.id).order_by('area', 'producer')
+
+        order = 0
+        try:
+            order = int(request.GET.get('o'))
+            parameters = ['','producer','area__region__name','area__name','color__name','classification','vintage','capacity', 'price_min', 'price_max']
+            if order>0:
+                param = parameters[order]
+            else:
+                param = '-'+parameters[-order]
+            query = query.order_by(param)
+        except:
+            pass
+
         paginator = Paginator(query, 10)  # Show 10 forms per page
         page = request.GET.get('page')
         try:
@@ -74,7 +87,7 @@ def edit_catalog(request):
         except EmptyPage:
             objects = paginator.page(paginator.num_pages)
         page_query = query.filter(id__in=[object.id for object in objects])
-        context = {'objects': objects, 'paginator' : paginator }
+        context = {'objects': objects, 'paginator' : paginator, 'order' : order }
 
         return render(request, 'wineshops/edit_catalog.html', context)
 
