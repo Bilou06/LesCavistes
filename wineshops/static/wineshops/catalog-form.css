@@ -127,20 +127,20 @@ table thead th.sorted .sortoptions a.sortremove:hover {
     background: url(images/sorting-icons.gif) -4px -27px no-repeat;
 }
 
-table thead th.sorted .sortoptions a.ascending {
-    background: url(images/sorting-icons.gif) -5px -50px no-repeat;
+.ascending .text {
+    background: url(images/sorting-icons.gif) right -47px no-repeat;
 }
 
-table thead th.sorted .sortoptions a.ascending:hover {
-    background: url(images/sorting-icons.gif) -5px -72px no-repeat;
+.ascending:hover .text {
+    background: url(images/sorting-icons.gif) right -69px no-repeat;
 }
 
-table thead th.sorted .sortoptions a.descending {
-    background: url(images/sorting-icons.gif) -5px -94px no-repeat;
+.descending .text {
+    background: url(images/sorting-icons.gif) right -91px no-repeat;
 }
 
-table thead th.sorted .sortoptions a.descending:hover {
-    background: url(images/sorting-icons.gif) -5px -115px no-repeat;
+.descending:hover .text {
+    background: url(images/sorting-icons.gif) right -112px no-repeat;
 }
 
 /* ORDERABLE TABLES */

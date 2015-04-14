@@ -107,7 +107,7 @@
                                 <div class="text"><a href="?o=7">Contenance(cl)</a></div>
                                 <div class="clear"></div>
                             </th>
-                            <th scope="col" class="sortable column-price-min">
+                            <th scope="col" class="sortable column-price_min">
                                 <div class="text"><a href="?o=8">Prix min.</a></div>
                                 <div class="clear"></div>
                             </th>
@@ -147,10 +147,10 @@
                 </div>
 
                 <p class="paginator">
-                {% if paginator.page_range > 1 %}
+                {% if paginator.page_range|length > 1 %}
                     {% for i in paginator.page_range %}
                         {% if i != objects.number %}
-                            <div class="page link"><a href="?page={{ i }}"> {{ i }} </a></div>
+                            <div class="page link"><a class="page_link" href="?page={{ i }}&o={{ order }}"> {{ i }} </a></div>
                         {% else %}
                             <div class="page nolink">{{ i }}</div>
                         {% endif %}

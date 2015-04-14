@@ -17,3 +17,7 @@
 .link{
     border: solid gray 1px;
 }
+
+a.page_link:visited{
+    color:black;
+}

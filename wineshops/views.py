@@ -5,6 +5,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.forms.models import inlineformset_factory
+from django.db.models.functions import Lower
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import *
@@ -69,12 +70,20 @@ def edit_catalog(request):
         order = 0
         try:
             order = int(request.GET.get('o'))
+            # order of columns is duplicated in html and in js
             parameters = ['','producer','area__region__name','area__name','color__name','classification','vintage','capacity', 'price_min', 'price_max']
             if order>0:
                 param = parameters[order]
+                if order <6:
+                    query = query.order_by(Lower(param).asc())
+                else:
+                    query = query.order_by(param)
             else:
-                param = '-'+parameters[-order]
-            query = query.order_by(param)
+                param = parameters[-order]
+                if -order <6:
+                    query = query.order_by(Lower(param).desc())
+                else:
+                    query = query.order_by('-'+param)
         except:
             pass
 
