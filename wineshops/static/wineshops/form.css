@@ -1,5 +1,4 @@
 #fheader{
-    background-color:#ffffff;
     display: -webkit-flex;
     display:         flex;
     -webkit-align-items: center;
@@ -68,8 +67,4 @@ ol#toc li {
 
 input[readonly], input[readonly="readonly"] {
     color:gray;
-}
-
-.addlink{
-    font-size: 11px;
 }

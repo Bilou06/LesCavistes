@@ -1,9 +1,21 @@
 {% extends "wineshops/base_edit.html" %}
 {% load staticfiles %}
 
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/catalog-form.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/pagination.css' %}"/>
+
+{% endblock %}
+
+{% block script %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/table-actions.js' %}"></script>
+{% endblock %}
+
+
 
 {% block form %}
-    <link rel="stylesheet" href="{% static 'wineshops/catalog-form.css' %}"/>
 
     <ol id="toc">
         <li><a href="/edit/user" class="active">Mon compte</a></li>
@@ -33,129 +45,136 @@
             <div class="module" id="changelist">
 
 
-                <form id="changelist-form" action="" method="post" novalidate=""><input type="hidden"
-                                                                                        name="csrfmiddlewaretoken"
-                                                                                        value="AUlVX42ZW5hgmV5HK5TDOaJXjSKNERwo">
+                <div class="actions">
+                    <label>Action : <select name="action" id="action">
+                        <option value="" selected="selected">---------</option>
+                        <option value="delete_selected">Supprimer les vins sélectionnés</option>
+                    </select></label><input class="select-across" name="select_across" type="hidden" value="0">
+                    <button type="submit" class="form-button" title="Run the selected action" name="index"
+                            value="0">Ok
+                    </button>
+
+                    <script type="text/javascript">var _actions_icnt = "1";</script>
+                    <span class="action-counter" style="display: inline;"><span id="count-selected">0</span> sur <span
+                            id="count-total">0</span> sélectionné(s)</span>
 
 
-                    <div class="actions">
-                        <label>Action : <select name="action">
-                            <option value="" selected="selected">---------</option>
-                            <option value="delete_selected">Supprimer les vins sélectionnés</option>
-                        </select></label><input class="select-across" name="select_across" type="hidden" value="0">
-                        <button type="submit" class="form-button" title="Run the selected action" name="index"
-                                value="0">Ok
-                        </button>
-
-                        <script type="text/javascript">var _actions_icnt = "1";</script>
-                        <span class="action-counter" style="display: inline;">0 sur 1 sélectionné(s)</span>
+                </div>
 
 
-                    </div>
+                <div class="results">
+                    <table id="result_list">
+                        <thead>
+                        <tr>
+
+                            <th scope="col" class="action-checkbox-column">
+
+                                <div class="text"><span><input type="checkbox" id="action-toggle"
+                                                               style="display: inline-block;"></span></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="action-checkbox-column">
+
+                                <div class="clear"></div>
+                            </th>
+
+                            <th scope="col" class="sortable column-producer">
 
 
-                    <div class="results">
-                        <table id="result_list">
-                            <thead>
-                            <tr>
-
-                                <th scope="col" class="action-checkbox-column">
-
-                                    <div class="text"><span><input type="checkbox" id="action-toggle"
-                                                                   style="display: inline-block;"></span></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="action-checkbox-column">
-                                    
-                                    <div class="clear"></div>
-                                </th>
-
-                                <th scope="col" class="sortable column-producer">
+                                <div class="text"><a href="?o=2">Producteur</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-region">
 
 
-                                    <div class="text"><a href="?o=2">Producteur</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-region">
+                                <div class="text"><a href="?o=3">Vignoble</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-area">
 
 
-                                    <div class="text"><a href="?o=3">Vignoble</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-area">
+                                <div class="text"><a href="?o=3">Région</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-color">
 
 
-                                    <div class="text"><a href="?o=3">Région</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-color">
+                                <div class="text"><a href="?o=4">Couleur</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-classification">
 
 
-                                    <div class="text"><a href="?o=4">Couleur</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-classification">
+                                <div class="text"><a href="?o=5">Classification</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-vintage">
 
+                                <div class="text"><a href="?o=6">Millésime</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-capacity">
 
-                                    <div class="text"><a href="?o=5">Classification</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-vintage">
+                                <div class="text"><a href="?o=7">Contenance(cl)</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-price-min">
 
-                                    <div class="text"><a href="?o=6">Millésime</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-capacity">
+                                <div class="text"><a href="?o=7">Prix min.</a></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-price_max">
 
-                                    <div class="text"><a href="?o=7">Contenance(cl)</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-price-min">
+                                <div class="text"><a href="?o=7">Prix max.</a></div>
+                                <div class="clear"></div>
+                            </th>
 
-                                    <div class="text"><a href="?o=7">Prix min.</a></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-price_max">
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                                    <div class="text"><a href="?o=7">Prix max.</a></div>
-                                    <div class="clear"></div>
-                                </th>
+                        {% for wine in objects %}
+                            <tr class="row2">
+                                <td class="action-checkbox">
+                                    <input class="action-select" name="_selected_action" type="checkbox"
+                                           value="{{ wine.id }}">
+                                </td>
+                                <td class="open"><a href="/wineshops/edit/wine/{{ wine.id }}/"><img
+                                        src="{% static 'wineshops/images/go.png' %}"></a></td>
+                                <td class="field-producer">{{ wine.producer }}</td>
+                                <td class="field-area nowrap">{{ wine.area.region }}</td>
+                                <td class="field-area nowrap">{{ wine.area.name }}</td>
+                                <td class="field-color nowrap">{{ wine.color }}</td>
+                                <td class="field-classification">{{ wine.classification }}</td>
+                                <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.capacity }}</td>
+                                <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
 
                             </tr>
-                            </thead>
-                            <tbody>
+                        {% endfor %}
 
 
-                            {% for wine in shop.wine_set.all %}
-                                <tr class="row2">
-                                    <td class="action-checkbox">
-                                        <input class="action-select" name="_selected_action" type="checkbox" value="{{ wine.id }}">
-                                    </td>
-                                    <td class="open"><a href="/wineshops/edit/wine/{{ wine.id }}/"><img src="{% static 'wineshops/images/go.png' %}"></a></td>
-                                    <td class="field-producer">{{ wine.producer }}</td>
-                                    <td class="field-area nowrap">{{ wine.area.region }}</td>
-                                    <td class="field-area nowrap">{{ wine.area.name }}</td>
-                                    <td class="field-color nowrap">{{ wine.color }}</td>
-                                    <td class="field-classification">{{ wine.classification }}</td>
-                                    <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
-                                    <td class="field-capacity">{{ wine.capacity }}</td>
-                                    <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
-                                    <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
+                        </tbody>
+                    </table>
+                </div>
 
-                                </tr>
-                            {% endfor %}
+                <p class="paginator">
+                {% if paginator.page_range > 1 %}
+                    {% for i in paginator.page_range %}
+                        {% if i != objects.number %}
+                            <div class="page link"><a href="?page={{ i }}"> {{ i }} </a></div>
+                        {% else %}
+                            <div class="page nolink">{{ i }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
 
+                <div style="float:right; margin-right:10px">
+                    {{ paginator.count }} vin(s)
+                </div>
+                </p>
 
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <p class="paginator">
-                        {{ wine_list|length }} vin(s)
-                    </p>
-
-                </form>
             </div>
         </div>
 

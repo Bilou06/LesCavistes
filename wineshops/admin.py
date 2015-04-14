@@ -22,4 +22,6 @@ class WineAdmin(admin.ModelAdmin):
 
     list_display = ('shop', 'producer', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max')
 
+    list_per_page = 2
+
 admin.site.register(Wine, WineAdmin)

@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 __author__ = 'Sylvain'
 from django.forms import ModelForm
-from django.forms.models import inlineformset_factory
 from .models import Shop, Wine
 
 
@@ -18,4 +17,3 @@ class WineForm(ModelForm):
         exclude = ['shop']
 
 
-ShopFormSet = inlineformset_factory(Shop, Wine, fields='__all__')

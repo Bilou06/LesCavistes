@@ -1,9 +1,11 @@
 {% extends "wineshops/base_wineshops.html" %}
 {% load staticfiles %}
 
-{% block content %}
-
+{% block extrastyle %}
     <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+{% endblock %}
+
+{% block content %}
 
     <div id="form">
         {% block form %}{% endblock %}

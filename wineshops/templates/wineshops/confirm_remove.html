@@ -1,0 +1,30 @@
+{% extends "wineshops/base_wineshops.html" %}
+{% load staticfiles %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+    <div id="fheader">
+            <form action="/wineshops/confirm_remove/{{ wine_ids }}/" method="post">{% csrf_token %}
+                <h2>Êtes-vous sûr ?</h2>
+                Êtes-vous sûr de vouloir supprimer {{ wine_ids|length }} référence(s) ?
+                <br>
+
+                <h2>Vins supprimés</h2>
+                <ul>
+                    {% for wine in wines %}
+                        <li>
+                            <a href="/wineshops/edit/wine/{{ wine.id }}/"> {{ wine.area }} {{ wine.producer }} </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+                <br>
+            <input type="submit" value="Valider"/>
+            <a href="/edit/catalog">Annuler</a>
+</form>
+    </div>
+{% endblock %}
