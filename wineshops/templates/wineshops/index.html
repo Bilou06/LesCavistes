@@ -8,18 +8,23 @@
 {% block script %}
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script type="text/javascript" src="{% static 'wineshops/js/search-box.js' %}"></script>
+
 {% endblock %}
 
 {% block content %}
 
     <div id="tfheader">
-        <form id="tfnewsearch" method="get" action="{% url 'wineshops:search' %}">
+        <form id="tfnewsearch" onsubmit="return mainSearch();" method="get" action="{% url 'wineshops:search' %}">
             <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120">
             <input type="text" id="tfq2b" class="tftextinput2" name="o" size="32" maxlength="120">
-            <input type="submit" value=">" class="tfbutton2">
+            <input type="hidden" id="id_latitude" name="lat" >
+            <input type="hidden" id="id_longitude" name="lng">
+            <input type = "submit" value=">" class="tfbutton2">
         </form>
         <div class="tfclear"></div>
+
     </div>
 
 {% endblock %}

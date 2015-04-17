@@ -23,7 +23,9 @@ function initialize() {
         zoom: 8,
         center: latlng
     };
+    $("#map-canvas").css({ opacity: 0, zoom: 0 });
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
 }
 
 function codeAddress() {
@@ -39,6 +41,7 @@ function codeAddress() {
                 map: map,
                 position: results[0].geometry.location
             });
+            $("#map-canvas").css({ opacity: 1, zoom: 1 });
             $('#id_latitude').attr("value",  results[0].geometry.location.lat());
             $('#id_longitude').attr("value",  results[0].geometry.location.lng());
         } else {
@@ -50,12 +53,11 @@ function codeAddress() {
 
 $(document).ready(function () {
 
-    previousAddress = ""
+    previousAddress = "";
 
     addressFields.forEach(function(field){
        $('#'+field).attr("onblur", "codeAddress();");
     });
-
     initialize();
     google.maps.event.addDomListener(window, 'load', codeAddress);
 });

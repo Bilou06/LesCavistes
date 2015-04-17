@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import ast
+from operator import itemgetter
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
+from . import haversine
 
 from .forms import *
 from user_profile.forms import EditUserForm
@@ -155,14 +157,21 @@ def confirm_remove(request, wine_ids):
 
 
 def search(request):
-    query_what = ''
-    query_where = ''
+    query_what = request.GET['q']
+    query_where = request.GET['o']
+    try:
+        lat = float(request.GET['lat'])
+        lng = float(request.GET['lng'])
+    except :
+        return HttpResponseRedirect('/')
 
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_where = request.GET['q']
-        if (len(query_string)==0 or query_string=="Où ? Entrez une ville, une adresse"): #  duplicated in the js that fills the page
-            return HttpResponseRedirect('/') # TODO : keep the 'o' entry and add an error message
+    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(longitude__isnull=True, latitude__isnull=True).all()]
+    results.sort(key=itemgetter(1))
+    results = [{'shop': a[0], 'dist': a[1]} for a in results]
 
+    return render_to_response('wineshops/search_results.html',
+                          { 'query_what': query_what, 'query_where' : query_where, 'results': results },
+                          context_instance=RequestContext(request))
 
 
 '''
