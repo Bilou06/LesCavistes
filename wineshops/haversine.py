@@ -1,6 +1,7 @@
 #  http://stackoverflow.com/questions/4913349/haversine-formula-in-python-bearing-and-distance-between-two-gps-points/4913653#4913653
 
 from math import radians, cos, sin, asin, sqrt
+from timeit import default_timer as timer
 
 def haversine(lon1, lat1, lon2, lat2):
     """
@@ -8,8 +9,8 @@ def haversine(lon1, lat1, lon2, lat2):
     on the earth (specified in decimal degrees)
     """
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
     # haversine formula
     dlon = lon2 - lon1
     dlat = lat2 - lat1

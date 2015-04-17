@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 import ast
+
 from operator import itemgetter
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
@@ -168,6 +169,7 @@ def search(request):
 
     results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(longitude__isnull=True, latitude__isnull=True).all()]
     results.sort(key=itemgetter(1))
+    results = results[:20]
     results = [{'shop': a[0],
                 'dist': "%.1f" %a[1],
                 'nb': Wine.objects.filter(shop_id=a[0].id).count(),

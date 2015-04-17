@@ -116,5 +116,29 @@
 
 
 
+/* PAGE STRUCTURE */
+
+
+#content-header {
+    background-color:#ffffff;
+    display: -webkit-flex;
+    display:         flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    border: #A53F4F solid 3px;
+	clear: left;
+	padding: 1em;
+}
+
+h2 {
+    text-align: center;
+}
+
+
+
+
 
 
