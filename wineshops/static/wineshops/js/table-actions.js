@@ -23,7 +23,7 @@ function removeChecked(){
 }
 
 function sort(order){
-    var column = ['','column-producer', 'column-region', 'column-area', 'column-color', 'column-classification', 'column-vintage', 'column-capacity', 'column-price_min', 'column-price_max'][Math.abs(order)];
+    var column = ['','column-producer', 'column-region', 'column-area', 'column-color', 'column-varietal', 'column-classification', 'column-vintage', 'column-capacity', 'column-price_min', 'column-price_max'][Math.abs(order)];
     $(".sortable").removeClass("sorted");
     if (order>0) {
         $("a[href^='?o=" + order + "']").each(function () {

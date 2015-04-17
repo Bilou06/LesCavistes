@@ -1,15 +1,16 @@
 # -*- coding: utf8 -*-
 import ast
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from django.forms.models import inlineformset_factory
 from django.db.models.functions import Lower
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template import RequestContext
 
 from .forms import *
 from user_profile.forms import EditUserForm
+from .searchEngine import get_query
 
 
 class IndexView(generic.ListView):
@@ -67,27 +68,29 @@ def edit_catalog(request):
     else:
         query = Wine.objects.filter(shop_id=shop.id).order_by('area', 'producer')
 
+        # sort
         order = 0
         try:
             order = int(request.GET.get('o'))
             # order of columns is duplicated in html and in js
-            parameters = ['','producer','area__region__name','area__name','color__name','classification','vintage','capacity', 'price_min', 'price_max']
+            parameters = ['','producer','area__region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max']
             if order>0:
                 param = parameters[order]
-                if order <6:
+                if order <7:
                     query = query.order_by(Lower(param).asc())
                 else:
                     query = query.order_by(param)
             else:
                 param = parameters[-order]
-                if -order <6:
+                if -order <7:
                     query = query.order_by(Lower(param).desc())
                 else:
                     query = query.order_by('-'+param)
         except:
             pass
 
-        paginator = Paginator(query, 10)  # Show 10 forms per page
+        # pagination
+        paginator = Paginator(query, 20)  # Show 20 forms per page
         page = request.GET.get('page')
         try:
             objects = paginator.page(page)
@@ -121,7 +124,7 @@ def edit_wine(request, wine_id):
 
 class create_wine(generic.CreateView):
     model = Wine
-    fields = ['producer', 'area', 'vintage', 'classification', 'color', 'capacity', 'price_min', 'price_max']
+    fields = ['producer', 'area', 'vintage', 'classification', 'color', 'varietal', 'capacity', 'price_min', 'price_max']
     success_url = '/wineshops/edit/catalog'
 
     def form_valid(self, form):
@@ -149,3 +152,33 @@ def confirm_remove(request, wine_ids):
 
     except:
         return HttpResponseForbidden()
+
+
+def search(request):
+    query_what = ''
+    query_where = ''
+
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_where = request.GET['q']
+        if (len(query_string)==0 or query_string=="Où ? Entrez une ville, une adresse"): #  duplicated in the js that fills the page
+            return HttpResponseRedirect('/') # TODO : keep the 'o' entry and add an error message
+
+
+
+'''
+def search(request):
+    query_string = ''
+    found_entries = None
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        if (len(query_string)==0 or query_string=='Trouvez votre vin près de chez vous'):
+            return HttpResponseRedirect('/')
+
+        entry_query = get_query(query_string, ['producer','area__region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity',])
+
+        found_entries = Wine.objects.filter(entry_query)# .order_by(DISTANCE)
+
+    return render_to_response('wineshops/search_results.html',
+                          { 'query_string': query_string, 'found_entries': found_entries },
+                          context_instance=RequestContext(request))
+                          '''

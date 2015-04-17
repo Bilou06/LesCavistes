@@ -14,5 +14,9 @@ urlpatterns = [
     url(r'^resend_mail/$', views.resend_mail, name='resend_mail'),
     url(r'^login/$', views.log_in, name='login'),
     url(r'^logout/$', views.log_out, name='logout'),
-    url(r'^account/$', views.account, name='acccount'),
+    url(r'^change_password/$', views.password_change, name='change_password'),
+    url(r'^forgotten_password/$', views.password_reset, name='forgotten_password'),
+    url(r'^password_reset_done/$', views.password_reset_done, name='password_reset_done'),
+    url(r'^password_reset_complete/$', views.password_reset_complete, name='password_reset_complete'),
+    url(r'^contract/$', views.contract, name='contract'),
 ]

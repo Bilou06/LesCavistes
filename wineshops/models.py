@@ -3,17 +3,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Shop(models.Model):
     name        = models.CharField(max_length = 100, verbose_name="Nom", null=True)
     address     = models.CharField(max_length = 250, verbose_name="Adresse", null=True)
     city        = models.CharField(max_length = 100, verbose_name="Ville", null=True)
     zip_code    = models.IntegerField(verbose_name="Code postal", null=True)
     country     = models.CharField(max_length = 100, default = 'France', verbose_name="Pays")
-    description = models.TextField(max_length = 500, blank = True, verbose_name="Déscription", null=True)
+    description = models.TextField(max_length = 500, blank = True, verbose_name="Description", null=True)
     phone       = models.CharField(max_length = 20, blank = True, verbose_name="Téléphone", null=True)
     mail        = models.EmailField(blank = True, verbose_name="E-mail", null=True)
     web         = models.CharField(max_length = 50, blank = True, verbose_name="Site web", null=True)
     user        = models.ForeignKey(User)
+    latitude    = models.FloatField(null=True)
+    longitude   = models.FloatField(null=True)
 
     def __str__(self):
         if self.name:
@@ -50,10 +53,11 @@ class Color(models.Model):
 class Wine(models.Model):
     shop        = models.ForeignKey(Shop)
     producer    = models.CharField(max_length = 50, blank = True, verbose_name="Producteur")
-    area        = models.ForeignKey(Area, verbose_name="Vignoble")
+    area        = models.ForeignKey(Area, verbose_name="Terroir")
     vintage     = models.IntegerField(blank = True, null=True, verbose_name="Millésime")
     classification = models.CharField(max_length = 50, blank = True, verbose_name="Classification" )
     color       = models.ForeignKey(Color, verbose_name="Couleur")
+    varietal    = models.CharField(max_length=250, blank=True, null=True, verbose_name="Cépage")
     capacity    = models.IntegerField(default = 75, verbose_name="Contenance")
     price_min   = models.FloatField(blank = True, null=True, verbose_name="Prix minimum")
     price_max   = models.FloatField(blank = True, null=True, verbose_name="Prix maximum")

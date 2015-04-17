@@ -10,7 +10,7 @@
     <div id="fheader">
             <form action="/wineshops/confirm_remove/{{ wine_ids }}/" method="post">{% csrf_token %}
                 <h2>Êtes-vous sûr ?</h2>
-                Êtes-vous sûr de vouloir supprimer {{ wine_ids|length }} référence(s) ?
+                Êtes-vous sûr de vouloir supprimer {{ wines|length }} référence(s) ?
                 <br>
 
                 <h2>Vins supprimés</h2>

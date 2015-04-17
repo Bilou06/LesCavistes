@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
     'wineshops',
     'user_profile',
 )
@@ -149,3 +150,7 @@ LOGGING = {
         },
     }
 }
+
+RECAPTCHA_PUBLIC_KEY = '6LfSXQUTAAAAANpoXdk2wVkm9jVOZF5Oak-Kgzru'
+RECAPTCHA_PRIVATE_KEY = '6LfSXQUTAAAAALTzRT2JvvoFwPwngVw0p--WCdxB'
+RECAPTCHA_USE_SSL = True

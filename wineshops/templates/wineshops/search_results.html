@@ -1,0 +1,47 @@
+{% extends "wineshops/base_wineshops.html" %}
+{% load staticfiles %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/search-box.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="tfheader">
+        <form id="tftopsearch" method="get" action="{% url 'wineshops:search' %}">
+            <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120">
+            <input type="text" id="tfq2b" class="tftextinput2" name="o" size="32" maxlength="120">
+            <input type="submit" value=">" class="tfbutton2">
+        </form>
+        <div class="tfclear"></div>
+    </div>
+
+    <table>
+
+
+
+    {% for wine in found_entries %}
+        <tr>
+
+            <td class="field-shop">{{ wine.shop }}</td>
+            <td class="field-producer">{{ wine.producer }}</td>
+                                <td class="field-area nowrap">{{ wine.area.region }}</td>
+                                <td class="field-area nowrap">{{ wine.area.name }}</td>
+                                <td class="field-color nowrap">{{ wine.color }}</td>
+                                <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>
+                                <td class="field-classification">{{ wine.classification }}</td>
+                                <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

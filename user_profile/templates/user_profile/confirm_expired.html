@@ -1,10 +1,12 @@
 {% extends "user_profile/base_user.html" %}
 
 {% block content %}
-Le lien que vous avez utilisé n'est plus valide. Cliquez sur le bouton ci-dessous pour renvoyer un mail à l'adresse indiquée.
+    <div id="fheader">
+<p>Le lien que vous avez utilisé n'est plus valide. Cliquez sur le bouton ci-dessous pour renvoyer un mail à l'adresse indiquée.</p>
 
     <form class="form-signup" action="/user/resend_mail/" method="post">{% csrf_token %}
         <input type="hidden" name="userId" value="{{ user.id }}" >
     <input type="submit" name="submit" class="btn btn-primary" value="Renvoyer le mail">
 </form>
+    </div>
 {% endblock %}

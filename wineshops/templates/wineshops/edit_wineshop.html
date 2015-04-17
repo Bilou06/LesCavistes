@@ -1,6 +1,22 @@
 {% extends "wineshops/base_edit.html" %}
+{% load staticfiles %}
 
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+    <style>
+        p {
+            width: 100px;
+        }
 
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/maps.js' %}"></script>
+
+{% endblock %}
 
 
 {% block form %}
@@ -19,9 +35,14 @@
             <br>
             et sur les applications mobiles par tous les utilsateurs.
             {{ form.as_p }}
-            <input type="submit" value="Valider"/>
+            <input type="submit" value="Valider" onclick="codeAddress()"/>
 
         </form>
+
+        <div onload="initialize()">
+            <div id="map-canvas" style="width: 320px; height: 480px;"></div>
+        </div>
     </div>
+
 
 {% endblock %}

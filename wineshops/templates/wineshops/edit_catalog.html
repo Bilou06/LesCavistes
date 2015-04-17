@@ -84,35 +84,39 @@
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-region">
-                                <div class="text"><a href="?o=2">Vignoble</a></div>
+                                <div class="text"><a href="?o=2">Région</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-area">
-                                <div class="text"><a href="?o=3">Région</a></div>
+                                <div class="text"><a href="?o=3">Terroir</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-color">
                                 <div class="text"><a href="?o=4">Couleur</a></div>
                                 <div class="clear"></div>
                             </th>
+                            <th scope="col" class="sortable column-varietal">
+                                <div class="text"><a href="?o=5">Cépage</a></div>
+                                <div class="clear"></div>
+                            </th>
                             <th scope="col" class="sortable column-classification">
-                                <div class="text"><a href="?o=5">Classification</a></div>
+                                <div class="text"><a href="?o=6">Classification</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-vintage">
-                                <div class="text"><a href="?o=6">Millésime</a></div>
+                                <div class="text"><a href="?o=7">Millésime</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-capacity">
-                                <div class="text"><a href="?o=7">Contenance(cl)</a></div>
+                                <div class="text"><a href="?o=8">Contenance(cl)</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price_min">
-                                <div class="text"><a href="?o=8">Prix min.</a></div>
+                                <div class="text"><a href="?o=9">Prix min.</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price_max">
-                                <div class="text"><a href="?o=9">Prix max.</a></div>
+                                <div class="text"><a href="?o=10">Prix max.</a></div>
                                 <div class="clear"></div>
                             </th>
 
@@ -132,9 +136,10 @@
                                 <td class="field-area nowrap">{{ wine.area.region }}</td>
                                 <td class="field-area nowrap">{{ wine.area.name }}</td>
                                 <td class="field-color nowrap">{{ wine.color }}</td>
+                                <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>
                                 <td class="field-classification">{{ wine.classification }}</td>
                                 <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
-                                <td class="field-capacity">{{ wine.capacity }}</td>
+                                <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
                                 <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
                                 <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
 

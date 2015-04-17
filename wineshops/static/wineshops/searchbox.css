@@ -11,16 +11,33 @@
     padding:120px;
     vertical-align:middle;
 }
+
+#tftopsearch{
+    padding:5px;
+    width:100%;
+    border-bottom: solid #A53F4F 1px;
+}
+
+.tftextinput1{
+    margin: 0;
+    padding: 5px 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#666;
+    border:1px solid #0076a3;
+    border-top-left-radius: 5px 5px;
+    border-bottom-left-radius: 5px 5px;
+}
+
 .tftextinput2{
     margin: 0;
     padding: 5px 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size:14px;
     color:#666;
-    border:1px solid #0076a3; border-right:0px;
-    border-top-left-radius: 5px 5px;
-    border-bottom-left-radius: 5px 5px;
+    border:1px solid #0076a3;
 }
+
 .tfbutton2 {
     margin: 0;
     padding: 5px 7px;

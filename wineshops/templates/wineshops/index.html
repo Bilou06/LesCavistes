@@ -1,44 +1,25 @@
 {% extends "wineshops/base_wineshops.html" %}
 {% load staticfiles %}
 
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
+{% endblock %}
 
+{% block script %}
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/search-box.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
-    <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-    <!-- JAVASCRIPT to clear search text when the field is clicked -->
-    <script type="text/javascript">
-        $(function () {
-            $("#tfq2b").click(function () {
-                if ($("#tfq2b").val() == "Trouvez votre vin près de chez vous") {
-                    $("#tfq2b").val("");
-                }
-            });
-        });
-    </script>
-
     <div id="tfheader">
-        <form id="tfnewsearch" method="get" action="http://www.google.com">
-            <input type="text" id="tfq2b" class="tftextinput2" name="q" size="32" maxlength="120"
-                   value="Trouvez votre vin près de chez vous"><input type="submit" value=">" class="tfbutton2">
+        <form id="tfnewsearch" method="get" action="{% url 'wineshops:search' %}">
+            <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120">
+            <input type="text" id="tfq2b" class="tftextinput2" name="o" size="32" maxlength="120">
+            <input type="submit" value=">" class="tfbutton2">
         </form>
         <div class="tfclear"></div>
     </div>
 
-
-
-
-    {% comment %}
-{% if shop_list %}
-    <ul>
-    {% for shop in shop_list %}
-        <li><a href="{% url 'wineshops:detail' shop.id %}">{{ shop.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No shops are available.</p>
-{% endif %}
-{% endcomment %}
 {% endblock %}

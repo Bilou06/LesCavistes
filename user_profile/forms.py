@@ -3,13 +3,17 @@ __author__ = 'Sylvain'
 
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from captcha.fields import ReCaptchaField
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
+    captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'})
+    contract_check = forms.BooleanField(required = True)
 
     class Meta:
         model = User
@@ -90,4 +94,17 @@ class EditUserForm(forms.ModelForm):
 
 
 class PickyAuthenticationForm(AuthenticationForm):
+    pass
+
+class FrenchPasswordChangeForm(PasswordChangeForm):
+    error_messages = {
+        'password_mismatch': "Les deux mots de passe ne correspondent pas.",
+        'password_incorrect': "Votre ancien mot de passe ne correspond pas. "
+                "Merci d'essayer à nouveau.",
+    }
+
+class FrenchPasswordResetForm(PasswordResetForm):
+    pass
+
+class FrenchSetPasswordForm(SetPasswordForm):
     pass
