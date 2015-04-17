@@ -6,6 +6,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
+from django.db.models import Max, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from . import haversine
@@ -167,7 +168,11 @@ def search(request):
 
     results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(longitude__isnull=True, latitude__isnull=True).all()]
     results.sort(key=itemgetter(1))
-    results = [{'shop': a[0], 'dist': a[1]} for a in results]
+    results = [{'shop': a[0],
+                'dist': "%.1f" %a[1],
+                'nb': Wine.objects.filter(shop_id=a[0].id).count(),
+                'price': Wine.objects.filter(shop_id=a[0].id).aggregate(Min('price_min'), Max('price_max')),
+                } for a in results]
 
     return render_to_response('wineshops/search_results.html',
                           { 'query_what': query_what, 'query_where' : query_where, 'results': results },

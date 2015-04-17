@@ -140,8 +140,8 @@
                                 <td class="field-classification">{{ wine.classification }}</td>
                                 <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
                                 <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
-                                <td class="field-capacity">{{ wine.price_min|default_if_none:"" }}</td>
-                                <td class="field-capacity">{{ wine.price_max|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.price_min|floatformat:2|default_if_none:"" }}</td>
+                                <td class="field-capacity">{{ wine.price_max|floatformat:2|default_if_none:"" }}</td>
 
                             </tr>
                         {% endfor %}

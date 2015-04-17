@@ -3,6 +3,7 @@
 
 {% block extrastyle %}
     <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/result.css' %}"/>
 {% endblock %}
 
 {% block script %}
@@ -28,15 +29,32 @@
         <div class="tfclear"></div>
     </div>
 
-    <table>
-        {% for shop in results %}
+    <div class="results">
+        <table id="result_list">
+            <thead>
             <tr>
-                <td class="field-name">{{ shop.shop.name }}</td>
-                <td class="field-address">{{ shop.shop.address }}</td>
-                <td class="field-city">{{ shop.shop.city }}</td>
-            <td class="field-city">{{ shop.dist }}</td>
-
+                <th scope="col">Magasin</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Distance</th>
+                <th scope="col">Nb. de référence(s)</th>
+                <th scope="col">Prix min.</th>
+                <th scope="col">Prix max.</th>
             </tr>
-        {% endfor %}
-    </table>
+            </thead>
+            <tbody>
+            {% for shop in results %}
+                <tr>
+                    <td>{{ shop.shop.name }}</td>
+                    <td>{{ shop.shop.address }}</td>
+                    <td>{{ shop.shop.zip_code }} {{ shop.shop.city }}</td>
+                    <td>{{ shop.dist }} km</td>
+                    <td>{{ shop.nb }}</td>
+                    <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:""  }}</td>
+                    <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:""  }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

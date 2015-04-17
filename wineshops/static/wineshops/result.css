@@ -1,0 +1,52 @@
+
+.results {
+
+    margin: 10px;
+    text-align: center;
+}
+
+#result_list{
+    border: solid #ccc 1px;
+    display: inline-table;
+    margin-left: 10%;
+}
+
+/* TABLES */
+
+table {
+    border-collapse: collapse;
+    border-color: #ccc;
+}
+
+td, th {
+    font-size: 14px;
+    line-height: 16px;
+    border: 1px solid #eee;
+    vertical-align: top;
+    padding: 10px;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+}
+
+thead th {
+    color: #666;
+    padding: 2px 5px;
+    font-size: 11px;
+    background: #e1e1e1 url(images/nav-bg.gif) top left repeat-x;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+
+thead th:first-child,
+tfoot td:first-child {
+    border-left: none !important;
+}
+
+.row2 {
+    background: #fff;
+}

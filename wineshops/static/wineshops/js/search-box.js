@@ -31,6 +31,7 @@ function codeAddress() {
                     }
                     finished = true;
                     $("#tfnewsearch").submit();
+                    $("#tftopsearch").submit();
                 }
                 else {
                     alert(status);
