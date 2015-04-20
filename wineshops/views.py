@@ -177,7 +177,11 @@ def search(request):
                 } for a in results]
 
     return render_to_response('wineshops/search_results.html',
-                          { 'query_what': query_what, 'query_where' : query_where, 'results': results },
+                          { 'query_what': query_what,
+                            'query_where' : query_where,
+                            'results': results,
+                            'lat' : lat,
+                            'lng' : lng},
                           context_instance=RequestContext(request))
 
 

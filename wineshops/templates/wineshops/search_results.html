@@ -23,8 +23,8 @@
                    value="{{ query_what }}">
             <input type="text" id="tfq2b" class="tftextinput2" name="o" size="32" maxlength="120"
                    value="{{ query_where }}">
-            <input type="hidden" id="id_latitude" name="lat">
-            <input type="hidden" id="id_longitude" name="lng">
+            <input type="hidden" id="id_latitude" name="lat" value="{{ lat }}">
+            <input type="hidden" id="id_longitude" name="lng" value="{{ lng }}">
             <input type="submit" value=">" class="tfbutton2">
         </form>
         <div class="tfclear"></div>
@@ -35,6 +35,7 @@
             <table id="result_list">
                 <thead>
                 <tr>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col">Magasin</th>
                     <th scope="col">Adresse</th>
@@ -48,6 +49,9 @@
                 <tbody>
                 {% for shop in results %}
                     <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
                         <td class="td-infoshop">
                             <div class="infoshop">
                                 <span class="info-shop btn_detail">Infos</span>
@@ -60,14 +64,15 @@
                                         <p>{{ shop.shop.address }} <br>
                                             {{ shop.shop.zip_code }}&nbsp;-&nbsp;{{ shop.shop.city }}<br>
                                             {% if shop.shop.phone %}{{ shop.shop.phone }}<br>{% endif %}
-
+                                        </p>
                                     </div>
                                     <div class="desc-shop">
                                         <p>{{ shop.shop.description }}</p>
                                     </div>
                                     {% if shop.shop.mail %}
                                         <div class="site-mail">
-                                            <a class="btn_base btn_white" href="""mailto:{{ shop.shop.mail }}">Lui ecrire</a></div>
+                                            <a class="btn_base btn_white" href="mailto:{{ shop.shop.mail }}">Lui
+                                                ecrire</a></div>
                                     {% endif %}
                                     {% if shop.shop.web %}
                                         <div class="site-shop"><a
@@ -89,10 +94,19 @@
                         <td>{{ shop.nb }}</td>
                         <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:"" }}</td>
                         <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:"" }}</td>
+                        <td style="display: none;" class="shop-lat-lng"
+                            data-lat="{{ shop.shop.latitude }}"
+                            data-lng="{{ shop.shop.longitude }}"
+                            data-title="{{ shop.shop.name }}"></td>
                     </tr>
                 {% endfor %}
+                <div id="map-div">
+                    <div id="map-canvas" style="width: 600px; height: 400px;"></div>
+                </div>
                 </tbody>
             </table>
         </div>
     </div>
+
+
 {% endblock %}
