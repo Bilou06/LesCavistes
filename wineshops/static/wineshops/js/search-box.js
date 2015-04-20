@@ -12,7 +12,7 @@ function mainSearch() {
 }
 
 function error() {
-    alert('error');
+    $("#dialog-message").show();
 }
 
 function codeAddress() {
@@ -34,7 +34,6 @@ function codeAddress() {
                     $("#tftopsearch").submit();
                 }
                 else {
-                    alert(status);
                     error();
                     return false;
                 }
@@ -76,5 +75,7 @@ $(document).ready(function () {
             field2.val("");
         }
     });
+
+    $('#dialog-message').dialog({autoOpen: false});
 
 });
