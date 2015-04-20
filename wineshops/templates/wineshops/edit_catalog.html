@@ -29,8 +29,9 @@
 
         <div id="content-main">
             <h2>Mes vins</h2>
-            <br><br>
-
+            Lorsqu'un utilisateur fait une recherche sur un von ou un terrroir en particulier,
+            seuls les cavistes qui ont renseigné leur catalogue de vin apparaissent.<br>
+            Au mieux votre catalogue est renseigné, au plus vous avez de chances d'apparaitre dans les résultats !<br><br>
             <ul class="object-tools">
 
                 <li>
@@ -83,40 +84,44 @@
                                 <div class="text"><a href="?o=1">Producteur</a></div>
                                 <div class="clear"></div>
                             </th>
+                            <th scope="col" class="sortable column-country">
+                                <div class="text"><a href="?o=2">Pays</a></div>
+                                <div class="clear"></div>
+                            </th>
                             <th scope="col" class="sortable column-region">
-                                <div class="text"><a href="?o=2">Région</a></div>
+                                <div class="text"><a href="?o=3">Région</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-area">
-                                <div class="text"><a href="?o=3">Terroir</a></div>
+                                <div class="text"><a href="?o=4">Terroir</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-color">
-                                <div class="text"><a href="?o=4">Couleur</a></div>
+                                <div class="text"><a href="?o=5">Couleur</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-varietal">
-                                <div class="text"><a href="?o=5">Cépage</a></div>
+                                <div class="text"><a href="?o=6">Cépage</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-classification">
-                                <div class="text"><a href="?o=6">Classification</a></div>
+                                <div class="text"><a href="?o=7">Classification</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-vintage">
-                                <div class="text"><a href="?o=7">Millésime</a></div>
+                                <div class="text"><a href="?o=8">Millésime</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-capacity">
-                                <div class="text"><a href="?o=8">Contenance(cl)</a></div>
+                                <div class="text"><a href="?o=9">Contenance(cl)</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price_min">
-                                <div class="text"><a href="?o=9">Prix min.</a></div>
+                                <div class="text"><a href="?o=10">Prix min.</a></div>
                                 <div class="clear"></div>
                             </th>
                             <th scope="col" class="sortable column-price_max">
-                                <div class="text"><a href="?o=10">Prix max.</a></div>
+                                <div class="text"><a href="?o=11">Prix max.</a></div>
                                 <div class="clear"></div>
                             </th>
 
@@ -133,6 +138,7 @@
                                 <td class="open"><a href="/wineshops/edit/wine/{{ wine.id }}/"><img
                                         src="{% static 'wineshops/images/go.png' %}"></a></td>
                                 <td class="field-producer">{{ wine.producer }}</td>
+                                <td class="field-area nowrap">{{ wine.area.region.country }}</td>
                                 <td class="field-area nowrap">{{ wine.area.region }}</td>
                                 <td class="field-area nowrap">{{ wine.area.name }}</td>
                                 <td class="field-color nowrap">{{ wine.color }}</td>

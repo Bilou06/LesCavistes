@@ -34,7 +34,7 @@ class Region(models.Model):#Bordeaux, ...
     name        = models.CharField(max_length = 50, unique = True)
 
     def __str__(self):
-        return self.name
+        return str(Country.objects.get(id=self.country_id)) + '\\' + self.name
 
 class Area(models.Model):#Saint-estèphe ...
     region      = models.ForeignKey(Region)
@@ -42,7 +42,6 @@ class Area(models.Model):#Saint-estèphe ...
 
     def __str__(self):
         return str(Region.objects.get(id=self.region_id)) + '\\' + self.name
-        return self.name
 
 class Color(models.Model):
     name        = models.CharField(max_length = 20, unique = True)

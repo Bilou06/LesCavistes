@@ -104,6 +104,13 @@ position: absolute;
     width: 40%;
 }
 
+.desc-shop {
+    vertical-align: bottom;
+}
+.coord-shop {
+    vertical-align: top;
+}
+
 .coord-shop h4 {
     font-weight: bold;
     font-size: 1em;
