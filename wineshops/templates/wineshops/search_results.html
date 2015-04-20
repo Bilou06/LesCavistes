@@ -11,6 +11,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script type="text/javascript" src="{% static 'wineshops/js/search-box.js' %}"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/result.js' %}"></script>
 {% endblock %}
 
 
@@ -30,33 +31,68 @@
     </div>
 
     <div id="content-header">
-    <div class="results">
-        <table id="result_list">
-            <thead>
-            <tr>
-                <th scope="col">Magasin</th>
-                <th scope="col">Adresse</th>
-                <th scope="col">Ville</th>
-                <th scope="col">Distance</th>
-                <th scope="col">Nb. de référence(s)</th>
-                <th scope="col">Prix min.</th>
-                <th scope="col">Prix max.</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for shop in results %}
+        <div class="results">
+            <table id="result_list">
+                <thead>
                 <tr>
-                    <td>{{ shop.shop.name }}</td>
-                    <td>{{ shop.shop.address }}</td>
-                    <td>{{ shop.shop.zip_code }} {{ shop.shop.city }}</td>
-                    <td>{{ shop.dist }} km</td>
-                    <td>{{ shop.nb }}</td>
-                    <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:""  }}</td>
-                    <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:""  }}</td>
+                    <th scope="col"></th>
+                    <th scope="col">Magasin</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Distance</th>
+                    <th scope="col">Nb. de référence(s)</th>
+                    <th scope="col">Prix min.</th>
+                    <th scope="col">Prix max.</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for shop in results %}
+                    <tr>
+                        <td class="td-infoshop">
+                            <div class="infoshop">
+                                <span class="info-shop btn_detail">Infos</span>
+
+                                <div class="bloc-info-shop" style="display: none;">
+                                    <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.shop.image }}" alt="{{ shop.shop.name }}" title="{{ shop.shop.name }}"></div-->
+                                    <div class="coord-shop">
+                                        <h4>{{ shop.shop.name }}</h4>
+
+                                        <p>{{ shop.shop.address }} <br>
+                                            {{ shop.shop.zip_code }}&nbsp;-&nbsp;{{ shop.shop.city }}<br>
+                                            {% if shop.shop.phone %}{{ shop.shop.phone }}<br>{% endif %}
+
+                                    </div>
+                                    <div class="desc-shop">
+                                        <p>{{ shop.shop.description }}</p>
+                                    </div>
+                                    {% if shop.shop.mail %}
+                                        <div class="site-mail">
+                                            <a class="btn_base btn_white" href="""mailto:{{ shop.shop.mail }}">Lui ecrire</a></div>
+                                    {% endif %}
+                                    {% if shop.shop.web %}
+                                        <div class="site-shop"><a
+                                                href="{% if shop.shop.web|slice:":4" != 'http' %}http://{% endif %}{{ shop.shop.web }}"
+                                                target="_blank"
+                                                class="btn_base btn_white">Voir son site</a></div>
+                                    {% endif %}
+                                    <div class="map-shop"><a class="btn_base btn_blue"
+                                                             href="https://maps.google.com/maps?q={{ shop.shop.address }}, {{ shop.shop.zip_code }} {{ shop.shop.city }}"
+                                                             target="_blank">Voir sur la carte</a></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{ shop.shop.name }}</td>
+                        <td>{{ shop.shop.address }}</td>
+                        <td>{{ shop.shop.zip_code }} {{ shop.shop.city }}</td>
+                        <td>{{ shop.dist }} km</td>
+                        <td>{{ shop.nb }}</td>
+                        <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:"" }}</td>
+                        <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:"" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

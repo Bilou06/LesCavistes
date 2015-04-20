@@ -5,7 +5,7 @@
     text-align: center;
 }
 
-#result_list{
+#result_list {
     border: solid #ccc 1px;
     display: inline-table;
 }
@@ -40,7 +40,6 @@ thead th {
     border-bottom: 1px solid #ddd;
 }
 
-
 thead th:first-child,
 tfoot td:first-child {
     border-left: none !important;
@@ -48,4 +47,151 @@ tfoot td:first-child {
 
 .row2 {
     background: #fff;
+}
+
+.infoshop {
+    position: relative;
+}
+
+.btn_detail {
+    background: #ffcc00;
+    border: 1px solid #cfcfcf;
+    padding: 5px 8px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.info-shop {
+    float: right;
+    font-size: 11px;
+    color: #777;
+    cursor: pointer;
+    position: relative;
+    font-weight: normal;
+}
+
+.info-shop:hover {
+    text-decoration: underline;
+    color: #4d4d4d;
+}
+
+.bloc-info-shop {
+    z-index: 1000;
+    position: absolute;
+    border: 1px solid #CFCFCF;
+    background: #FFF;
+    padding: 10px;
+    font-weight: normal;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    top: 10px;
+    width: 400px;
+}
+
+.logo-shop {
+    float: left;
+    border: 1px solid #efefef;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.coord-shop, .desc-shop {
+    display: inline-block;
+    line-height: 150%;
+    text-align: left;
+    width: 40%;
+}
+
+.coord-shop h4 {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.coord-shop p, .desc-shop p {
+    margin: 0;
+    padding: 0;
+    line-height: 150%;
+    font-size : 12px;
+}
+
+.site-shop, .map-shop, .site-mail {
+    display: inline-block;
+    margin: 5px 5px 5px 0;
+}
+
+.btn_base {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    border-radius: .5em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    font-size: 11px;
+    padding: .2em 1em .275em;
+}
+
+.btn_base:hover {
+    text-decoration: none
+}
+
+.btn_base:active {
+    position: relative;
+    top: 1px
+}
+
+/*CSS Coulor buttons*/
+
+.btn_white {
+    color: #606060;
+    border: solid 1px #b7b7b7;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    background: -moz-linear-gradient(top, #fff, #ededed);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+
+.btn_white:hover {
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+    background: -moz-linear-gradient(top, #fff, #dcdcdc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+
+.btn_white:active {
+    color: #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+    background: -moz-linear-gradient(top, #ededed, #fff);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+
+.btn_blue {
+    color: #d9eef7;
+    border: solid 1px #0076a3;
+    background: #0095cd;
+    background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+    background: -moz-linear-gradient(top, #00adee, #0078a5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');
+}
+
+.btn_blue:hover {
+    background: #007ead;
+    background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+    background: -moz-linear-gradient(top, #0095cc, #00678e);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');
+}
+
+.btn_blue:active {
+    color: #80bed6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));
+    background: -moz-linear-gradient(top, #0078a5, #00adee);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
 }
