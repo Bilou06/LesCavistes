@@ -27,7 +27,11 @@
             <input type="hidden" id="id_longitude" name="lng" value="{{ lng }}">
             <input type="submit" value=">" class="tfbutton2">
         </form>
-        <div class="tfclear"></div>
+        <div class="tfclear">
+                    <div id="dialog-message" title="Impossible de localiser l'adresse" style="display: none">
+            <p>Veuillez rentrer une adresse, une ville, etc.</p>
+        </div>
+        </div>
     </div>
 
     <div id="content-header">
@@ -62,7 +66,7 @@
                                         <h4>{{ shop.shop.name }}</h4>
 
                                         <p>{{ shop.shop.address }} <br>
-                                            {{ shop.shop.zip_code }}&nbsp;-&nbsp;{{ shop.shop.city }}<br>
+                                            {{ shop.shop.zip_code|stringformat:"05d" }}&nbsp;-&nbsp;{{ shop.shop.city }}<br>
                                             {% if shop.shop.phone %}{{ shop.shop.phone }}<br>{% endif %}
                                         </p>
                                     </div>
@@ -81,7 +85,7 @@
                                                 class="btn_base btn_white">Voir son site</a></div>
                                     {% endif %}
                                     <div class="map-shop"><a class="btn_base btn_blue"
-                                                             href="https://maps.google.com/maps?q={{ shop.shop.address }}, {{ shop.shop.zip_code }} {{ shop.shop.city }}"
+                                                             href="https://maps.google.com/maps?q={{ shop.shop.address }}, {{ shop.shop.zip_code|stringformat:"05d" }} {{ shop.shop.city }}"
                                                              target="_blank">Voir sur la carte</a></div>
                                 </div>
                             </div>
@@ -89,7 +93,7 @@
 
                         <td>{{ shop.shop.name }}</td>
                         <td>{{ shop.shop.address }}</td>
-                        <td>{{ shop.shop.zip_code }} {{ shop.shop.city }}</td>
+                        <td>{{ shop.shop.zip_code|stringformat:"05d" }} {{ shop.shop.city }}</td>
                         <td>{{ shop.dist }} km</td>
                         <td>{{ shop.nb }}</td>
                         <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:"" }}</td>
