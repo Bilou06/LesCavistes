@@ -119,12 +119,32 @@ def edit_wine(request, wine_id):
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        wineform = WineForm(request.POST, instance=wine)
-        if wineform.is_valid():
-            wineform.save()
+        form = WineForm(request.POST, instance=wine)
+        if form.is_valid():
+
+            country = form.cleaned_data['country']
+            if not country or( form.cleaned_data['country_hidden'] and country.name != form.cleaned_data['country_hidden']):
+                country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'], defaults={'custom':True, 'name':form.cleaned_data['country_hidden'] })
+            form.instance.country = country
+
+            region = form.cleaned_data['region']
+            if not region or (form.cleaned_data['region_hidden'] and region.name != form.cleaned_data['region_hidden']):
+                region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country, defaults={'custom':True, 'name':form.cleaned_data['region_hidden'], 'country':country })
+            elif region.country != country:
+                region, created = Region.objects.get_or_create(name=region.name, country=country, defaults={'custom':True, 'name':region.name, 'country':country })
+            form.instance.region = region
+
+            area = form.cleaned_data['area']
+            if not area or(form.cleaned_data['area_hidden'] and area.name != form.cleaned_data['area_hidden']):
+                area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region, defaults={'custom':True, 'name':form.cleaned_data['area_hidden'], 'region':region })
+            elif region.country != country:
+                area, created = Area.objects.get_or_create(name=area.name, region=region, defaults={'custom':True, 'name':area.name, 'region':region })
+            form.instance.area = area
+
+            form.save()
             return HttpResponseRedirect('/wineshops/edit/catalog')
     else:
-        wineform = WineForm(instance=wine)
+        form = WineForm(instance=wine)
 
     generic_countries = set(Country.objects.filter(custom=False).all())
     user_countries_ids = set(Wine.objects.filter(shop__user=request.user).values_list('country', flat=True).distinct())
@@ -133,7 +153,7 @@ def edit_wine(request, wine_id):
     countries.sort(key=Country.__str__)
 
     context = {
-        'form': wineform,
+        'form': form,
         'id': wine_id,
         'title' : "Mon vin",
         'countries' : countries,

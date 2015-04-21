@@ -104,10 +104,12 @@
         _removeIfInvalid: function (event, ui) {
 
             // Change value in hidden form
-            $("#" + $(this.element).attr('id') + "_hidden").val(this.input.val());
-
-
+            this._updateHidden();
             this._updateOptions();
+        },
+
+        _updateHidden: function(){
+            $("#" + $(this.element).attr('id') + "_hidden").val(this.input.val());
         },
 
         _updateOptions: function () {
@@ -191,3 +193,8 @@ $(function () {
 });
 
 
+function setHiddenFields(){
+    $("#id_country_hidden").val($("#id_country").next().find('input').val());
+    $("#id_region_hidden").val($("#id_region").next().find('input').val());
+    $("#id_area_hidden").val($("#id_area").next().find('input').val());
+};
