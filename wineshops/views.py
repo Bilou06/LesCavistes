@@ -80,7 +80,7 @@ def edit_catalog(request):
         try:
             order = int(request.GET.get('o'))
             # order of columns is duplicated in html and in js
-            parameters = ['','producer','area__region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max']
+            parameters = ['','producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max']
             if order>0:
                 param = parameters[order]
                 if order <7:
