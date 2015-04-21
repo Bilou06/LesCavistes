@@ -138,8 +138,8 @@
                                 <td class="open"><a href="/wineshops/edit/wine/{{ wine.id }}/"><img
                                         src="{% static 'wineshops/images/go.png' %}"></a></td>
                                 <td class="field-producer">{{ wine.producer }}</td>
-                                <td class="field-area nowrap">{{ wine.area.region.country }}</td>
-                                <td class="field-area nowrap">{{ wine.area.region }}</td>
+                                <td class="field-area nowrap">{{ wine.country.name }}</td>
+                                <td class="field-area nowrap">{{ wine.region.name }}</td>
                                 <td class="field-area nowrap">{{ wine.area.name }}</td>
                                 <td class="field-color nowrap">{{ wine.color }}</td>
                                 <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>

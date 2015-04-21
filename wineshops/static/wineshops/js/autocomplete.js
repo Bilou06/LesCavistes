@@ -90,11 +90,31 @@
       },
 
       _removeIfInvalid: function( event, ui ) {
-
-          // Every value accepted
+        // Selected an item, nothing to do
+        if ( ui.item ) {
           return;
+        }
 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+
+        // Change value
+          // TODO : change selected item first
+          $("#id_country_hidden").val(this.input.val());
+          return;
       },
 
       _destroy: function() {

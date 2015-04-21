@@ -17,10 +17,10 @@ admin.site.register(Color)
 class WineAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,  {'fields': ['shop']}),
-        ('Vin', {'fields': ['producer', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max']})
+        ('Vin', {'fields': ['producer', 'country', 'region', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max']})
     ]
 
-    list_display = ('shop', 'producer', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max')
+    list_display = ('shop', 'producer', 'country', 'region', 'area', 'color', 'classification', 'vintage', 'capacity', 'price_min', 'price_max')
 
     list_per_page = 2
 

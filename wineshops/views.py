@@ -13,6 +13,7 @@ from django.template import RequestContext
 from . import haversine
 
 from .forms import *
+from .models import Country, Region, Area
 from user_profile.forms import EditUserForm
 from .searchEngine import get_query
 
@@ -125,15 +126,34 @@ def edit_wine(request, wine_id):
 
     return render(request, 'wineshops/edit_wine.html', {'wineform': wineform, 'id': wine_id})
 
-
+import logging
 class create_wine(generic.CreateView):
-    model = Wine
-    fields = ['producer', 'country', 'region', 'area', 'vintage', 'classification', 'color', 'varietal', 'capacity', 'price_min', 'price_max']
+    form_class = WineForm
+    template_name = 'wineshops/wine_form.html'
     success_url = '/wineshops/edit/catalog'
 
+
     def form_valid(self, form):
+        logger = logging.getLogger(__name__)
+        logger.info(form.cleaned_data)
+
         form.instance.shop = get_object_or_404(Shop, user=self.request.user)
+        country = form.cleaned_data['country']
+        if not country:
+            country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'], defaults={'custom':True, 'name':form.cleaned_data['country_hidden'] })
+        form.instance.country = country
+
         return super(create_wine, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        ctx = super(create_wine, self).get_context_data(**kwargs)
+        generic_countries = set(Country.objects.filter(custom=False).all())
+        user_countries_ids = set(Wine.objects.filter(shop__user=self.request.user).values_list('country', flat=True).distinct())
+        user_countries = Country.objects.filter(pk__in=user_countries_ids)
+        countries = list(generic_countries.union(user_countries))
+        countries.sort(key=Country.__str__)
+        ctx['countries'] = countries
+        return ctx
 
 
 @login_required

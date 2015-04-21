@@ -11,11 +11,7 @@
 
 {% block extrastyle %}
     <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
-    <link rel="stylesheet" href="{% static 'wineshops/combobox.css' %}"
-    <style>
-
-
-    </style>
+    <link rel="stylesheet" href="{% static 'wineshops/combobox.css' %}"/>
 {% endblock %}
 
 
@@ -27,7 +23,7 @@
         <li><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
         <li class="current"><a href="/edit/catalog" class="inactive">Mes vins</a></li>
     </ol>
-
+    {{ form.errors }}
     <div id="fheader">
         <form action="" method="post">{% csrf_token %}
 
@@ -43,19 +39,13 @@
                 <label>Pays :</label><br>
                 <select id="id_country" name="country">
                     <option value="" selected="selected">---------</option>
-                    <option value="1">France</option>
-                    <option value="2">Italie</option>
-                    <option value="3">Espagne</option>
-                    <option value="4">Etats-Unis</option>
-                    <option value="5">Australie</option>
-                    <option value="6">Chili</option>
-                    <option value="7">Argentine</option>
-                    <option value="8">Allemagne</option>
-                    <option value="9">Afrique du sud</option>
-                    <option value="10">Portugal</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <br>
+            {{ form.country_hidden }}
 
             <div class="fieldWrapper">
                 <label>Région :</label><br>

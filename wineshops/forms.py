@@ -22,4 +22,8 @@ class WineForm(ModelForm):
         model = Wine
         exclude = ['shop']
 
+    country_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
+    region_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
+    area_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
+
 

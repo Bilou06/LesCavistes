@@ -49,7 +49,6 @@
     font-size: 1.1em;
     display: inline-block;
     position: relative;
-    padding: 1;
     line-height: normal;
     margin-right: 1em;
     cursor: pointer;
@@ -83,56 +82,53 @@
     overflow: visible;
 }
 
-
 /*---*/
-.ui-autocomplete{
+.ui-autocomplete {
 
-  top: 33px;
-  left: 238px;
-  width: 176px;
-  border: 1px solid #aaaaaa;
-  background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
-  color: #222222;
-  font-family: Verdana,Arial,sans-serif;
-  font-size: 1.1em;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  position: absolute;
-  cursor: default;
-  z-index: 100;
+    top: 33px;
+    left: 238px;
+    width: 176px;
+    border: 1px solid #aaaaaa;
+    background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+    color: #222222;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.1em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    position: absolute;
+    cursor: default;
+    z-index: 100;
 }
 
+.ui-menu-item {
+    position: relative;
 
-.ui-menu-item{
-  position: relative;
+    cursor: pointer;
+    min-height: 0;
+    /* support: IE7; */
+    /* support: IE10, see #8844; */
+    list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 
-  cursor: pointer;
-  min-height: 0;
-  /* support: IE7; */
-  /* support: IE10, see #8844; */
-  list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+    display: list-item;
+    text-align: -webkit-match-parent;
 
-  display: list-item;
-  text-align: -webkit-match-parent;
+    background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+    color: #222222;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 0.8em;
 
-  background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
-  color: #222222;
-  font-family: Verdana,Arial,sans-serif;
-  font-size: 0.8em;
-
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
 }
-
 
 .ui-state-focus {
-  border: 1px solid #999999;
-  background: #dadada url("images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x;
-  font-weight: normal;
-  color: #212121;
-  margin: -1px;
+    border: 1px solid #999999;
+    font-weight: normal;
+    color: #212121;
+    margin: -1px;
+    background: #c6c6c6;
 }
