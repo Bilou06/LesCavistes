@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^create/wine/$', views.create_wine.as_view(), name='create_wine'),
     url(r'^confirm_remove/(?P<wine_ids>[0-9]+(,[0-9]+)*)/$', views.confirm_remove, name="confirm_remove"),
     url(r'^search/$', views.search, name='search'),
+    url(r'^regions/$', views.regions, name='regions'),
+    url(r'^areas/$', views.areas, name='areas'),
 ]

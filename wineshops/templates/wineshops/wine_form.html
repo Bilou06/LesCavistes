@@ -23,11 +23,10 @@
         <li><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
         <li class="current"><a href="/edit/catalog" class="inactive">Mes vins</a></li>
     </ol>
-    {{ form.errors }}
+
     <div id="fheader">
         <form action="" method="post">{% csrf_token %}
-
-            <h2>Ajouter un vin</h2>
+            <h2>{{ title }}</h2>
 
             <div class="fieldWrapper">
                 <label>Producteur :</label><br>
@@ -44,19 +43,30 @@
                     {% endfor %}
                 </select>
             </div>
-            <br>
             {{ form.country_hidden }}
-
-            <div class="fieldWrapper">
-                <label>Région :</label><br>
-                {{ form.region }}
-            </div>
+            <input type="hidden" id="former_country" value="{{ form.country.value }}">
             <br>
 
-            <div class="fieldWrapper">
-                <label>Terroir :</label><br>
-                {{ form.area }}
+
+            <div class="fieldWrapper ui-widget">
+                <label>Région :</label><br>
+                <select id="id_region" name="region">
+                    <option value="" selected="selected">---------</option>
+                </select>
             </div>
+
+            {{ form.region_hidden }}
+            <input type="hidden" id="former_region" value="{{ form.region.value }}">
+            <br>
+
+            <div class="fieldWrapper ui-widget">
+                <label>Terroir :</label><br>
+                <select id="id_area" name="area">
+                    <option value="" selected="selected">---------</option>
+                </select>
+            </div>
+            <input type="hidden" id="former_area" value="{{ form.area.value }}">
+            {{ form.area_hidden }}
             <br>
 
             <div class="fieldWrapper">

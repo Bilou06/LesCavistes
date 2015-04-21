@@ -8,9 +8,20 @@ class ShopAdmin(admin.ModelAdmin):
 admin.site.register(Shop, ShopAdmin)
 
 
-admin.site.register(Country)
-admin.site.register(Region)
-admin.site.register(Area)
+class CountryAdmin(admin.ModelAdmin):
+    list_filter = ('custom',)
+
+admin.site.register(Country, CountryAdmin)
+
+class RegionAdmin(admin.ModelAdmin):
+    list_filter = ('custom',)
+
+admin.site.register(Region, RegionAdmin)
+
+class AreaAdmin(admin.ModelAdmin):
+    list_filter = ('custom',)
+
+admin.site.register(Area, AreaAdmin)
 admin.site.register(Color)
 
 
@@ -25,3 +36,4 @@ class WineAdmin(admin.ModelAdmin):
     list_per_page = 2
 
 admin.site.register(Wine, WineAdmin)
+
