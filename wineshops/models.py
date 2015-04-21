@@ -23,25 +23,28 @@ class Shop(models.Model):
             return self.name
         return ''
 
-class Country(models.Model):#France, ...
+class Country(models.Model):#  France, ...
     name        = models.CharField(max_length = 50, unique = True)
+    custom      = models.BooleanField(default=False)#  custom = False -> appear in combo box for everyone
 
     def __str__(self):
         return self.name
 
-class Region(models.Model):#Bordeaux, ...
+class Region(models.Model):#  Bordeaux, ...
     country     = models.ForeignKey(Country)
-    name        = models.CharField(max_length = 50, unique = True)
+    name        = models.CharField(max_length = 50)
+    custom      = models.BooleanField(default=False)#  custom = False -> appear in combo box for everyone
 
     def __str__(self):
-        return str(Country.objects.get(id=self.country_id)) + '\\' + self.name
+        return self.name
 
-class Area(models.Model):#Saint-estèphe ...
+class Area(models.Model):#  Saint-estèphe ...
     region      = models.ForeignKey(Region)
-    name        = models.CharField(max_length = 50, unique = True, null=True)
+    name        = models.CharField(max_length = 50)
+    custom      = models.BooleanField(default=False)#  custom = False -> appear in combo box for everyone
 
     def __str__(self):
-        return str(Region.objects.get(id=self.region_id)) + '\\' + self.name
+        return self.name
 
 class Color(models.Model):
     name        = models.CharField(max_length = 20, unique = True)
@@ -52,7 +55,9 @@ class Color(models.Model):
 class Wine(models.Model):
     shop        = models.ForeignKey(Shop)
     producer    = models.CharField(max_length = 50, blank = True, verbose_name="Producteur")
-    area        = models.ForeignKey(Area, verbose_name="Terroir")
+    country     = models.ForeignKey(Country, verbose_name="Pays", blank=True)
+    region      = models.ForeignKey(Region, verbose_name="Région", blank=True)
+    area        = models.ForeignKey(Area, verbose_name="Terroir", blank=True)
     vintage     = models.IntegerField(blank = True, null=True, verbose_name="Millésime")
     classification = models.CharField(max_length = 50, blank = True, verbose_name="Classification" )
     color       = models.ForeignKey(Color, verbose_name="Couleur")

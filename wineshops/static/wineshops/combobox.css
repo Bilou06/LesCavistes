@@ -1,0 +1,138 @@
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-combobox-input {
+    margin: 0;
+}
+
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px solid #d3d3d3;
+    background: #e6e6e6 url("images/ui-bg_glass_75_e6e6e6_1x400.png") 50% 50% repeat-x;
+    font-weight: normal;
+    color: #555555;
+    font-family: Verdana, Arial, sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    line-height: normal;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+}
+
+/* ---*/
+
+.ui-icon-triangle-1-s {
+    left: 50%;
+    margin-left: -8px;
+    top: 50%;
+    margin-top: -8px;
+    background-position: -64px -16px;
+    background-image: url("images/ui-icons_222222_256x240.png");
+    width: 16px;
+    height: 16px;
+    text-indent: -99999px;
+    background-repeat: no-repeat;
+    border: 1px solid #d3d3d3;
+    font-weight: normal;
+    color: #555555;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.1em;
+    display: inline-block;
+    position: relative;
+    padding: 1;
+    line-height: normal;
+    margin-right: 1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+}
+
+/* ---*/
+
+.ui-button-text {
+    padding: .4em;
+    text-indent: -9999999px;
+    display: block;
+    line-height: normal;
+    font-size: 1em;
+    border: 1px solid #d3d3d3;
+    background: #e6e6e6 url("images/ui-bg_glass_75_e6e6e6_1x400.png") 50% 50% repeat-x;
+    font-weight: normal;
+    color: #555555;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.1em;
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    line-height: normal;
+    margin-right: .1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+}
+
+
+/*---*/
+.ui-autocomplete{
+
+  top: 33px;
+  left: 238px;
+  width: 176px;
+  border: 1px solid #aaaaaa;
+  background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+  color: #222222;
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 1.1em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  position: absolute;
+  cursor: default;
+  z-index: 100;
+}
+
+
+.ui-menu-item{
+  position: relative;
+
+  cursor: pointer;
+  min-height: 0;
+  /* support: IE7; */
+  /* support: IE10, see #8844; */
+  list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+
+  display: list-item;
+  text-align: -webkit-match-parent;
+
+  background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+  color: #222222;
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 0.8em;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+
+.ui-state-focus {
+  border: 1px solid #999999;
+  background: #dadada url("images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x;
+  font-weight: normal;
+  color: #212121;
+  margin: -1px;
+}

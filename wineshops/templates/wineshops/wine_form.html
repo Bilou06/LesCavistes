@@ -1,14 +1,25 @@
 {% extends "wineshops/base_edit.html" %}
 {% load staticfiles %}
 
+{% block script %}
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/autocomplete.js' %}"></script>
 
-{% block form %}
+{% endblock %}
+
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/combobox.css' %}"
     <style>
-        p {
-            width: 100px;
-        }
+
 
     </style>
+{% endblock %}
+
+
+{% block form %}
 
 
     <ol id="toc">
@@ -19,8 +30,87 @@
 
     <div id="fheader">
         <form action="" method="post">{% csrf_token %}
+
             <h2>Ajouter un vin</h2>
-            {{ form.as_p }}
+
+            <div class="fieldWrapper">
+                <label>Producteur :</label><br>
+                {{ form.producer }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper ui-widget">
+                <label>Pays :</label><br>
+                <select id="id_country" name="country">
+                    <option value="" selected="selected">---------</option>
+                    <option value="1">France</option>
+                    <option value="2">Italie</option>
+                    <option value="3">Espagne</option>
+                    <option value="4">Etats-Unis</option>
+                    <option value="5">Australie</option>
+                    <option value="6">Chili</option>
+                    <option value="7">Argentine</option>
+                    <option value="8">Allemagne</option>
+                    <option value="9">Afrique du sud</option>
+                    <option value="10">Portugal</option>
+                </select>
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Région :</label><br>
+                {{ form.region }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Terroir :</label><br>
+                {{ form.area }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Millésime :</label><br>
+                {{ form.vintage }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Classification :</label><br>
+                {{ form.classification }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Couleur :</label><br>
+                {{ form.color }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Cépage :</label><br>
+                {{ form.varietal }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Contenance :</label><br>
+                {{ form.capacity }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Prix minimum :</label><br>
+                {{ form.price_min }}
+            </div>
+            <br>
+
+            <div class="fieldWrapper">
+                <label>Prix maximum :</label><br>
+                {{ form.price_max }}
+            </div>
+            <br>
+
             <input type="submit" value="Valider"/>
         </form>
 

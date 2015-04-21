@@ -9,7 +9,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Adresse e-mail'}))
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'})

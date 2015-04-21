@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 __author__ = 'Sylvain'
+
+from django import forms
 from django.forms import ModelForm, HiddenInput
 from .models import Shop, Wine
 

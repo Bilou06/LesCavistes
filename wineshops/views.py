@@ -128,7 +128,7 @@ def edit_wine(request, wine_id):
 
 class create_wine(generic.CreateView):
     model = Wine
-    fields = ['producer', 'area', 'vintage', 'classification', 'color', 'varietal', 'capacity', 'price_min', 'price_max']
+    fields = ['producer', 'country', 'region', 'area', 'vintage', 'classification', 'color', 'varietal', 'capacity', 'price_min', 'price_max']
     success_url = '/wineshops/edit/catalog'
 
     def form_valid(self, form):
