@@ -265,7 +265,7 @@ def regions(request):
     regions = []
     if country_id:
         generic_regions = set(Region.objects.filter(country_id=country_id,custom=False).all())
-        user_regions_ids = set(Wine.objects.filter(shop__user=request.user).values_list('region', flat=True).distinct())
+        user_regions_ids = set(Wine.objects.filter(shop__user=request.user, country_id=country_id).values_list('region', flat=True).distinct())
         user_regions = Region.objects.filter(pk__in=user_regions_ids)
         regions = list(generic_regions.union(user_regions))
         regions.sort(key=Country.__str__)
@@ -280,7 +280,7 @@ def areas(request):
     areas = []
     if region_id:
         generic_areas = set(Area.objects.filter(region_id=region_id,custom=False).all())
-        user_areas_ids = set(Wine.objects.filter(shop__user=request.user).values_list('area', flat=True).distinct())
+        user_areas_ids = set(Wine.objects.filter(shop__user=request.user, region_id=region_id).values_list('area', flat=True).distinct())
         user_areas = Area.objects.filter(pk__in=user_areas_ids)
         areas = list(generic_areas.union(user_areas))
         areas.sort(key=Country.__str__)
