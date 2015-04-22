@@ -14,12 +14,12 @@ class CountryAdmin(admin.ModelAdmin):
 admin.site.register(Country, CountryAdmin)
 
 class RegionAdmin(admin.ModelAdmin):
-    list_filter = ('custom',)
+    list_filter = ('custom', 'country')
 
 admin.site.register(Region, RegionAdmin)
 
 class AreaAdmin(admin.ModelAdmin):
-    list_filter = ('custom',)
+    list_filter = ('custom', 'region')
 
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Color)

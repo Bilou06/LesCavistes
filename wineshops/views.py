@@ -73,7 +73,7 @@ def edit_catalog(request):
     if request.method == 'POST':
         return HttpResponseForbidden()
     else:
-        query = Wine.objects.filter(shop_id=shop.id).order_by('area', 'producer')
+        query = Wine.objects.filter(shop_id=shop.id).order_by('country__name','region__name','area__name', 'producer')
 
         # sort
         order = 0

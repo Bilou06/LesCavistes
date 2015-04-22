@@ -5,11 +5,23 @@
     <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
 {% endblock %}
 
+{% block script %}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% static 'wineshops/js/jquery.are-you-sure.js' %}"></script>
+    <script src="{% static 'wineshops/js/ays-beforeunload-shim.js' %}"></script>
+    <script>
+        $(function () {
+            $('form').areYouSure({'message': 'Cette page contient des modifications non sauvegardées.'});
+        })
+    </script>
+    {% block extrascript %}{% endblock %}
+{% endblock %}
+
 {% block content %}
 
     <div id="form">
-        {% block form %}{% endblock %}
-    </div>
-
+    {% block form %}{% endblock %}
+    </div >
 
 {% endblock %}
