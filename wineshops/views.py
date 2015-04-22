@@ -18,6 +18,7 @@ from user_profile.forms import EditUserForm
 from .searchEngine import get_query
 
 import logging
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -270,14 +271,23 @@ def search(request):
     except :
         return HttpResponseRedirect('/')
 
+
+    do_search =(len(query_what)!=0 and query_what!='Trouvez votre vin près de chez vous')
+
+    wine_objects = Wine.objects
+    if do_search:
+        wine_objects = wine_objects.filter(get_query(query_what, ['producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity',]))
+
     results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(longitude__isnull=True, latitude__isnull=True).all()]
     results.sort(key=itemgetter(1))
-    results = results[:20]
     results = [{'shop': a[0],
                 'dist': "%.1f" %a[1],
-                'nb': Wine.objects.filter(shop_id=a[0].id, in_stock=True).count(),
-                'price': Wine.objects.filter(shop_id=a[0].id, in_stock=True).aggregate(Min('price_min'), Max('price_max')),
+                'nb': wine_objects.filter(in_stock=True, shop_id=a[0].id).count(),
+                'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'), Max('price_max')),
                 } for a in results]
+    if do_search:
+        results = [a for a in results if a['nb'] != 0]
+    results = results[:20]
 
     return render_to_response('wineshops/search_results.html',
                           { 'query_what': query_what,
@@ -286,6 +296,9 @@ def search(request):
                             'lat' : lat,
                             'lng' : lng},
                           context_instance=RequestContext(request))
+
+
+
 
 
 
@@ -318,20 +331,3 @@ def areas(request):
 
     return HttpResponse('|'.join([r.name+'#'+str(r.id) for r in areas]))
 
-'''
-def search(request):
-    query_string = ''
-    found_entries = None
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        if (len(query_string)==0 or query_string=='Trouvez votre vin près de chez vous'):
-            return HttpResponseRedirect('/')
-
-        entry_query = get_query(query_string, ['producer','area__region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity',])
-
-        found_entries = Wine.objects.filter(entry_query)# .order_by(DISTANCE)
-
-    return render_to_response('wineshops/search_results.html',
-                          { 'query_string': query_string, 'found_entries': found_entries },
-                          context_instance=RequestContext(request))
-                          '''

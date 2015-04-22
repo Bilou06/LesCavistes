@@ -23,6 +23,7 @@ function initialize() {
 
 function addMarkers() {
     var bounds = new google.maps.LatLngBounds();
+    bounds.extend(new google.maps.LatLng($("#id_latitude").val(), $("#id_longitude").val()));
     var i = 0;
     $(".shop-lat-lng").each(function () {
         i++;

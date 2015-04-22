@@ -22,6 +22,7 @@ from django.contrib.auth import update_session_auth_hash, get_user_model
 from django.contrib.auth.tokens import default_token_generator
 
 import logging
+logger = logging.getLogger(__name__)
 
 from trouvetonvin.settings import DEBUG
 
@@ -91,7 +92,7 @@ def resend_mail(request):
 
 
 def sendmail(subject, body, email):
-    logger = logging.getLogger(__name__)
+
     logger.info('|'.join(['EMAIL ', email, subject, body]))
     if not DEBUG:
         send_mail(subject, body, 'myemail@example.com', #  TODO : change mail

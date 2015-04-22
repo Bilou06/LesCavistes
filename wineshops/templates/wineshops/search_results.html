@@ -33,7 +33,7 @@
         </div>
         </div>
     </div>
-
+    {% if results %}
     <div id="content-header">
         <div class="results">
             <table id="result_list">
@@ -111,6 +111,10 @@
             </table>
         </div>
     </div>
-
+    {% else %}
+    Aucun résultat trouvé pour cette recherche. Veuillez essayer un autre vin.
+        <br>
+        Note : vous pouvez faire des recherches simples comme "Chili" ou plus compliquées comme "Blaye rouge 2010"
+    {% endif %}
 
 {% endblock %}
