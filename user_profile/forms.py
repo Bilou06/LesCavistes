@@ -66,15 +66,15 @@ class RegistrationForm(UserCreationForm):
 
 
 class EditUserForm(forms.ModelForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
-    username = forms.CharField(max_length=254)
-    last_login = forms.DateTimeField()
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}), label="E-mail")
+    first_name = forms.CharField(required=False, label="Prénom")
+    last_name = forms.CharField(required=False, label="Nom")
+    username = forms.CharField(max_length=254, label="Identifiant")
+    last_login = forms.DateTimeField(label="Dernière connexion")
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'last_login', 'first_name', 'last_name')
+        fields = ('username', 'email', 'last_login', 'last_name', 'first_name', )
 
     email.widget.attrs['readonly'] = True
     username.widget.attrs['readonly'] = True

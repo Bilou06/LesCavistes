@@ -1,15 +1,7 @@
 {% extends "wineshops/base_edit.html" %}
 {% load staticfiles %}
 
-{% block extrastyle %}
-    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
-    <style>
-        p {
-            width: 100px;
-        }
 
-    </style>
-{% endblock %}
 
 {% block extrascript %}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
@@ -32,13 +24,15 @@
             Les informations ci-dessous seront visibles sur le site
             <br>
             et sur les applications mobiles par tous les utilsateurs.
-            {{ form.as_p }}
+            <table>
+                {{ form.as_table }}
+            </table>
             <input type="submit" value="Valider" onclick="codeAddress()"/>
 
         </form>
 
         <div onload="initialize()">
-            <div id="map-canvas"  style="width: 320px; height: 480px;"></div>
+            <div id="map-canvas" style="width: 320px; height: 480px;"></div>
         </div>
     </div>
 

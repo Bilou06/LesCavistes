@@ -8,13 +8,12 @@
 {% endblock %}
 
 
-{% block extrastyle %}
-    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
-    <link rel="stylesheet" href="{% static 'wineshops/combobox.css' %}"/>
-{% endblock %}
-
-
 {% block form %}
+    <style>
+        .ui-helper-hidden-accessible {
+            display: none;
+        }
+    </style>
 
 
     <ol id="toc">
@@ -27,93 +26,90 @@
         <form action="" method="post" onsubmit="setHiddenFields();">{% csrf_token %}
             <h2>{{ title }}</h2>
 
-            <div class="fieldWrapper">
-                <label>Producteur :</label><br>
-                {{ form.producer }}
-            </div>
-            <br>
+            <table>
+                <tbody>
+                <tr>
+                    <th>
+                        <label>Producteur :</label><br>
+                    </th>
+                    <td>
+                        {{ form.producer }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>Pays :</label>
+                    </th>
+                    <td>
+                        <select id="id_country" name="country">
+                            <option value="" selected="selected">---------</option>
+                            {% for country in countries %}
+                                <option value="{{ country.id }}">{{ country.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form.country_hidden }}
+                        <input type="hidden" id="former_country" value="{{ form.country.value }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>Région :</label>
+                    </th>
+                    <td>
+                        <select id="id_region" name="region">
+                            <option value="" selected="selected">---------</option>
+                        </select>
+                        {{ form.region_hidden }}
+                        <input type="hidden" id="former_region" value="{{ form.region.value }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>Terroir :</label>
+                    </th>
+                    <td>
+                        <select id="id_area" name="area">
+                            <option value="" selected="selected">---------</option>
+                        </select>
+                        <input type="hidden" id="former_area" value="{{ form.area.value }}">
+                        {{ form.area_hidden }}
+                    </td>
+                </tr>
+                <tr>
+                    <th><label>Millésime :</label></th>
+                    <td>{{ form.vintage }}</td>
+                </tr>
+                <tr>
+                    <th><label>Classification :</label></th>
+                    <td>{{ form.classification }}</td>
+                </tr>
+                <tr>
+                    <th><label>Couleur :</label></th>
+                    <td>{{ form.color }}</td>
+                </tr>
+                <tr>
+                    <th><label>Cépage :</label></th>
+                    <td>{{ form.varietal }}</td>
+                </tr>
+                <tr>
+                    <th><label>Contenance :</label></th>
+                    <td>{{ form.capacity }}</td>
+                </tr>
+                <tr>
+                    <th><label>Prix minimum :</label></th>
+                    <th>{{ form.price_min }}</th>
+                </tr>
+                <tr>
+                    <th><label>Prix maximum :</label></th>
+                    <td>{{ form.price_max }}</td>
+                </tr>
+                <tr>
+                    <th><label>En stock :</label></th>
+                    <td>{{ form.in_stock }}</td>
+                </tr>
+                </tbody>
+            </table>
 
-            <div class="fieldWrapper ui-widget">
-                <label>Pays :</label><br>
-                <select id="id_country" name="country">
-                    <option value="" selected="selected">---------</option>
-                    {% for country in countries %}
-                        <option value="{{ country.id }}">{{ country.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            {{ form.country_hidden }}
-            <input type="hidden" id="former_country" value="{{ form.country.value }}">
-            <br>
-
-
-            <div class="fieldWrapper ui-widget">
-                <label>Région :</label><br>
-                <select id="id_region" name="region">
-                    <option value="" selected="selected">---------</option>
-                </select>
-            </div>
-
-            {{ form.region_hidden }}
-            <input type="hidden" id="former_region" value="{{ form.region.value }}">
-            <br>
-
-            <div class="fieldWrapper ui-widget">
-                <label>Terroir :</label><br>
-                <select id="id_area" name="area">
-                    <option value="" selected="selected">---------</option>
-                </select>
-            </div>
-            <input type="hidden" id="former_area" value="{{ form.area.value }}">
-            {{ form.area_hidden }}
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Millésime :</label><br>
-                {{ form.vintage }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Classification :</label><br>
-                {{ form.classification }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Couleur :</label><br>
-                {{ form.color }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Cépage :</label><br>
-                {{ form.varietal }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Contenance :</label><br>
-                {{ form.capacity }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Prix minimum :</label><br>
-                {{ form.price_min }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Prix maximum :</label><br>
-                {{ form.price_max }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>En stock :</label><br>
-                {{ form.in_stock }}
-            </div>
             <br>
 
             <input type="submit" value="Valider"/>

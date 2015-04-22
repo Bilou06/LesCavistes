@@ -2,6 +2,7 @@
 
 {% block form %}
 
+
     <ol id="toc">
         <li class="current"><a href="/edit/user" class="active">Mon compte</a></li>
         <li><a href="/edit/wineshop" class="inactive">Mon magasin</a></li>
@@ -17,44 +18,12 @@
             <br>
             Elles sont utilisées par LesCavistes pour vous contacter uniquement.
             <br><br>
-
-            <div class="fieldWrapper">
-                <label>Identifiant :</label><br>
-                {{ form.username }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Adresse e-mail :</label><br>
-                {{ form.email }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                <label>Dernière connection :</label><br>
-                {{ form.last_login }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                {{ form.last_name.errors }}
-                <label>Nom :</label><br>
-                {{ form.last_name }}
-            </div>
-            <br>
-
-            <div class="fieldWrapper">
-                {{ form.first_name.errors }}
-                <label>Prénom :</label><br>
-                {{ form.first_name }}
-            </div>
-            <br>
-            <br>
-
-
-            <input type="submit" value="Valider"/>
-            <br>
+            <table>
+                {{ form.as_table }}
+            </table>
             <br><br>
+            <input type="submit" value="Valider"/>
+
 
             <a href="{% url 'user_profile:change_password' %}">Changer le mot de passe</a>
 
