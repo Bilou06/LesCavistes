@@ -1,4 +1,5 @@
-# -*- coding: utf8 -*-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 __author__ = 'Sylvain'
 
 from django import forms
@@ -10,8 +11,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Adresse e-mail'}))
-    first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False)
+    first_name = forms.CharField(required=False, label='Prénom')
+    last_name = forms.CharField(required=False, label='Nom')
     captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'})
     contract_check = forms.BooleanField(required = True)
 
