@@ -74,6 +74,7 @@ class Wine(models.Model):
     capacity    = models.IntegerField(default = 75, verbose_name="Contenance")
     price_min   = models.FloatField(blank = True, null=True, verbose_name="Prix minimum")
     price_max   = models.FloatField(blank = True, null=True, verbose_name="Prix maximum")
+    in_stock    = models.BooleanField(default=True, verbose_name="En stock")
 
     def __str__(self):
         return ''+self.producer

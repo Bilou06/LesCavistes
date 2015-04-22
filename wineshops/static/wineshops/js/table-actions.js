@@ -12,18 +12,35 @@ function countChecked(){
     return count;
 }
 
-function removeChecked(){
+function getChecked(){
     var index = [];
     $(".action-select").each(function () {
                 if ($(this).is(":checked")) {
                     index.push($(this).attr("value"));
                 };
             })
-    window.location.href = "/wineshops/confirm_remove/"+index.join(',')
+    return index;
 }
 
+function removeChecked(){
+    window.location.href = "/wineshops/confirm_remove/"+getChecked().join(',');
+}
+
+function stockChecked(status){
+    var url = (status ? "/wineshops/in_wines/" : "/wineshops/out_wines/");
+     $.get(
+        url+getChecked().join(','),
+         {},
+        function(data){
+            location.reload();
+        }
+    );
+
+}
+
+
 function sort(order){
-    var column = ['','column-producer', 'column-country','column-region', 'column-area', 'column-color', 'column-varietal', 'column-classification', 'column-vintage', 'column-capacity', 'column-price_min', 'column-price_max'][Math.abs(order)];
+    var column = ['','column-producer', 'column-country','column-region', 'column-area', 'column-color', 'column-varietal', 'column-classification', 'column-vintage', 'column-capacity', 'column-price_min', 'column-price_max', 'column-in_stock'][Math.abs(order)];
     $(".sortable").removeClass("sorted");
     if (order>0) {
         $("a[href^='?o=" + order + "']").each(function () {
@@ -72,6 +89,10 @@ $(document).ready(function () {
 
         if(action == "delete_selected"){
             removeChecked();
+        } else if (action == "in_stock_selected"){
+            stockChecked(true);
+        } else if (action == "out_stock_selected") {
+            stockChecked(false);
         }
     });
 

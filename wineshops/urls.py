@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^regions/$', views.regions, name='regions'),
     url(r'^areas/$', views.areas, name='areas'),
+    url(r'^in_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.in_wines, name='in_wines'),
+    url(r'^out_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.out_wines, name='out_wines'),
 ]

@@ -80,7 +80,7 @@ def edit_catalog(request):
         try:
             order = int(request.GET.get('o'))
             # order of columns is duplicated in html and in js
-            parameters = ['','producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max']
+            parameters = ['','producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max', 'in_stock']
             if order>0:
                 param = parameters[order]
                 if order <7:
@@ -229,6 +229,37 @@ def confirm_remove(request, wine_ids):
     except:
         return HttpResponseForbidden()
 
+@login_required
+def out_wines(request, wine_ids):
+    return in_out_wines(request, wine_ids, False)
+
+@login_required
+def in_wines(request, wine_ids):
+    return in_out_wines(request, wine_ids, True)
+
+def in_out_wines(request, wine_ids, status):
+    try:
+        index = ast.literal_eval('[' + wine_ids + ']')
+        wines = []
+        for i in index:
+            wine = get_object_or_404(Wine, id=i)
+            wines.append(wine)
+            if (not wine.shop.user == request.user):
+                return HttpResponseForbidden()
+
+        if request.method == 'GET':
+            for wine in wines:
+                wine.in_stock = status
+                wine.save()
+
+        return HttpResponse('ok')
+
+    except:
+        return HttpResponseForbidden()
+
+
+
+
 
 def search(request):
     query_what = request.GET['q']
@@ -244,8 +275,8 @@ def search(request):
     results = results[:20]
     results = [{'shop': a[0],
                 'dist': "%.1f" %a[1],
-                'nb': Wine.objects.filter(shop_id=a[0].id).count(),
-                'price': Wine.objects.filter(shop_id=a[0].id).aggregate(Min('price_min'), Max('price_max')),
+                'nb': Wine.objects.filter(shop_id=a[0].id, in_stock=True).count(),
+                'price': Wine.objects.filter(shop_id=a[0].id, in_stock=True).aggregate(Min('price_min'), Max('price_max')),
                 } for a in results]
 
     return render_to_response('wineshops/search_results.html',

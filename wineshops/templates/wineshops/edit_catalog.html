@@ -51,6 +51,9 @@
                     <label>Action : <select name="action" id="action">
                         <option value="" selected="selected">---------</option>
                         <option value="delete_selected">Supprimer les vins sélectionnés</option>
+                        <option value="in_stock_selected">Marquer disponible les vins sélectionnés</option>
+                        <option value="out_stock_selected">Marquer indisponible les vins sélectionnés</option>
+
                     </select></label><input class="select-across" name="select_across" type="hidden" value="0">
                     <button type="submit" class="form-button" title="Run the selected action" name="index"
                             value="0">Ok
@@ -124,6 +127,10 @@
                                 <div class="text"><a href="?o=11">Prix max.</a></div>
                                 <div class="clear"></div>
                             </th>
+                            <th scope="col" class="sortable column-in_stock">
+                                <div class="text"><a href="?o=12">En stock</a></div>
+                                <div class="clear"></div>
+                            </th>
 
                         </tr>
                         </thead>
@@ -148,6 +155,7 @@
                                 <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
                                 <td class="field-capacity">{{ wine.price_min|floatformat:2|default_if_none:"" }}</td>
                                 <td class="field-capacity">{{ wine.price_max|floatformat:2|default_if_none:"" }}</td>
+                                <td class="field-capacity">{% if wine.in_stock %}Oui{% else %}Non{% endif %}</td>
 
                             </tr>
                         {% endfor %}
