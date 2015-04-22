@@ -1,6 +1,12 @@
 
+  th{
+    text-align: right;
+}
 
-
+.center{
+    horiz-align: center;
+    text-align: center;
+}
 #fheader{
     display: -webkit-flex;
     display:         flex;
