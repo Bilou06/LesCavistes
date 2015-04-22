@@ -28,7 +28,8 @@
                 .autocomplete({
                     delay: 0,
                     minLength: 0,
-                    source: $.proxy(this, "_source")
+                    source: $.proxy(this, "_source"),
+                    change: function () {$(this).css("background-color", "#FFFAC9");}
                 })
                 .tooltip({
                     tooltipClass: "ui-state-highlight"

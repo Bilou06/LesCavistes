@@ -14,6 +14,7 @@
     <script>
         $(function () {
             $('form').areYouSure({'message': 'Cette page contient des modifications non sauvegardées.'});
+            $('input, select').change(function () {$(this).css("background-color", "#FFFAC9");});// code duplicated for combobox in autocomplete.js
         })
     </script>
     {% block extrascript %}{% endblock %}
