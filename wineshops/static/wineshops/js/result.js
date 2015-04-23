@@ -32,7 +32,7 @@ function addMarkers() {
             title: $(this).data('title'),
             map: map,
             animation: google.maps.Animation.DROP,
-            icon: '/static/wineshops/images/mapicons/number_'+i.toString()+'.png'
+            icon: '/static/wineshops/images/mapicons/number_' + i.toString() + '.png'
         });
 
         var contentString = $(this).siblings('.td-infoshop').find(".bloc-info-shop").html();
@@ -53,7 +53,7 @@ function addMarkers() {
 
 $(document).ready(function () {
 
-    $(".infoshop").click(function () {
+    $(".infoshop").click(function (event) {
         $(this).find(".bloc-info-shop").show();
         event.stopPropagation();
     });

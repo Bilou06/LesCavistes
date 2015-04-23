@@ -3,16 +3,17 @@
     background-color: #A53F4F;
     color: white;
     text-align: center;
-
     overflow: auto;
     width: 100%;
     position: relative;
-    height: 175px;
+    height: 179px;
+
 }
 
 #logo {
     display: inline-block;
     float: left;
+
 }
 
 #logo_img {
