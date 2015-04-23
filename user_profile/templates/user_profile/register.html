@@ -1,76 +1,69 @@
 {% extends "user_profile/base_user.html" %}
 {% load staticfiles %}
 
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+{% endblock %}
+
 {% block script %}
-<script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'user_profile/registerform.css' %}" />
+    <link rel="stylesheet" href="{% static 'user_profile/registerform.css' %}"/>
 
-<div id="fheader">
-<form id="form-signup" action="/user_profile/sign_up/" method="post">{% csrf_token %}
-
-    <h2>Créez votre compte</h2>
-    <div class="fieldWrapper">
-        <label>Nom :</label><br>
-        {{ form.first_name }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        <label>Prénom :</label><br>
-        {{ form.last_name }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{ form.email.errors }}
-        <label>Adresse e-mail :</label><br>
-        {{ form.email }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-    {{form.errors.values.0}}
-        {{ form.username.errors }}
-        <label>Identifiant :</label><br>
-        {{ form.username }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        {{form.errors.values.1}}
-        {{ form.password1.errors }}
-        <label>Mot de passe :</label><br>
-        {{ form.password1 }}
-    </div>
-    <br>
-
-    <div class="fieldWrapper">
-        {{ form.password2.errors }}
-        <label>Confirmation du mot de passe :</label><br>
-        {{ form.password2 }}
-    </div>
-    <br/>
-
-    <div class="fieldWrapper">
-        {{ form.captcha.errors }}
-        <label>Confirmation du mot de passe :</label><br>
-        {{ form.captcha }}
-    </div>
-    <br/>
-    <div class="fieldWrapper">
-        {{ form.contract_check.errors }}
-        <label>J'ai lu et j'approuve <a href="{% url 'user_profile:contract' %}">les conditions d'utilisation</a></label><br>
-        {{ form.contract_check }}
-    </div>
-    <br/>
+    <div id="fheader">
+        <form id="form-signup" action="/user_profile/sign_up/" method="post">{% csrf_token %}
+            <h2>Créez votre compte</h2>
+            <table>
+                <tbody>
+                <tr>
+                    <th><label>Nom :</label></th>
+                    <td>{{ form.first_name }}</td>
+                </tr>
+                <tr>
+                    <th><label>Prénom :</label></th>
+                    <td>{{ form.last_name }}</td>
+                </tr>
+                <tr>
+                    <th><label>Adresse e-mail :</label></th>
+                    <td>{{ form.email.errors }}{{ form.email }}</td>
+                </tr>
+                <tr>
+                    <th><label>Identifiant :</label></th>
+                    <td>{{ form.errors.values.0 }}{{ form.username.errors }}{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <th><label>Mot de passe :</label></th>
+                    <td>{{ form.errors.values.1 }}{{ form.password1.errors }}{{ form.password1 }}</td>
+                </tr>
+                <tr>
+                    <th><label>Confirmation du mot de passe :</label></th>
+                    <td>{{ form.password2.errors }}{{ form.password2 }}</td>
+                </tr>
+                <tr>
+                    <th><label>Êtes vous un être humain ?</label></th>
+                    <td>{{ form.captcha.errors }}{{ form.captcha }}</td>
+                </tr>
+                <tr>
+                    <th><label>J'ai lu et j'approuve <a href="{% url 'user_profile:contract' %}">les conditions
+                        d'utilisation</a></label>{{ form.contract_check.errors }}{{ form.contract_check }}</th>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
 
 
-    <br/>
-    <input type="submit" name="submit" class="btn btn-primary" value="Créer">
-</form>
-<div class="fclear"></div>
-</div>
+            <br><br>
+
+            <div class="center">
+                <input type="submit" name="submit" class="btn btn-primary" value="Créer">
+            </div>
+        </form>
+        <div class="fclear"></div>
+    </div>
 
 
 {% endblock %}
