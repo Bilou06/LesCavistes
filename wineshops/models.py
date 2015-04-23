@@ -17,6 +17,7 @@ class Shop(models.Model):
     user        = models.ForeignKey(User)
     latitude    = models.FloatField(null=True)
     longitude   = models.FloatField(null=True)
+    filled      = models.BooleanField(default=False)
 
     def __str__(self):
         if self.name:

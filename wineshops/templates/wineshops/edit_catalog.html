@@ -63,7 +63,6 @@
                     <span class="action-counter" style="display: inline;"><span id="count-selected">0</span> sur <span
                             id="count-total">0</span> sélectionné(s)</span>
 
-
                 </div>
 
 
@@ -168,7 +167,7 @@
                 <p class="paginator">
                 {% if paginator.page_range|length > 1 %}
                     {% for i in paginator.page_range %}
-                        {% if i != objects.number %}
+                        {% if i != page %}
                             <div class="page link"><a class="page_link" href="?page={{ i }}&o={{ order }}"> {{ i }} </a></div>
                         {% else %}
                             <div class="page nolink">{{ i }}</div>

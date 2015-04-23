@@ -4,7 +4,7 @@ import ast
 from operator import itemgetter
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
-from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.db.models import Max, Min
@@ -27,11 +27,6 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Shop.objects.all()
-
-
-class DetailView(generic.DetailView):
-    model = Shop
-    template_name = 'wineshops/detail.html'
 
 
 @login_required
@@ -57,6 +52,7 @@ def edit_wineshop(request):
     if request.method == 'POST':
         form = WineshopForm(request.POST, instance=shop)
         if form.is_valid():
+            form.instance.filled = True
             form.save()
             return HttpResponseRedirect('/wineshops/edit/wineshop')  # Redirect after POST
     else:
@@ -74,23 +70,35 @@ def edit_catalog(request):
     if request.method == 'POST':
         return HttpResponseForbidden()
     else:
-        query = Wine.objects.filter(shop_id=shop.id).order_by('country__name','region__name','area__name', 'producer')
+        query = Wine.objects.filter(shop_id=shop.id).order_by('country__name', 'region__name', 'area__name', 'producer')
 
         # sort
         order = 0
         try:
             order = int(request.GET.get('o'))
             # order of columns is duplicated in html and in js
-            parameters = ['','producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity', 'price_min', 'price_max', 'in_stock']
-            if order>0:
+            parameters = ['',
+                          'producer',
+                          'country__name',
+                          'region__name',
+                          'area__name',
+                          'color__name',
+                          'varietal',
+                          'classification',
+                          'vintage',
+                          'capacity',
+                          'price_min',
+                          'price_max',
+                          'in_stock']
+            if order > 0:
                 param = parameters[order]
-                if order <7:
+                if order < 7:
                     query = query.order_by(Lower(param).asc())
                 else:
                     query = query.order_by(param)
             else:
                 param = parameters[-order]
-                if -order <7:
+                if -order < 7:
                     query = query.order_by(Lower(param).desc())
                 else:
                     query = query.order_by('-'+param)
@@ -98,16 +106,18 @@ def edit_catalog(request):
             pass
 
         # pagination
-        paginator = Paginator(query, 20)  # Show 20 forms per page
+        paginator = Paginator(query.all(), 20)  # Show 20 forms per page
         page = request.GET.get('page')
         try:
-            objects = paginator.page(page)
+            objects = paginator.page(page).object_list
+            page = int(page)
         except PageNotAnInteger:
-            objects = paginator.page(1)
+            objects = paginator.page(1).object_list
+            page = 1
         except EmptyPage:
-            objects = paginator.page(paginator.num_pages)
-        page_query = query.filter(id__in=[object.id for object in objects])
-        context = {'objects': objects, 'paginator' : paginator, 'order' : order }
+            objects = paginator.page(paginator.num_pages).object_list
+            page = paginator.num_pages
+        context = {'objects': objects, 'paginator': paginator, 'order': order, 'page':page}
 
         return render(request, 'wineshops/edit_catalog.html', context)
 
@@ -278,7 +288,7 @@ def search(request):
     if do_search:
         wine_objects = wine_objects.filter(get_query(query_what, ['producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity',]))
 
-    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(longitude__isnull=True, latitude__isnull=True).all()]
+    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
     results.sort(key=itemgetter(1))
     results = [{'shop': a[0],
                 'dist': "%.1f" %a[1],
@@ -296,10 +306,6 @@ def search(request):
                             'lat' : lat,
                             'lng' : lng},
                           context_instance=RequestContext(request))
-
-
-
-
 
 
 def regions(request):
