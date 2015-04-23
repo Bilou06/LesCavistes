@@ -8,7 +8,6 @@
 #result_list {
     border: solid #ccc 1px;
     display: inline-table;
-    margin-top: 20px;
 }
 
 /* TABLES */
@@ -207,6 +206,6 @@ position: absolute;
 /* MAPS */
 #map-div{
     width: 600px;
-    margin: 0 auto;
     display: block;
+    margin: 0 auto 20px;
 }

@@ -8,21 +8,17 @@
     text-align: center;
 }
 #fheader{
-    display: -webkit-flex;
-    display:         flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-
     border: #A53F4F solid 3px;
 	clear: left;
 	padding: 1em;
+    margin: 0 auto;
+    width: 100%;
 }
 
 form{
     padding:10px;
-    vertical-align:middle;
+    text-align: left;
+    display: inline-block;
 }
 
 .form-p{
@@ -33,18 +29,15 @@ form{
     clear: both;
 }
 
-
 ol#toc {
 	height: 2em;
 	list-style: none;
-	margin: 0;
-	padding: 0;
-        display: -webkit-flex;
-    display:         flex;
     -webkit-align-items: center;
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
+    display: inline-block;
+    margin: 0 auto -4px;
 }
 
 ol#toc a {
@@ -57,8 +50,7 @@ ol#toc a {
 }
 
 ol#toc li.current {
-	background-color: #A53F4F;
-	background-position: 0 -60px;
+    background: #A53F4F 0 -60px;
 }
 
 ol#toc li.current a {
@@ -76,4 +68,8 @@ ol#toc li {
 
 input[readonly], input[readonly="readonly"] {
     color:gray;
+}
+
+#map{
+    display: inline-block;
 }
