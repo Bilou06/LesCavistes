@@ -29,7 +29,9 @@
                     delay: 0,
                     minLength: 0,
                     source: $.proxy(this, "_source"),
-                    change: function () {$(this).css("background-color", "#FFFAC9");}
+                    change: function () {
+                        $(this).css("background-color", "#FFFAC9");
+                    }
                 })
                 .tooltip({
                     tooltipClass: "ui-state-highlight"
@@ -109,7 +111,7 @@
             this._updateOptions();
         },
 
-        _updateHidden: function(){
+        _updateHidden: function () {
             $("#" + $(this.element).attr('id') + "_hidden").val(this.input.val());
         },
 
@@ -129,54 +131,9 @@
 
             // update options
             if ($(this.element).attr('id') == "id_country") {
-                var id_region = $('#id_region');
-                id_region
-                    .find('option')
-                    .remove()
-                    .end()
-                    .append('<option value="" selected="selected">---------</option>');
-                $.get('/wineshops/regions',
-                    {'country_id': index},
-                    function (data) {
-                        var regions = data.split('|');
-                        for (index in regions) {
-                            var region = regions[index].split('#');
-                            id_region.append(new Option(region[0], region[1]));
-                        }
-
-                        id_region.children("option").each(function () {
-                            if (this.value == $('#former_region').val()) {
-                                this.selected = valid = true;
-                                id_region.next().find('input').val(this.text);
-                            }
-
-                        });
-
-                    })
+                updateRegion(index);
             } else if ($(this.element).attr('id') == "id_region") {
-                var id_area = $('#id_area');
-                id_area
-                    .find('option')
-                    .remove()
-                    .end()
-                    .append('<option value="" selected="selected">---------</option>');
-                $.get('/wineshops/areas',
-                    {'region_id': index},
-                    function (data) {
-                        regions = data.split('|');
-                        for (index in regions) {
-                            region = regions[index].split('#');
-                            id_area.append(new Option(region[0], region[1]));
-                        }
-
-                        id_area.children("option").each(function () {
-                            if (this.value == $('#former_area').val()) {
-                                this.selected = valid = true;
-                                id_area.next().find('input').val(this.text);
-                            }
-
-                        });
-                    });
+                updateArea(index);
             }
         },
 
@@ -187,15 +144,69 @@
     });
 })(jQuery);
 
+function updateRegion(country) {
+    var id_region = $('#id_region');
+    id_region
+        .find('option')
+        .remove()
+        .end()
+        .append('<option value="" selected="selected">---------</option>');
+    $.get('/wineshops/regions',
+        {'country_id': country},
+        function (data) {
+            var regions = data.split('|');
+            for (var index in regions) {
+                var region = regions[index].split('#');
+                id_region.append(new Option(region[0], region[1]));
+            }
+            id_region.children("option").each(function () {
+                if (this.value == $('#former_region').val()) {
+                    this.selected = valid = true;
+                    id_region.next().find('input').val(this.text);
+                    updateArea(this.value);
+                }
+            });
+        });
+}
+
+function updateArea(region) {
+
+    var id_area = $('#id_area');
+    id_area
+        .find('option')
+        .remove()
+        .end()
+        .append('<option value="" selected="selected">---------</option>');
+    $.get('/wineshops/areas',
+        {'region_id': region},
+        function (data) {
+            regions = data.split('|');
+            for (index in regions) {
+                var area = regions[index].split('#');
+                id_area.append(new Option(area[0], area[1]));
+            }
+
+            id_area.children("option").each(function () {
+                if (this.value == $('#former_area').val()) {
+                    this.selected = valid = true;
+                    id_area.next().find('input').val(this.text);
+                }
+            });
+        });
+}
+
+
+var country_combo, region_combo, area_combo;
 $(function () {
-    $("#id_country").combobox();
-    $("#id_region").combobox();
-    $("#id_area").combobox();
+    country_combo = $("#id_country").combobox();
+    region_combo = $("#id_region").combobox();
+    area_combo = $("#id_area").combobox();
+    setHiddenFields();
 });
 
 
-function setHiddenFields(){
-    $("#id_country_hidden").val($("#id_country").next().find('input').val());
-    $("#id_region_hidden").val($("#id_region").next().find('input').val());
-    $("#id_area_hidden").val($("#id_area").next().find('input').val());
+function setHiddenFields() {
+    $("#id_country_hidden").val(country_combo.find('input').val());
+    $("#id_region_hidden").val(region_combo.find('input').val());
+    $("#id_area_hidden").val(area_combo.find('input').val());
 };

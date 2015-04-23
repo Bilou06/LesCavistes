@@ -18,6 +18,7 @@ from user_profile.forms import EditUserForm
 from .searchEngine import get_query
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -104,7 +105,7 @@ def edit_catalog(request):
                 if -order < 7:
                     query = query.order_by(Lower(param).desc())
                 else:
-                    query = query.order_by('-'+param)
+                    query = query.order_by('-' + param)
         except:
             pass
 
@@ -131,6 +132,7 @@ def edit_catalog(request):
 
 @login_required
 def edit_wine(request, wine_id):
+    shop, created = Shop.objects.get_or_create(user=request.user)
     wine = get_object_or_404(Wine, id=wine_id)
 
     if not wine.shop.user == request.user:
@@ -141,27 +143,35 @@ def edit_wine(request, wine_id):
         if form.is_valid():
 
             country = form.cleaned_data['country']
-            if not country or( form.cleaned_data['country_hidden'] and country.name != form.cleaned_data['country_hidden']):
+            if not country or (
+                        form.cleaned_data['country_hidden'] and country.name != form.cleaned_data['country_hidden']):
                 country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
-                                                                 defaults={'custom': True, 'name': form.cleaned_data['country_hidden'] })
+                                                                 defaults={'custom': True,
+                                                                           'name': form.cleaned_data['country_hidden']})
             form.instance.country = country
 
             region = form.cleaned_data['region']
             if not region or (form.cleaned_data['region_hidden'] and region.name != form.cleaned_data['region_hidden']):
                 region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country,
-                                                               defaults={'custom': True, 'name': form.cleaned_data['region_hidden'], 'country': country })
+                                                               defaults={'custom': True,
+                                                                         'name': form.cleaned_data['region_hidden'],
+                                                                         'country': country})
             elif region.country != country:
                 region, created = Region.objects.get_or_create(name=region.name, country=country,
-                                                               defaults={'custom': True, 'name': region.name, 'country': country })
+                                                               defaults={'custom': True, 'name': region.name,
+                                                                         'country': country})
             form.instance.region = region
 
             area = form.cleaned_data['area']
-            if not area or(form.cleaned_data['area_hidden'] and area.name != form.cleaned_data['area_hidden']):
+            if not area or (form.cleaned_data['area_hidden'] and area.name != form.cleaned_data['area_hidden']):
                 area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region,
-                                                           defaults={'custom': True, 'name': form.cleaned_data['area_hidden'], 'region': region })
+                                                           defaults={'custom': True,
+                                                                     'name': form.cleaned_data['area_hidden'],
+                                                                     'region': region})
             elif region.country != country:
                 area, created = Area.objects.get_or_create(name=area.name, region=region,
-                                                           defaults={'custom': True, 'name': area.name, 'region': region })
+                                                           defaults={'custom': True, 'name': area.name,
+                                                                     'region': region})
             form.instance.area = area
 
             form.save()
@@ -180,10 +190,9 @@ def edit_wine(request, wine_id):
         'id': wine_id,
         'title': "Mon vin",
         'countries': countries,
-        }
-    return render(request, 'wineshops/wine_form.html', context )
-
-
+        'filled': shop.filled,
+    }
+    return render(request, 'wineshops/wine_form.html', context)
 
 
 class create_wine(generic.CreateView):
@@ -198,27 +207,33 @@ class create_wine(generic.CreateView):
         country = form.cleaned_data['country']
         if not country and form.cleaned_data['country_hidden']:
             country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
-                                                             defaults={'custom': True, 'name': form.cleaned_data['country_hidden'] })
+                                                             defaults={'custom': True,
+                                                                       'name': form.cleaned_data['country_hidden']})
         form.instance.country = country
 
         region = form.cleaned_data['region']
         if not region:
             if form.cleaned_data['region_hidden']:
                 region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country,
-                                                               defaults={'custom': True, 'name': form.cleaned_data['region_hidden'], 'country': country })
+                                                               defaults={'custom': True,
+                                                                         'name': form.cleaned_data['region_hidden'],
+                                                                         'country': country})
         elif region.country != country:
             region, created = Region.objects.get_or_create(name=region.name, country=country,
-                                                           defaults={'custom': True, 'name': region.name, 'country': country })
+                                                           defaults={'custom': True, 'name': region.name,
+                                                                     'country': country})
         form.instance.region = region
 
         area = form.cleaned_data['area']
         if not area:
             if form.cleaned_data['area_hidden']:
                 area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region,
-                                                           defaults={'custom': True, 'name': form.cleaned_data['area_hidden'], 'region': region })
+                                                           defaults={'custom': True,
+                                                                     'name': form.cleaned_data['area_hidden'],
+                                                                     'region': region})
         elif region.country != country:
             area, created = Area.objects.get_or_create(name=area.name, region=region,
-                                                       defaults={'custom': True, 'name': area.name, 'region': region })
+                                                       defaults={'custom': True, 'name': area.name, 'region': region})
         form.instance.area = area
 
         return super(create_wine, self).form_valid(form)
@@ -226,11 +241,15 @@ class create_wine(generic.CreateView):
     def get_context_data(self, **kwargs):
         ctx = super(create_wine, self).get_context_data(**kwargs)
         generic_countries = set(Country.objects.filter(custom=False).all())
-        user_countries_ids = set(Wine.objects.filter(shop__user=self.request.user).values_list('country', flat=True).distinct())
+        user_countries_ids = set(
+            Wine.objects.filter(shop__user=self.request.user).values_list('country', flat=True).distinct())
         user_countries = Country.objects.filter(pk__in=user_countries_ids)
         countries = list(generic_countries.union(user_countries))
         countries.sort(key=Country.__str__)
         ctx['countries'] = countries
+
+        shop, created = Shop.objects.get_or_create(user=self.request.user)
+        ctx['filled'] = shop.filled,
 
         ctx['title'] = 'Ajouter un vin'
         return ctx
@@ -298,46 +317,52 @@ def search(request):
     except:
         return HttpResponseRedirect('/')
 
-
-    do_search =(len(query_what)!=0 and query_what!='Trouvez votre vin près de chez vous')
+    do_search = (len(query_what) != 0 and query_what != 'Trouvez votre vin près de chez vous')
 
     wine_objects = Wine.objects
     if do_search:
-        wine_objects = wine_objects.filter(get_query(query_what, ['producer','country__name','region__name','area__name','color__name', 'varietal', 'classification','vintage','capacity',]))
+        wine_objects = wine_objects.filter(get_query(query_what,
+                                                     ['producer', 'country__name', 'region__name', 'area__name',
+                                                      'color__name', 'varietal', 'classification', 'vintage',
+                                                      'capacity', ]))
 
-    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
+    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in
+               Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
     results.sort(key=itemgetter(1))
     results = [{'shop': a[0],
-                'dist': "%.1f" %a[1],
+                'dist': "%.1f" % a[1],
                 'nb': wine_objects.filter(in_stock=True, shop_id=a[0].id).count(),
-                'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'), Max('price_max')),
+                'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'),
+                                                                                       Max('price_max')),
                 } for a in results]
     if do_search:
         results = [a for a in results if a['nb'] != 0]
     results = results[:20]
 
     return render_to_response('wineshops/search_results.html',
-                          { 'query_what': query_what,
-                            'query_where': query_where,
-                            'results': results,
-                            'lat': lat,
-                            'lng': lng},
-                          context_instance=RequestContext(request))
+                              {'query_what': query_what,
+                               'query_where': query_where,
+                               'results': results,
+                               'lat': lat,
+                               'lng': lng},
+                              context_instance=RequestContext(request))
 
 
 def regions(request):
     country_id = None
     if request.method == 'GET':
         country_id = request.GET.get('country_id', -1)
-    regions = []
+
     if country_id:
-        generic_regions = set(Region.objects.filter(country_id=country_id,custom=False).all())
+        generic_regions = set(Region.objects.filter(country_id=country_id, custom=False).all())
         user_regions_ids = set(Wine.objects.filter(shop__user=request.user, country_id=country_id).values_list('region', flat=True).distinct())
         user_regions = Region.objects.filter(pk__in=user_regions_ids)
         regions = list(generic_regions.union(user_regions))
         regions.sort(key=Country.__str__)
+    else:
+        regions = []
 
-    return HttpResponse('|'.join([r.name+'#'+str(r.id) for r in regions]))
+    return HttpResponse('|'.join([r.name + '#' + str(r.id) for r in regions]))
 
 
 def areas(request):
@@ -346,11 +371,12 @@ def areas(request):
         region_id = request.GET.get('region_id', -1)
     areas = []
     if region_id:
-        generic_areas = set(Area.objects.filter(region_id=region_id,custom=False).all())
-        user_areas_ids = set(Wine.objects.filter(shop__user=request.user, region_id=region_id).values_list('area', flat=True).distinct())
+        generic_areas = set(Area.objects.filter(region_id=region_id, custom=False).all())
+        user_areas_ids = set(
+            Wine.objects.filter(shop__user=request.user, region_id=region_id).values_list('area', flat=True).distinct())
         user_areas = Area.objects.filter(pk__in=user_areas_ids)
         areas = list(generic_areas.union(user_areas))
         areas.sort(key=Country.__str__)
 
-    return HttpResponse('|'.join([r.name+'#'+str(r.id) for r in areas]))
+    return HttpResponse('|'.join([r.name + '#' + str(r.id) for r in areas]))
 

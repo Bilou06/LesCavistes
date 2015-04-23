@@ -148,3 +148,7 @@ h2 {
     background-image: url('images/warning.png');
     width: 400px;
 }
+
+
+a img {outline : none;}
+img {border : 0;}
