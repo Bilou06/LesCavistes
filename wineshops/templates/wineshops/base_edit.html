@@ -14,7 +14,9 @@
     <script>
         $(function () {
             $('form').areYouSure({'message': 'Cette page contient des modifications non sauvegardées.'});
-            $('input, select').change(function () {$(this).css("background-color", "#FFFAC9");});// code duplicated for combobox in autocomplete.js
+            $('input, select').change(function () {
+                $(this).css("background-color", "#FFFAC9");
+            });// code duplicated for combobox in autocomplete.js
         })
     </script>
     {% block extrascript %}{% endblock %}
@@ -23,7 +25,14 @@
 {% block content %}
 
     <div id="form">
-    {% block form %}{% endblock %}
-    </div >
+        {% block form %}{% endblock %}
+    </div>
 
+    {% if not filled %}
+        <div class="warning" title="Magasin non renseigné">
+            <p>Attention, les informations de votre magasion ne sont pas renseignées.</p>
+            <p>Aucun utilisateur ne pourra vous trouver.</p>
+            <p>Veuillez cliquer sur l'onglet "Mon magasion" pour les renseigner</p>
+        </div>
+    {% endif %}
 {% endblock %}

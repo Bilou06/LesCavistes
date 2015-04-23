@@ -31,6 +31,7 @@ class IndexView(generic.ListView):
 
 @login_required
 def edit_user(request):
+    shop, created = Shop.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -43,6 +44,7 @@ def edit_user(request):
 
     return render(request, 'wineshops/edit_user.html', {
         'form': form,
+        'filled': shop.filled
     })
 
 
@@ -60,6 +62,7 @@ def edit_wineshop(request):
 
     return render(request, 'wineshops/edit_wineshop.html', {
         'form': form,
+        'filled': shop.filled
     })
 
 
@@ -117,7 +120,11 @@ def edit_catalog(request):
         except EmptyPage:
             objects = paginator.page(paginator.num_pages).object_list
             page = paginator.num_pages
-        context = {'objects': objects, 'paginator': paginator, 'order': order, 'page': page}
+        context = {'objects': objects,
+                   'paginator': paginator,
+                   'order': order,
+                   'page': page,
+                   'filled': shop.filled}
 
         return render(request, 'wineshops/edit_catalog.html', context)
 
