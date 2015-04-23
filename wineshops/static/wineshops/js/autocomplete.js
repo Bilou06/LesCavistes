@@ -157,7 +157,10 @@ function updateRegion(country) {
             var regions = data.split('|');
             for (var index in regions) {
                 var region = regions[index].split('#');
-                id_region.append(new Option(region[0], region[1]));
+                id_region.append($('<option>', {
+                    text: region[0],
+                    value: region[1]
+                }));
             }
             id_region.children("option").each(function () {
                 if (this.value == $('#former_region').val()) {
@@ -183,7 +186,10 @@ function updateArea(region) {
             regions = data.split('|');
             for (index in regions) {
                 var area = regions[index].split('#');
-                id_area.append(new Option(area[0], area[1]));
+                id_area.append($('<option>', {
+                    text: area[0],
+                    value: area[1]
+                }));
             }
 
             id_area.children("option").each(function () {

@@ -12,8 +12,8 @@ class WineshopForm(ModelForm):
         model = Shop
         fields = ['name', 'address', 'zip_code', 'city', 'country', 'description', 'phone', 'mail', 'web', 'latitude', 'longitude']
         widgets = {
-            'latitude' : HiddenInput(),
-            'longitude' : HiddenInput(),
+            'latitude': HiddenInput(),
+            'longitude': HiddenInput(),
         }
 #
 

@@ -7,8 +7,8 @@ function countChecked(){
    $(".action-select").each(function () {
                 if ($(this).is(":checked")) {
                     count +=1;
-                };
-            })
+                }
+            });
     return count;
 }
 
@@ -17,8 +17,8 @@ function getChecked(){
     $(".action-select").each(function () {
                 if ($(this).is(":checked")) {
                     index.push($(this).attr("value"));
-                };
-            })
+                }
+            });
     return index;
 }
 
@@ -31,7 +31,7 @@ function stockChecked(status){
      $.get(
         url+getChecked().join(','),
          {},
-        function(data){
+        function(){
             location.reload();
         }
     );
@@ -71,17 +71,18 @@ $(document).ready(function () {
 
     $('.action-select').change(function(){
         $('#count-selected').text(countChecked())
-    })
+    });
 
     $('.form-button').click(function()
     {
-        count = countChecked();
+        var count = countChecked();
         if(count ==0 ){
             alert("Aucun vin sélectionné");
             return;
         }
 
-        action = $("#action").val();
+        //var action = $("#action option:selected").prop('value');
+        var action = $("#action").val();
         if(action.length == 0){
             alert('Aucune action sélectionnée, veuillez sélectionner une action');
             return
