@@ -107,17 +107,17 @@ def edit_catalog(request):
 
         # pagination
         paginator = Paginator(query.all(), 20)  # Show 20 forms per page
-        page = request.GET.get('page')
+        p = request.GET.get('page')
         try:
-            objects = paginator.page(page).object_list
-            page = int(page)
+            objects = paginator.page(p).object_list
+            page = int(p)
         except PageNotAnInteger:
             objects = paginator.page(1).object_list
             page = 1
         except EmptyPage:
             objects = paginator.page(paginator.num_pages).object_list
             page = paginator.num_pages
-        context = {'objects': objects, 'paginator': paginator, 'order': order, 'page':page}
+        context = {'objects': objects, 'paginator': paginator, 'order': order, 'page': page}
 
         return render(request, 'wineshops/edit_catalog.html', context)
 
@@ -126,7 +126,7 @@ def edit_catalog(request):
 def edit_wine(request, wine_id):
     wine = get_object_or_404(Wine, id=wine_id)
 
-    if (not wine.shop.user == request.user):
+    if not wine.shop.user == request.user:
         return HttpResponseForbidden()
 
     if request.method == 'POST':
@@ -135,21 +135,26 @@ def edit_wine(request, wine_id):
 
             country = form.cleaned_data['country']
             if not country or( form.cleaned_data['country_hidden'] and country.name != form.cleaned_data['country_hidden']):
-                country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'], defaults={'custom':True, 'name':form.cleaned_data['country_hidden'] })
+                country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
+                                                                 defaults={'custom': True, 'name': form.cleaned_data['country_hidden'] })
             form.instance.country = country
 
             region = form.cleaned_data['region']
             if not region or (form.cleaned_data['region_hidden'] and region.name != form.cleaned_data['region_hidden']):
-                region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country, defaults={'custom':True, 'name':form.cleaned_data['region_hidden'], 'country':country })
+                region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country,
+                                                               defaults={'custom': True, 'name': form.cleaned_data['region_hidden'], 'country': country })
             elif region.country != country:
-                region, created = Region.objects.get_or_create(name=region.name, country=country, defaults={'custom':True, 'name':region.name, 'country':country })
+                region, created = Region.objects.get_or_create(name=region.name, country=country,
+                                                               defaults={'custom': True, 'name': region.name, 'country': country })
             form.instance.region = region
 
             area = form.cleaned_data['area']
             if not area or(form.cleaned_data['area_hidden'] and area.name != form.cleaned_data['area_hidden']):
-                area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region, defaults={'custom':True, 'name':form.cleaned_data['area_hidden'], 'region':region })
+                area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region,
+                                                           defaults={'custom': True, 'name': form.cleaned_data['area_hidden'], 'region': region })
             elif region.country != country:
-                area, created = Area.objects.get_or_create(name=area.name, region=region, defaults={'custom':True, 'name':area.name, 'region':region })
+                area, created = Area.objects.get_or_create(name=area.name, region=region,
+                                                           defaults={'custom': True, 'name': area.name, 'region': region })
             form.instance.area = area
 
             form.save()
@@ -166,8 +171,8 @@ def edit_wine(request, wine_id):
     context = {
         'form': form,
         'id': wine_id,
-        'title' : "Mon vin",
-        'countries' : countries,
+        'title': "Mon vin",
+        'countries': countries,
         }
     return render(request, 'wineshops/wine_form.html', context )
 
@@ -185,23 +190,28 @@ class create_wine(generic.CreateView):
 
         country = form.cleaned_data['country']
         if not country and form.cleaned_data['country_hidden']:
-            country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'], defaults={'custom':True, 'name':form.cleaned_data['country_hidden'] })
+            country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
+                                                             defaults={'custom': True, 'name': form.cleaned_data['country_hidden'] })
         form.instance.country = country
 
         region = form.cleaned_data['region']
         if not region:
             if form.cleaned_data['region_hidden']:
-                region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country, defaults={'custom':True, 'name':form.cleaned_data['region_hidden'], 'country':country })
+                region, created = Region.objects.get_or_create(name=form.cleaned_data['region_hidden'], country=country,
+                                                               defaults={'custom': True, 'name': form.cleaned_data['region_hidden'], 'country': country })
         elif region.country != country:
-            region, created = Region.objects.get_or_create(name=region.name, country=country, defaults={'custom':True, 'name':region.name, 'country':country })
+            region, created = Region.objects.get_or_create(name=region.name, country=country,
+                                                           defaults={'custom': True, 'name': region.name, 'country': country })
         form.instance.region = region
 
         area = form.cleaned_data['area']
         if not area:
             if form.cleaned_data['area_hidden']:
-                area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region, defaults={'custom':True, 'name':form.cleaned_data['area_hidden'], 'region':region })
+                area, created = Area.objects.get_or_create(name=form.cleaned_data['area_hidden'], region=region,
+                                                           defaults={'custom': True, 'name': form.cleaned_data['area_hidden'], 'region': region })
         elif region.country != country:
-            area, created = Area.objects.get_or_create(name=area.name, region=region, defaults={'custom':True, 'name':area.name, 'region':region })
+            area, created = Area.objects.get_or_create(name=area.name, region=region,
+                                                       defaults={'custom': True, 'name': area.name, 'region': region })
         form.instance.area = area
 
         return super(create_wine, self).form_valid(form)
@@ -227,7 +237,7 @@ def confirm_remove(request, wine_ids):
         for i in index:
             wine = get_object_or_404(Wine, id=i)
             wines.append(wine)
-            if (not wine.shop.user == request.user):
+            if not wine.shop.user == request.user:
                 return HttpResponseForbidden()
 
         if request.method == 'POST':
@@ -240,13 +250,16 @@ def confirm_remove(request, wine_ids):
     except:
         return HttpResponseForbidden()
 
+
 @login_required
 def out_wines(request, wine_ids):
     return in_out_wines(request, wine_ids, False)
 
+
 @login_required
 def in_wines(request, wine_ids):
     return in_out_wines(request, wine_ids, True)
+
 
 def in_out_wines(request, wine_ids, status):
     try:
@@ -255,7 +268,7 @@ def in_out_wines(request, wine_ids, status):
         for i in index:
             wine = get_object_or_404(Wine, id=i)
             wines.append(wine)
-            if (not wine.shop.user == request.user):
+            if not wine.shop.user == request.user:
                 return HttpResponseForbidden()
 
         if request.method == 'GET':
@@ -269,16 +282,13 @@ def in_out_wines(request, wine_ids, status):
         return HttpResponseForbidden()
 
 
-
-
-
 def search(request):
     query_what = request.GET['q']
     query_where = request.GET['o']
     try:
         lat = float(request.GET['lat'])
         lng = float(request.GET['lng'])
-    except :
+    except:
         return HttpResponseRedirect('/')
 
 
@@ -301,10 +311,10 @@ def search(request):
 
     return render_to_response('wineshops/search_results.html',
                           { 'query_what': query_what,
-                            'query_where' : query_where,
+                            'query_where': query_where,
                             'results': results,
-                            'lat' : lat,
-                            'lng' : lng},
+                            'lat': lat,
+                            'lng': lng},
                           context_instance=RequestContext(request))
 
 

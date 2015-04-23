@@ -34,8 +34,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wineshops/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40801188" vertical-offset="1561" max-vertical-offset="5865">
-              <caret line="108" column="45" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.35756677" vertical-offset="5131" max-vertical-offset="6035">
+              <caret line="316" column="33" selection-start-line="316" selection-start-column="33" selection-end-line="316" selection-end-column="33" />
               <folding>
                 <element signature="e#24#34#0" expanded="true" />
               </folding>
@@ -895,6 +895,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="323">
           <caret line="0" column="45" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1124,8 +1125,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wineshops/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40801188" vertical-offset="1561" max-vertical-offset="5865">
-          <caret line="108" column="45" selection-start-line="108" selection-start-column="45" selection-end-line="108" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.35756677" vertical-offset="5131" max-vertical-offset="6035">
+          <caret line="316" column="33" selection-start-line="316" selection-start-column="33" selection-end-line="316" selection-end-column="33" />
           <folding>
             <element signature="e#24#34#0" expanded="true" />
           </folding>
