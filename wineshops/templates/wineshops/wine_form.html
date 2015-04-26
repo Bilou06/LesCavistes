@@ -86,6 +86,7 @@
                 <tr>
                     <th><label>Couleur :</label></th>
                     <td>{{ form.color }}</td>
+                    <td class="errorlist">{{ form.color.errors|first }}</td>
                 </tr>
                 <tr>
                     <th><label>Cépage :</label></th>
@@ -94,6 +95,7 @@
                 <tr>
                     <th><label>Contenance :</label></th>
                     <td>{{ form.capacity }}</td>
+                    <td class="errorlist">{{ form.capacity.errors|first }}</td>
                 </tr>
                 <tr>
                     <th><label>Prix minimum :</label></th>

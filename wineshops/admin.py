@@ -15,11 +15,16 @@ admin.site.register(Country, CountryAdmin)
 
 class RegionAdmin(admin.ModelAdmin):
     list_filter = ('custom', 'country')
+    list_display = ('name', 'country', 'custom')
 
 admin.site.register(Region, RegionAdmin)
 
 class AreaAdmin(admin.ModelAdmin):
     list_filter = ('custom', 'region')
+    list_display = ('name', 'country', 'region', 'custom')
+
+    def country(self, obj):
+        return obj.region.country
 
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Color)
