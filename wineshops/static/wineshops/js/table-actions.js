@@ -2,6 +2,10 @@
  * Created by Sylvain on 14/04/2015.
  */
 
+String.prototype.splice = function( idx, rem, s ) {
+    return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+};
+
 function countChecked(){
     var count = 0;
    $(".action-select").each(function () {
@@ -44,7 +48,7 @@ function sort(order){
     $(".sortable").removeClass("sorted");
     if (order>0) {
         $("a[href^='?o=" + order + "']").each(function () {
-            this.href = "?o=-" + order
+            this.href = this.href.replace("/?o=", "/?o=-")
         });
         $("."+column).addClass("sorted ascending");
     }else{

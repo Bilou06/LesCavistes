@@ -54,13 +54,17 @@ tfoot td:first-child {
 }
 
 .btn_detail {
-    background: #ffcc00;
+    float: right;
+    font-size: 11px;
+    color: #777;
+    cursor: pointer;
+    position: relative;
+    font-weight: normal;
+    background: #48ffa4;
     border: 1px solid #cfcfcf;
     padding: 5px 8px;
     text-align: center;
     border-radius: 5px;
-    font-weight: bold;
-    font-size: 11px;
 }
 
 .info-shop {
@@ -70,6 +74,11 @@ tfoot td:first-child {
     cursor: pointer;
     position: relative;
     font-weight: normal;
+    background: #ffcc00;
+    border: 1px solid #cfcfcf;
+    padding: 5px 8px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 .info-shop:hover {
@@ -87,6 +96,17 @@ position: absolute;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     top: 10px;
     width: 400px;
+}
+
+.bloc-id-shop{
+    border: 1px solid #CFCFCF;
+    background: #FFF;
+    padding: 10px;
+    font-weight: normal;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    top: 10px;
+    margin: 10px;
+    width:50%;
 }
 
 .logo-shop {

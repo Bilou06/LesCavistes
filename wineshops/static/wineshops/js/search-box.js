@@ -44,7 +44,7 @@ function codeAddress() {
     return true;
 }
 
-var ref1 = "Quel vin ? Vide pour tous";;
+var ref1 = "Quel vin ? Laisser vide pour tous";;
 var ref2 = "Où ? Entrez une ville, une adresse"//duplicated in the view
 var field1, field2;
 

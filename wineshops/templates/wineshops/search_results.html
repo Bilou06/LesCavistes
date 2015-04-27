@@ -16,7 +16,6 @@
 
 
 {% block content %}
-
     <div id="tfheader">
         <form id="tftopsearch" onsubmit="return mainSearch();" method="get" action="{% url 'wineshops:search' %}">
             <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
@@ -45,9 +44,12 @@
                         <th scope="col">Adresse</th>
                         <th scope="col">Ville</th>
                         <th scope="col">Distance</th>
-                        <th scope="col">Nb. de référence(s)</th>
-                        <th scope="col">Prix min.</th>
-                        <th scope="col">Prix max.</th>
+                        {% if what_criteria %}
+                            <th scope="col">Nb. de référence(s)</th>
+                            <th scope="col">Prix min.</th>
+                            <th scope="col">Prix max.</th>
+                            <th></th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -58,7 +60,7 @@
                             </td>
                             <td class="td-infoshop">
                                 <div class="infoshop">
-                                    <span class="info-shop btn_detail">Infos</span>
+                                    <span class="info-shop">Infos</span>
 
                                     <div class="bloc-info-shop" style="display: none;">
                                         <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.shop.image }}" alt="{{ shop.shop.name }}" title="{{ shop.shop.name }}"></div-->
@@ -95,13 +97,21 @@
                             <td>{{ shop.shop.address }}</td>
                             <td>{{ shop.shop.zip_code|stringformat:"05d" }} {{ shop.shop.city }}</td>
                             <td>{{ shop.dist }} km</td>
-                            <td>{{ shop.nb }}</td>
-                            <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:"" }}</td>
-                            <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:"" }}</td>
+                            {% if what_criteria %}
+                                <td>{{ shop.nb }}</td>
+                                <td>{{ shop.price.price_min__min|floatformat:2|default_if_none:"" }}</td>
+                                <td>{{ shop.price.price_max__max|floatformat:2|default_if_none:"" }}</td>
+                            {% endif %}
                             <td style="display: none;" class="shop-lat-lng"
                                 data-lat="{{ shop.shop.latitude }}"
                                 data-lng="{{ shop.shop.longitude }}"
                                 data-title="{{ shop.shop.name }}"></td>
+                            <td>
+                                <div class="infoshop">
+                                    <a href="/wineshops/catalog/{{ shop.shop.id }}/?q={{ query_what }}"><span
+                                            class="btn_detail">Détails</span></a>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                     <div id="map-div">

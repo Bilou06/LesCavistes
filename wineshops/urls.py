@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^areas/$', views.areas, name='areas'),
     url(r'^in_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.in_wines, name='in_wines'),
     url(r'^out_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.out_wines, name='out_wines'),
+    url(r'catalog/(?P<shop_id>[0-9]+)/$', views.filtered_catalog, name="filtered_catalog")
 ]

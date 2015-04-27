@@ -74,7 +74,13 @@ def edit_catalog(request):
     if request.method == 'POST':
         return HttpResponseForbidden()
     else:
-        query = Wine.objects.filter(shop_id=shop.id).order_by('country__name', 'region__name', 'area__name', 'producer')
+        query = Wine.objects.filter(shop_id=shop.id)
+
+    return displayWines(request, 'wineshops/edit_catalog.html', query, {'filled': shop.filled})
+
+
+def displayWines(request, template, query, context={}):
+        query = query.order_by('country__name', 'region__name', 'area__name', 'producer')
 
         # sort
         order = 0
@@ -121,13 +127,14 @@ def edit_catalog(request):
         except EmptyPage:
             objects = paginator.page(paginator.num_pages).object_list
             page = paginator.num_pages
-        context = {'objects': objects,
+
+        c = context.copy()
+        c.update({'objects': objects,
                    'paginator': paginator,
                    'order': order,
-                   'page': page,
-                   'filled': shop.filled}
+                   'page': page})
 
-        return render(request, 'wineshops/edit_catalog.html', context)
+        return render(request, template, c)
 
 
 @login_required
@@ -344,7 +351,8 @@ def search(request):
                                'query_where': query_where,
                                'results': results,
                                'lat': lat,
-                               'lng': lng},
+                               'lng': lng,
+                               'what_criteria':do_search},
                               context_instance=RequestContext(request))
 
 
@@ -380,3 +388,27 @@ def areas(request):
 
     return HttpResponse('|'.join([r.name + '#' + str(r.id) for r in areas]))
 
+
+def filtered_catalog(request, shop_id):
+
+    shop = get_object_or_404(Shop, id=shop_id)
+
+    if request.method == 'POST':
+        return HttpResponseForbidden()
+    else:
+        query_what = request.GET['q']
+        do_search = (len(query_what) != 0 and query_what != 'Trouvez votre vin près de chez vous')
+
+        query = Wine.objects.filter(shop_id=shop.id)
+        if do_search:
+            query = query.filter(get_query(query_what, ['producer', 'country__name', 'region__name', 'area__name',
+                                       'color__name', 'varietal', 'classification', 'vintage',
+                                       'capacity', ]))\
+
+    return displayWines(request,
+                        'wineshops/show_catalog.html',
+                        query,
+                        {'query_what': query_what,
+                         'shop_id': shop_id,
+                         'shop' : shop,
+                         'what_criteria': do_search,})

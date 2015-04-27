@@ -1,0 +1,146 @@
+{% extends "wineshops/base_wineshops.html" %}
+{% load staticfiles %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/result.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/form.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/catalog-form.css' %}"/>
+    <link rel="stylesheet" href="{% static 'wineshops/pagination.css' %}"/>
+{% endblock %}
+
+{% block script %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/search-box.js' %}"></script>
+    <script type="text/javascript" src="{% static 'wineshops/js/table-actions.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div id="tfheader">
+        <form id="tftopsearch" method="get" action="/wineshops/filtered_catalog/{{ shop_id }}/?q={{ query_what }}">
+            <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
+                   value="{{ query_what }}">
+            <input type="submit" value=">" class="tfbutton2">
+        </form>
+
+        <div class="bloc-id-shop">
+            <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.image }}" alt="{{ shop.name }}" title="{{ shop.name }}"></div-->
+            <div class="coord-shop">
+                <h4>{{ shop.name }}</h4>
+
+                <p>{{ shop.address }} <br>
+                    {{ shop.zip_code|stringformat:"05d" }}&nbsp;-&nbsp;{{ shop.city }}<br>
+                    {% if shop.phone %}{{ shop.phone }}<br>{% endif %}
+                </p>
+            </div>
+            <div class="desc-shop">
+                <p>{{ shop.description }}</p>
+            </div>
+            {% if shop.mail %}
+                <div class="site-mail">
+                    <a class="btn_base btn_white" href="mailto:{{ shop.mail }}">Lui
+                        ecrire</a></div>
+            {% endif %}
+            {% if shop.web %}
+                <div class="site-shop"><a
+                        href="{% if shop.web|slice:":4" != 'http' %}http://{% endif %}{{ shop.web }}"
+                        target="_blank"
+                        class="btn_base btn_white">Voir son site</a></div>
+            {% endif %}
+            <div class="map-shop"><a class="btn_base btn_blue"
+                                     href="https://maps.google.com/maps?q={{ shop.address }}, {{ shop.zip_code|stringformat:"05d" }} {{ shop.city }}"
+                                     target="_blank">Voir sur la carte</a></div>
+        </div>
+    </div>
+
+
+
+    {% if objects %}
+        <div id="content-header">
+            <div class="results">
+                <table id="result_list">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable column-producer">
+                            <div class="text"><a href="?o=1&q={{ query_what }}">Producteur</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-country">
+                            <div class="text"><a href="?o=2&q={{ query_what }}">Pays</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-region">
+                            <div class="text"><a href="?o=3&q={{ query_what }}">Région</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-area">
+                            <div class="text"><a href="?o=4&q={{ query_what }}">Terroir</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-color">
+                            <div class="text"><a href="?o=5&q={{ query_what }}">Couleur</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-varietal">
+                            <div class="text"><a href="?o=6&q={{ query_what }}">Cépage</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-classification">
+                            <div class="text"><a href="?o=7&q={{ query_what }}">Classification</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-vintage">
+                            <div class="text"><a href="?o=8&q={{ query_what }}">Millésime</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-capacity">
+                            <div class="text"><a href="?o=9&q={{ query_what }}">Contenance(cl)</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-price_min">
+                            <div class="text"><a href="?o=10&q={{ query_what }}">Prix min.</a></div>
+                            <div class="clear"></div>
+                        </th>
+                        <th scope="col" class="sortable column-price_max">
+                            <div class="text"><a href="?o=11&q={{ query_what }}">Prix max.</a></div>
+                            <div class="clear"></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for wine in objects %}
+                        <tr>
+                            <td class="field-producer">{{ wine.producer }}</td>
+                            <td class="field-area nowrap">{{ wine.country.name }}</td>
+                            <td class="field-area nowrap">{{ wine.region.name }}</td>
+                            <td class="field-area nowrap">{{ wine.area.name }}</td>
+                            <td class="field-color nowrap">{{ wine.color }}</td>
+                            <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>
+                            <td class="field-classification">{{ wine.classification }}</td>
+                            <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
+                            <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
+                            <td class="field-capacity">{{ wine.price_min|floatformat:2|default_if_none:"" }}</td>
+                            <td class="field-capacity">{{ wine.price_max|floatformat:2|default_if_none:"" }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <p>
+            Aucun résultat trouvé pour cette recherche.
+        </p>
+        <p>
+            Le catalogue n'est peut-être pas à jour.
+        </p>
+    {% endif %}
+    {% if order %}
+        <script>
+            sort({{ order }});
+        </script>
+    {% endif %}
+
+
+{% endblock %}
