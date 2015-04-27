@@ -21,9 +21,10 @@
         <div style="height: 200px; width: 40%;">
             <a id="back" class="button" href="{{ back_url }}">Retour à la liste</a>
             <div style="position: relative; top: 100px;">
-            <form id="tftopsearch" method="get" action="/wineshops/catalog/{{ shop_id }}/?q={{ query_what }}&back={{ back }}">
+            <form id="tftopsearch" method="get" action="/wineshops/catalog/{{ shop_id }}/">
                 <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
                        value="{{ query_what }}">
+                <input type="hidden" name="back" value="{{ back_url }}">
                 <input type="submit" value=">" class="tfbutton2">
             </form>
                 </div>
