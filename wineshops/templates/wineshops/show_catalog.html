@@ -18,11 +18,16 @@
 
 {% block content %}
     <div id="tfheader">
-        <form id="tftopsearch" method="get" action="/wineshops/filtered_catalog/{{ shop_id }}/?q={{ query_what }}">
-            <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
-                   value="{{ query_what }}">
-            <input type="submit" value=">" class="tfbutton2">
-        </form>
+        <div style="height: 200px; width: 40%;">
+            <a id="back" class="button" href="{{ back_url }}">Retour à la liste</a>
+            <div style="position: relative; top: 100px;">
+            <form id="tftopsearch" method="get" action="/wineshops/catalog/{{ shop_id }}/?q={{ query_what }}&back={{ back }}">
+                <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
+                       value="{{ query_what }}">
+                <input type="submit" value=">" class="tfbutton2">
+            </form>
+                </div>
+        </div>
 
         <div class="bloc-id-shop">
             <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.image }}" alt="{{ shop.name }}" title="{{ shop.name }}"></div-->
@@ -63,47 +68,47 @@
                     <thead>
                     <tr>
                         <th scope="col" class="sortable column-producer">
-                            <div class="text"><a href="?o=1&q={{ query_what }}">Producteur</a></div>
+                            <div class="text"><a href="?o=1&q={{ query_what }}&back={{ back }}">Producteur</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-country">
-                            <div class="text"><a href="?o=2&q={{ query_what }}">Pays</a></div>
+                            <div class="text"><a href="?o=2&q={{ query_what }}&back={{ back }}">Pays</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-region">
-                            <div class="text"><a href="?o=3&q={{ query_what }}">Région</a></div>
+                            <div class="text"><a href="?o=3&q={{ query_what }}&back={{ back }}">Région</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-area">
-                            <div class="text"><a href="?o=4&q={{ query_what }}">Terroir</a></div>
+                            <div class="text"><a href="?o=4&q={{ query_what }}&back={{ back }}">Terroir</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-color">
-                            <div class="text"><a href="?o=5&q={{ query_what }}">Couleur</a></div>
+                            <div class="text"><a href="?o=5&q={{ query_what }}&back={{ back }}">Couleur</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-varietal">
-                            <div class="text"><a href="?o=6&q={{ query_what }}">Cépage</a></div>
+                            <div class="text"><a href="?o=6&q={{ query_what }}&back={{ back }}">Cépage</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-classification">
-                            <div class="text"><a href="?o=7&q={{ query_what }}">Classification</a></div>
+                            <div class="text"><a href="?o=7&q={{ query_what }}&back={{ back }}">Classification</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-vintage">
-                            <div class="text"><a href="?o=8&q={{ query_what }}">Millésime</a></div>
+                            <div class="text"><a href="?o=8&q={{ query_what }}&back={{ back }}">Millésime</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-capacity">
-                            <div class="text"><a href="?o=9&q={{ query_what }}">Contenance(cl)</a></div>
+                            <div class="text"><a href="?o=9&q={{ query_what }}&back={{ back }}">Contenance(cl)</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-price_min">
-                            <div class="text"><a href="?o=10&q={{ query_what }}">Prix min.</a></div>
+                            <div class="text"><a href="?o=10&q={{ query_what }}&back={{ back }}">Prix min.</a></div>
                             <div class="clear"></div>
                         </th>
                         <th scope="col" class="sortable column-price_max">
-                            <div class="text"><a href="?o=11&q={{ query_what }}">Prix max.</a></div>
+                            <div class="text"><a href="?o=11&q={{ query_what }}&back={{ back }}">Prix max.</a></div>
                             <div class="clear"></div>
                         </th>
                     </tr>

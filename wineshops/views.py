@@ -17,6 +17,8 @@ from .models import Country, Region, Area
 from user_profile.forms import EditUserForm
 from .searchEngine import get_query
 
+import urllib
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -316,8 +318,8 @@ def in_out_wines(request, wine_ids, status):
 
 
 def search(request):
-    query_what = request.GET['q']
-    query_where = request.GET['o']
+    query_what = request.GET.get('q')
+    query_where = request.GET.get('o')
     try:
         lat = float(request.GET['lat'])
         lng = float(request.GET['lng'])
@@ -395,15 +397,25 @@ def filtered_catalog(request, shop_id):
 
     if request.method == 'POST':
         return HttpResponseForbidden()
-    else:
-        query_what = request.GET['q']
-        do_search = (len(query_what) != 0 and query_what != 'Trouvez votre vin près de chez vous')
 
-        query = Wine.objects.filter(shop_id=shop.id)
-        if do_search:
-            query = query.filter(get_query(query_what, ['producer', 'country__name', 'region__name', 'area__name',
-                                       'color__name', 'varietal', 'classification', 'vintage',
-                                       'capacity', ]))\
+    query_what = request.GET.get('q')
+    do_search = (len(query_what) != 0 and query_what != 'Trouvez votre vin près de chez vous')
+
+    query = Wine.objects.filter(shop_id=shop.id)
+    if do_search:
+        query = query.filter(get_query(query_what, ['producer', 'country__name', 'region__name', 'area__name',
+                                   'color__name', 'varietal', 'classification', 'vintage',
+                                   'capacity', ]))\
+
+    back = request.GET.get('back')
+
+    if back == None:
+        back_url = request.META.get('HTTP_REFERER', '/')
+        back = urllib.parse.quote(back_url)
+    else:
+        back_url = back
+        back = urllib.parse.quote(back_url)
+
 
     return displayWines(request,
                         'wineshops/show_catalog.html',
@@ -411,4 +423,6 @@ def filtered_catalog(request, shop_id):
                         {'query_what': query_what,
                          'shop_id': shop_id,
                          'shop' : shop,
-                         'what_criteria': do_search,})
+                         'what_criteria': do_search,
+                         'back': back,
+                         'back_url': back_url})
