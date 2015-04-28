@@ -34,8 +34,12 @@
     padding: 5px 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size:14px;
-    color:#666;
+    color:#999;
     border:1px solid #0076a3;
+}
+
+.tftextinput_modified{
+    color:black;
 }
 
 .tfbutton2 {

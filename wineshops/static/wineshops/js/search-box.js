@@ -6,7 +6,9 @@ var text1, text2;
 var finished = false;
 
 function mainSearch() {
-    if (finished) {return true;}
+    if (finished) {
+        return true;
+    }
     codeAddress();
     return false;
 }
@@ -62,18 +64,42 @@ $(document).ready(function () {
     if (text2 == "") {
         text2 = ref2;
         field2.val(text2);
+        getLocation();
     }
 
-    $("#tfq1b").click(function () {
-        if ($("#tfq1b").val() == ref1) {
-            $("#tfq1b").val("");
+    field1.click(function () {
+        if (field1.val() == ref1) {
+            field1.val("");
+            field1.addClass("tftextinput_modified")
         }
     });
 
     field2.click(function () {
         if (field2.val() == ref2) {
             field2.val("");
+            field1.addClass("tftextinput_modified")
         }
     });
 
 });
+
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+}
+function showPosition(position) {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    geocoder.geocode({'latLng': latlng}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                field2.val(results[0].formatted_address)
+                field2.addClass("tftextinput_modified")
+            }
+        }
+    )
+    ;
+}
+
