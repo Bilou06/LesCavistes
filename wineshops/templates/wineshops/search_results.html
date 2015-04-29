@@ -48,8 +48,9 @@
                             <th scope="col">Nb. de référence(s)</th>
                             <th scope="col">Prix min.</th>
                             <th scope="col">Prix max.</th>
-                            <th></th>
+
                         {% endif %}
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -105,7 +106,9 @@
                             <td style="display: none;" class="shop-lat-lng"
                                 data-lat="{{ shop.shop.latitude }}"
                                 data-lng="{{ shop.shop.longitude }}"
-                                data-title="{{ shop.shop.name }}"></td>
+                                data-title="{{ shop.shop.name }}">
+
+                            </td>
                             <td>
                                 <div class="infoshop">
                                     <a href="/wineshops/catalog/{{ shop.shop.id }}/?q={{ query_what }}"><span

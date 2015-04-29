@@ -18,6 +18,7 @@ from user_profile.forms import EditUserForm
 from .searchEngine import get_query
 
 import urllib
+import json
 
 import logging
 
@@ -372,7 +373,7 @@ def regions(request):
     else:
         regions = []
 
-    return HttpResponse('|'.join([r.name + '#' + str(r.id) for r in regions]))
+    return HttpResponse(json.dumps([{'name': r.name, '#': str(r.id)} for r in regions]))
 
 
 def areas(request):
@@ -388,7 +389,7 @@ def areas(request):
         areas = list(generic_areas.union(user_areas))
         areas.sort(key=Country.__str__)
 
-    return HttpResponse('|'.join([r.name + '#' + str(r.id) for r in areas]))
+    return HttpResponse(json.dumps([{'name': r.name, '#': str(r.id)} for r in areas]))
 
 
 def filtered_catalog(request, shop_id):

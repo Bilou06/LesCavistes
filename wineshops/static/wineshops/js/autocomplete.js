@@ -154,12 +154,12 @@ function updateRegion(country) {
     $.get('/wineshops/regions',
         {'country_id': country},
         function (data) {
-            var regions = data.split('|');
+            var regions = JSON.parse(data)
             for (var index in regions) {
-                var region = regions[index].split('#');
+                var region = regions[index];
                 id_region.append($('<option>', {
-                    text: region[0],
-                    value: region[1]
+                    text: region['name'],
+                    value: region['#']
                 }));
             }
             id_region.children("option").each(function () {
@@ -183,12 +183,12 @@ function updateArea(region) {
     $.get('/wineshops/areas',
         {'region_id': region},
         function (data) {
-            regions = data.split('|');
-            for (index in regions) {
-                var area = regions[index].split('#');
+            var areas = JSON.parse(data)
+            for (index in areas) {
+                var area = areas[index];
                 id_area.append($('<option>', {
-                    text: area[0],
-                    value: area[1]
+                    text: area['name'],
+                    value: area['#']
                 }));
             }
 
