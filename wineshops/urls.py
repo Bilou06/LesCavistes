@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     # ex: /wineshops/
     url(r'^$', views.IndexView.as_view(), name='index'),
+	
     # ex: /wineshops/edit/
     url(r'^edit/$', views.edit_user, name='edit'),
     url(r'^edit/user/$', views.edit_user, name='edit_user'),
@@ -23,6 +24,7 @@ urlpatterns = [
     url(r'^in_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.in_wines, name='in_wines'),
     url(r'^out_wines/(?P<wine_ids>[0-9]+(,[0-9]+)*)$', views.out_wines, name='out_wines'),
     url(r'catalog/(?P<shop_id>[0-9]+)/$', views.filtered_catalog, name="filtered_catalog"),
+
 
     # for apps
     url(r'getwineshops/$', views.get_wine_shops, name="getwineshops"),

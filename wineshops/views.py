@@ -379,6 +379,7 @@ def get_wine_shops(request):
         query_what = request.GET.get('q')
         lat = float(request.GET['lat'])
         lng = float(request.GET['lng'])
+        already_loaded = int(request.GET['c'])
     except ValueError:
         logger.warning(ValueError)
         return HttpResponse(json.dumps([]), content_type='application/json')
@@ -412,9 +413,11 @@ def get_wine_shops(request):
 
     if do_search:
         results = [a for a in results if a['nb'] != 0]
-    results = results[:20]
-
-    return Response(results)
+    
+    nb_results = len(results)
+    per_page = 10
+    results = results[already_loaded: already_loaded + per_page]
+    return Response([nb_results]+results)
 
 
 def regions(request):
