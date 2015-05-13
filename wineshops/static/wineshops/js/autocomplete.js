@@ -212,7 +212,7 @@ $(function () {
 
 
 function setHiddenFields() {
-    $("#id_country_hidden").val(country_combo.find('input').val());
-    $("#id_region_hidden").val(region_combo.find('input').val());
-    $("#id_area_hidden").val(area_combo.find('input').val());
+    $("#id_country_hidden").val($("#id_country").next().find('input').val());
+    $("#id_region_hidden").val($("#id_region").next().find('input').val());
+    $("#id_area_hidden").val($("#id_area").next().find('input').val());
 };

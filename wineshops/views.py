@@ -10,7 +10,14 @@ from django.db.models.functions import Lower
 from django.db.models import Max, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
+
 from . import haversine
+
 
 from .forms import *
 from .models import Country, Region, Area
@@ -79,10 +86,10 @@ def edit_catalog(request):
     else:
         query = Wine.objects.filter(shop_id=shop.id)
 
-    return displayWines(request, 'wineshops/edit_catalog.html', query, {'filled': shop.filled})
+    return display_wines(request, 'wineshops/edit_catalog.html', query, {'filled': shop.filled})
 
 
-def displayWines(request, template, query, context={}):
+def display_wines(request, template, query, context={}):
         query = query.order_by('country__name', 'region__name', 'area__name', 'producer')
 
         # sort
@@ -215,8 +222,9 @@ class create_wine(generic.CreateView):
         form.instance.shop = get_object_or_404(Shop, user=self.request.user)
 
         country = form.cleaned_data['country']
-        if not country and form.cleaned_data['country_hidden']:
-            country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
+        if not country:
+            if form.cleaned_data['country_hidden']:
+                country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
                                                              defaults={'custom': True,
                                                                        'name': form.cleaned_data['country_hidden']})
         form.instance.country = country
@@ -345,6 +353,7 @@ def search(request):
                 'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'),
                                                                                        Max('price_max')),
                 } for a in results]
+
     if do_search:
         results = [a for a in results if a['nb'] != 0]
     results = results[:20]
@@ -357,6 +366,55 @@ def search(request):
                                'lng': lng,
                                'what_criteria':do_search},
                               context_instance=RequestContext(request))
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def get_wine_shops(request):
+    """
+    A view that returns the count of active users in JSON.
+    """
+
+    try:
+        query_what = request.GET.get('q')
+        lat = float(request.GET['lat'])
+        lng = float(request.GET['lng'])
+    except ValueError:
+        logger.warning(ValueError)
+        return HttpResponse(json.dumps([]), content_type='application/json')
+
+    do_search = (len(query_what) != 0)
+
+    wine_objects = Wine.objects
+    if do_search:
+        wine_objects = wine_objects.filter(get_query(query_what,
+                                                     ['producer', 'country__name', 'region__name', 'area__name',
+                                                      'color__name', 'varietal', 'classification', 'vintage',
+                                                      'capacity', ]))
+
+    results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in
+               Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
+    results.sort(key=itemgetter(1))
+    results = [{'name': a[0].name,
+                'id': a[0].id,
+                'address': a[0].address + ', '+ str(a[0].zip_code)+ ' '+ a[0].city,
+                'phone': a[0].phone,
+                'mail': a[0].mail,
+                'web': a[0].web,
+                'desc': a[0].description,
+                'lat': a[0].latitude,
+                'lng': a[0].longitude,
+                'dist': "%.1f" % a[1],
+                'nb': wine_objects.filter(in_stock=True, shop_id=a[0].id).count(),
+                'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'),
+                                                                                       Max('price_max')),
+                } for a in results]
+
+    if do_search:
+        results = [a for a in results if a['nb'] != 0]
+    results = results[:20]
+
+    return Response(results)
 
 
 def regions(request):
@@ -418,7 +476,7 @@ def filtered_catalog(request, shop_id):
         back = urllib.parse.quote(back_url)
 
 
-    return displayWines(request,
+    return display_wines(request,
                         'wineshops/show_catalog.html',
                         query,
                         {'query_what': query_what,
