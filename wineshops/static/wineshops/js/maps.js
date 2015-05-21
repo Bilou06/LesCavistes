@@ -60,7 +60,7 @@ $(document).ready(function () {
     previousAddress = "";
 
     jQuery.each(addressFields, function (field) {
-        $('#' + field).attr("onblur", "codeAddress();");
+        $('#' + addressFields[field]).attr("onblur", "codeAddress();");
     });
 
     initialize();

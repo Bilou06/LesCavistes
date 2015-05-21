@@ -20,37 +20,81 @@
             <table>
                 <tbody>
                 <tr>
-                    <th><label>Nom :</label></th>
-                    <td>{{ form.first_name }}</td>
-                </tr>
-                <tr>
-                    <th><label>Prénom :</label></th>
-                    <td>{{ form.last_name }}</td>
-                </tr>
-                <tr>
-                    <th><label>Adresse e-mail :</label></th>
-                    <td>{{ form.email.errors }}{{ form.email }}</td>
-                </tr>
-                <tr>
                     <th><label>Identifiant :</label></th>
-                    <td>{{ form.errors.values.0 }}{{ form.username.errors }}{{ form.username }}</td>
+                    <td>{{ form.username }}</td>
+                    <td>{{ form.username.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>E-mail :</label></th>
+                    <td>{{ form.email }}</td>
+                    <td>{{ form.email.errors }}</td>
                 </tr>
                 <tr>
                     <th><label>Mot de passe :</label></th>
-                    <td>{{ form.errors.values.1 }}{{ form.password1.errors }}{{ form.password1 }}</td>
+                    <td>{{ form.password1 }}</td>
+                    <td>{{ form.password1.errors }}</td>
                 </tr>
                 <tr>
                     <th><label>Confirmation du mot de passe :</label></th>
-                    <td>{{ form.password2.errors }}{{ form.password2 }}</td>
+                    <td>{{ form.password2 }}</td>
+                    <td>{{ form.password2.errors }}</td>
                 </tr>
                 <tr>
                     <th><label>Êtes vous un être humain ?</label></th>
-                    <td>{{ form.captcha.errors }}{{ form.captcha }}</td>
+                    <td>{{ form.captcha }}</td>
+                    <td>{{ form.captcha.errors }}</td>
                 </tr>
                 <tr>
                     <th><label>J'ai lu et j'approuve <a href="{% url 'user_profile:contract' %}">les conditions
-                        d'utilisation</a></label>{{ form.contract_check.errors }}{{ form.contract_check }}</th>
+                        d'utilisation</a></label>{{ form.contract_check }}</th>
                     <td></td>
+                    <td>{{ form.contract_check.errors }}</td>
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><h4>Informations de facturation</h4></td>
+                </tr>
+
+                <tr>
+                    <th><label>{{ form.last_name.label }} :</label></th>
+                    <td>{{ form.last_name }}</td>
+                    <td>{{ form.last_name.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ form.first_name.label }} :</label></th>
+                    <td>{{ form.first_name }}</td>
+                    <td>{{ form.first_name.errors }}</td>
+                </tr>
+
+                <tr>
+                    <th><label>{{ form.name.label }} :</label></th>
+                    <td>{{ form.name }}</td>
+                    <td>{{ form.name.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ form.address.label }} :</label></th>
+                    <td>{{ form.address }}</td>
+                    <td>{{ form.address.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ form.zip_code.label }} :</label></th>
+                    <td>{{ form.zip_code }}</td>
+                    <td>{{ form.zip_code.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ form.city.label }} :</label></th>
+                    <td>{{ form.city }}</td>
+                    <td>{{ form.city.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ form.VAT.label }} :</label></th>
+                    <td>{{ form.VAT }}</td>
+                    <td>{{ form.VAT.errors }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -51,8 +51,14 @@ def register_user(request):
             user = User.objects.get(username=username)
 
             # Create and save user profile
-            new_profile = UserProfile(user=user, activation_key=activation_key,
-                                      key_expires=key_expires)
+            new_profile = UserProfile(user=user,
+                                      activation_key=activation_key,
+                                      key_expires=key_expires,
+                                      name=form.cleaned_data['name'],
+                                      address=form.cleaned_data['address'],
+                                      city=form.cleaned_data['city'],
+                                      zip_code=form.cleaned_data['zip_code'],
+                                      VAT=form.cleaned_data['VAT'])
             new_profile.save()
 
             # Send email with activation key

@@ -11,23 +11,22 @@ from django.db.models import Max, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 
 from . import haversine
 
-
 from .forms import *
 from .models import Country, Region, Area
-from user_profile.forms import EditUserForm
+from user_profile.forms import EditUserForm, EditUserProfileForm
 from .searchEngine import get_query
 
 import urllib
 import json
 
 import logging
+from user_profile.models import UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -41,20 +40,35 @@ class IndexView(generic.ListView):
 
 
 @login_required
+def edit(request):
+    shop, created = Shop.objects.get_or_create(user=request.user)
+    if (shop.filled):
+        return edit_catalog(request)
+    else:
+        return edit_wineshop(request)
+
+
+@login_required
 def edit_user(request):
     shop, created = Shop.objects.get_or_create(user=request.user)
+    userProfile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        form = EditUserForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
+        userForm = EditUserForm(request.POST, instance=request.user)
+        profileForm = EditUserProfileForm(request.POST, instance=userProfile)
+        if userForm.is_valid() and profileForm.is_valid():
+
+            userForm.save()
+            profileForm.save()
             return HttpResponseRedirect('/wineshops/edit/user')  # Redirect after POST
         else:
-            return HttpResponse('ko')
+            return HttpResponseRedirect('/wineshops/edit/user')  # todo : add a warning to explain the error
     else:
-        form = EditUserForm(instance=request.user)  # An unbound form
+        userForm = EditUserForm(instance=request.user)  # An unbound form
+        profileForm = EditUserProfileForm(instance=userProfile)
 
     return render(request, 'wineshops/edit_user.html', {
-        'form': form,
+        'userForm': userForm,
+        'profileForm': profileForm,
         'filled': shop.filled
     })
 
@@ -69,7 +83,18 @@ def edit_wineshop(request):
             form.save()
             return HttpResponseRedirect('/wineshops/edit/wineshop')  # Redirect after POST
     else:
-        form = WineshopForm(instance=shop)
+
+        if not shop.filled:
+            userProfile = UserProfile.objects.get(user=request.user)
+            form = WineshopForm(instance=shop, initial={
+                'name': userProfile.name,
+                'address': userProfile.address,
+                'zip_code': userProfile.zip_code,
+                'city': userProfile.city,
+                'country': userProfile.country,
+                'mail': userProfile.user.email})
+        else:
+            form = WineshopForm(instance=shop)
 
     return render(request, 'wineshops/edit_wineshop.html', {
         'form': form,
@@ -90,61 +115,61 @@ def edit_catalog(request):
 
 
 def display_wines(request, template, query, context={}):
-        query = query.order_by('country__name', 'region__name', 'area__name', 'producer')
+    query = query.order_by('country__name', 'region__name', 'area__name', 'producer')
 
-        # sort
-        order = 0
-        try:
-            order = int(request.GET.get('o'))
-            # order of columns is duplicated in html and in js
-            parameters = ['',
-                          'producer',
-                          'country__name',
-                          'region__name',
-                          'area__name',
-                          'color__name',
-                          'varietal',
-                          'classification',
-                          'vintage',
-                          'capacity',
-                          'price_min',
-                          'price_max',
-                          'in_stock']
-            if order > 0:
-                param = parameters[order]
-                if order < 7:
-                    query = query.order_by(Lower(param).asc())
-                else:
-                    query = query.order_by(param)
+    # sort
+    order = 0
+    try:
+        order = int(request.GET.get('o'))
+        # order of columns is duplicated in html and in js
+        parameters = ['',
+                      'producer',
+                      'country__name',
+                      'region__name',
+                      'area__name',
+                      'color__name',
+                      'varietal',
+                      'classification',
+                      'vintage',
+                      'capacity',
+                      'price_min',
+                      'price_max',
+                      'in_stock']
+        if order > 0:
+            param = parameters[order]
+            if order < 7:
+                query = query.order_by(Lower(param).asc())
             else:
-                param = parameters[-order]
-                if -order < 7:
-                    query = query.order_by(Lower(param).desc())
-                else:
-                    query = query.order_by('-' + param)
-        except:
-            pass
+                query = query.order_by(param)
+        else:
+            param = parameters[-order]
+            if -order < 7:
+                query = query.order_by(Lower(param).desc())
+            else:
+                query = query.order_by('-' + param)
+    except:
+        pass
 
-        # pagination
-        paginator = Paginator(query.all(), 20)  # Show 20 forms per page
-        p = request.GET.get('page')
-        try:
-            objects = paginator.page(p).object_list
-            page = int(p)
-        except PageNotAnInteger:
-            objects = paginator.page(1).object_list
-            page = 1
-        except EmptyPage:
-            objects = paginator.page(paginator.num_pages).object_list
-            page = paginator.num_pages
+    # pagination
+    paginator = Paginator(query.all(), 20)  # Show 20 forms per page
+    p = request.GET.get('page')
+    try:
+        objects = paginator.page(p).object_list
+        page = int(p)
+    except PageNotAnInteger:
+        objects = paginator.page(1).object_list
+        page = 1
+    except EmptyPage:
+        objects = paginator.page(paginator.num_pages).object_list
+        page = paginator.num_pages
 
-        c = context.copy()
-        c.update({'objects': objects,
-                   'paginator': paginator,
-                   'order': order,
-                   'page': page})
+    c = context.copy()
+    c.update({'objects': objects,
+              'paginator': paginator,
+              'order': order,
+              'page': page})
 
-        return render(request, template, c)
+    return render(request, template, c)
 
 
 @login_required
@@ -225,8 +250,8 @@ class create_wine(generic.CreateView):
         if not country:
             if form.cleaned_data['country_hidden']:
                 country, created = Country.objects.get_or_create(name=form.cleaned_data['country_hidden'],
-                                                             defaults={'custom': True,
-                                                                       'name': form.cleaned_data['country_hidden']})
+                                                                 defaults={'custom': True,
+                                                                           'name': form.cleaned_data['country_hidden']})
         form.instance.country = country
 
         region = form.cleaned_data['region']
@@ -364,7 +389,7 @@ def search(request):
                                'results': results,
                                'lat': lat,
                                'lng': lng,
-                               'what_criteria':do_search},
+                               'what_criteria': do_search},
                               context_instance=RequestContext(request))
 
 
@@ -398,7 +423,7 @@ def get_wine_shops(request):
     results.sort(key=itemgetter(1))
     results = [{'name': a[0].name,
                 'id': a[0].id,
-                'address': a[0].address + ', '+ str(a[0].zip_code)+ ' '+ a[0].city,
+                'address': a[0].address + ', ' + str(a[0].zip_code) + ' ' + a[0].city,
                 'phone': a[0].phone,
                 'mail': a[0].mail,
                 'web': a[0].web,
@@ -413,11 +438,11 @@ def get_wine_shops(request):
 
     if do_search:
         results = [a for a in results if a['nb'] != 0]
-    
+
     nb_results = len(results)
     per_page = 10
     results = results[already_loaded: already_loaded + per_page]
-    return Response([nb_results]+results)
+    return Response([nb_results] + results)
 
 
 def regions(request):
@@ -427,7 +452,8 @@ def regions(request):
 
     if country_id:
         generic_regions = set(Region.objects.filter(country_id=country_id, custom=False).all())
-        user_regions_ids = set(Wine.objects.filter(shop__user=request.user, country_id=country_id).values_list('region', flat=True).distinct())
+        user_regions_ids = set(Wine.objects.filter(shop__user=request.user, country_id=country_id).values_list('region',
+                                                                                                               flat=True).distinct())
         user_regions = Region.objects.filter(pk__in=user_regions_ids)
         regions = list(generic_regions.union(user_regions))
         regions.sort(key=Country.__str__)
@@ -454,7 +480,6 @@ def areas(request):
 
 
 def filtered_catalog(request, shop_id):
-
     shop = get_object_or_404(Shop, id=shop_id)
 
     if request.method == 'POST':
@@ -466,9 +491,8 @@ def filtered_catalog(request, shop_id):
     query = Wine.objects.filter(shop_id=shop.id)
     if do_search:
         query = query.filter(get_query(query_what, ['producer', 'country__name', 'region__name', 'area__name',
-                                   'color__name', 'varietal', 'classification', 'vintage',
-                                   'capacity', ]))\
-
+                                                    'color__name', 'varietal', 'classification', 'vintage',
+                                                    'capacity', ]))
     back = request.GET.get('back')
 
     if back == None:
@@ -478,13 +502,12 @@ def filtered_catalog(request, shop_id):
         back_url = back
         back = urllib.parse.quote(back_url)
 
-
     return display_wines(request,
-                        'wineshops/show_catalog.html',
-                        query,
-                        {'query_what': query_what,
-                         'shop_id': shop_id,
-                         'shop' : shop,
-                         'what_criteria': do_search,
-                         'back': back,
-                         'back_url': back_url})
+                         'wineshops/show_catalog.html',
+                         query,
+                         {'query_what': query_what,
+                          'shop_id': shop_id,
+                          'shop': shop,
+                          'what_criteria': do_search,
+                          'back': back,
+                          'back_url': back_url})

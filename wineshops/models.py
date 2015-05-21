@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Shop(models.Model):
-    name        = models.CharField(max_length = 100, verbose_name="Nom", null=True)
+    name        = models.CharField(max_length = 100, verbose_name="Nom du magasin", null=True)
     address     = models.CharField(max_length = 250, verbose_name="Adresse", null=True)
     city        = models.CharField(max_length = 100, verbose_name="Ville", null=True)
     zip_code    = models.IntegerField(verbose_name="Code postal", null=True)

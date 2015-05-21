@@ -15,7 +15,6 @@ class WineshopForm(ModelForm):
             'latitude': HiddenInput(),
             'longitude': HiddenInput(),
         }
-#
 
 class WineForm(ModelForm):
     class Meta:

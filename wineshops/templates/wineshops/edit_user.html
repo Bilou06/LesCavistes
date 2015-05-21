@@ -19,7 +19,68 @@
             Elles sont utilisées par LesCavistes pour vous contacter uniquement.
             <br><br>
             <table>
-                {{ form.as_table }}
+                <tbody>
+                <tr>
+                    <th><label>Identifiant :</label></th>
+                    <td>{{ userForm.username }}</td>
+                </tr>
+                <tr>
+                    <th><label>E-mail :</label></th>
+                    <td>{{ userForm.email }}</td>
+                </tr>
+
+                <tr>
+                    <th><label>Dernière connexion :</label></th>
+                    <td>{{ userForm.last_login }}</td>
+                </tr>
+
+
+                <tr>
+                    <th></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><h4>Informations de facturation</h4></td>
+                </tr>
+
+                <tr>
+                    <th><label>{{ userForm.last_name.label }} :</label></th>
+                    <td>{{ userForm.last_name }}</td>
+                    <td>{{ userForm.last_name.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ userForm.first_name.label }} :</label></th>
+                    <td>{{ userForm.first_name }}</td>
+                    <td>{{ userForm.first_name.errors }}</td>
+                </tr>
+
+                <tr>
+                    <th><label>{{ profileForm.name.label }} :</label></th>
+                    <td>{{ profileForm.name }}</td>
+                    <td>{{ profileForm.name.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ profileForm.address.label }} :</label></th>
+                    <td>{{ profileForm.address }}</td>
+                    <td>{{ profileForm.address.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ profileForm.zip_code.label }} :</label></th>
+                    <td>{{ profileForm.zip_code }}</td>
+                    <td>{{ profileForm.zip_code.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ profileForm.city.label }} :</label></th>
+                    <td>{{ profileForm.city }}</td>
+                    <td>{{ profileForm.city.errors }}</td>
+                </tr>
+                <tr>
+                    <th><label>{{ profileForm.VAT.label }} :</label></th>
+                    <td>{{ profileForm.VAT }}</td>
+                    <td>{{ profileForm.VAT.errors }}</td>
+                </tr>
+                </tbody>
             </table>
             <br><br>
 

@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
 	
     # ex: /wineshops/edit/
-    url(r'^edit/$', views.edit_user, name='edit'),
+    url(r'^edit/$', views.edit, name='edit'),
     url(r'^edit/user/$', views.edit_user, name='edit_user'),
     url(r'^edit/wineshop/$', views.edit_wineshop, name='edit_wineshop'),
     url(r'^edit/catalog/$', views.edit_catalog, name='edit_catalog'),

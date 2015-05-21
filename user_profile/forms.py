@@ -11,14 +11,22 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput())
-    first_name = forms.CharField(required=False, label='Prénom')
-    last_name = forms.CharField(required=False, label='Nom')
+    first_name = forms.CharField(required=True, label='Prénom')
+    last_name = forms.CharField(required=True, label='Nom')
     captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'})
     contract_check = forms.BooleanField(required = True)
+
+    name        = forms.CharField(required=True, label="Dénomination sociale")
+    address     = forms.CharField(required=True, label="Adresse")
+    city        = forms.CharField(required=True, label="Ville")
+    zip_code    = forms.CharField(required=True, label="Code postal")
+    VAT         = forms.CharField(required=True, label="TVA")
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
+
+
 
     # clean email field
     def clean_email(self):
@@ -73,6 +81,7 @@ class EditUserForm(forms.ModelForm):
     username = forms.CharField(max_length=254, label="Identifiant")
     last_login = forms.DateTimeField(label="Dernière connexion")
 
+
     class Meta:
         model = User
         fields = ('username', 'email', 'last_login', 'last_name', 'first_name', )
@@ -92,6 +101,20 @@ class EditUserForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+class EditUserProfileForm(forms.ModelForm):
+
+    name        = forms.CharField(required=True, label="Dénomination sociale")
+    address     = forms.CharField(required=True, label="Adresse")
+    city        = forms.CharField(required=True, label="Ville")
+    zip_code    = forms.IntegerField(required=True, label="Code postal")
+    VAT         = forms.CharField(required=True, label="TVA")
+
+    class Meta:
+        model = User
+        fields = ('name', 'address', 'city', 'zip_code', 'VAT',)
+
+
 
 
 class PickyAuthenticationForm(AuthenticationForm):
