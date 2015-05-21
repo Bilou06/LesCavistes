@@ -18,7 +18,7 @@ from rest_framework.renderers import JSONRenderer
 from . import haversine
 
 from .forms import *
-from .models import Country, Region, Area
+from .models import Country, Region, Area, Color, Capacity
 from user_profile.forms import EditUserForm, EditUserProfileForm
 from .searchEngine import get_query
 
@@ -210,28 +210,40 @@ def edit_wine(request, wine_id):
                                                            defaults={'custom': True,
                                                                      'name': form.cleaned_data['area_hidden'],
                                                                      'region': region})
-            elif region.country != country:
+            elif area.region != region:
                 area, created = Area.objects.get_or_create(name=area.name, region=region,
                                                            defaults={'custom': True, 'name': area.name,
                                                                      'region': region})
             form.instance.area = area
+
+            color = form.cleaned_data['color']
+            if not color or (form.cleaned_data['color_hidden'] and color.name != form.cleaned_data['color_hidden']):
+                color, created = Color.objects.get_or_create(name=form.cleaned_data['color_hidden'],
+                                                             defaults={'custom': True,
+                                                                       'name': form.cleaned_data['color_hidden']})
+            form.instance.color = color
+
+            capacity = form.cleaned_data['capacity']
+            if not capacity or (
+                form.cleaned_data['capacity_hidden'] and capacity.volume != form.cleaned_data['capacity_hidden']):
+                capacity, created = Capacity.objects.get_or_create(volume=form.cleaned_data['capacity_hidden'],
+                                                                   defaults={'custom': True,
+                                                                             'volume': form.cleaned_data[
+                                                                                 'capacity_hidden']})
+            form.instance.capacity = capacity
 
             form.save()
             return HttpResponseRedirect('/wineshops/edit/catalog')
     else:
         form = WineForm(instance=wine)
 
-    generic_countries = set(Country.objects.filter(custom=False).all())
-    user_countries_ids = set(Wine.objects.filter(shop__user=request.user).values_list('country', flat=True).distinct())
-    user_countries = Country.objects.filter(pk__in=user_countries_ids)
-    countries = list(generic_countries.union(user_countries))
-    countries.sort(key=Country.__str__)
-
     context = {
         'form': form,
         'id': wine_id,
         'title': "Mon vin",
-        'countries': countries,
+        'countries': _get_user_data(Country, 'country', Country.__str__, request.user),
+        'colors': _get_user_data(Color, 'color', Color.__str__, request.user),
+        'capacities': _get_user_data(Capacity, 'capacity', Capacity.value, request.user),
         'filled': shop.filled,
     }
     return render(request, 'wineshops/wine_form.html', context)
@@ -274,10 +286,27 @@ class create_wine(generic.CreateView):
                                                            defaults={'custom': True,
                                                                      'name': form.cleaned_data['area_hidden'],
                                                                      'region': region})
-        elif region.country != country:
+        elif area.region != region:
             area, created = Area.objects.get_or_create(name=area.name, region=region,
                                                        defaults={'custom': True, 'name': area.name, 'region': region})
         form.instance.area = area
+
+        color = form.cleaned_data['color']
+        if not color:
+            if form.cleaned_data['color_hidden']:
+                color, created = Color.objects.get_or_create(name=form.cleaned_data['color_hidden'],
+                                                         defaults={'custom': True,
+                                                                   'name': form.cleaned_data['color_hidden']})
+        form.instance.color = color
+
+        capacity = form.cleaned_data['capacity']
+        if not capacity:
+            if form.cleaned_data['capacity_hidden']:
+                capacity, created = Capacity.objects.get_or_create(volume=form.cleaned_data['capacity_hidden'],
+                                                               defaults={'custom': True,
+                                                                         'volume': form.cleaned_data[
+                                                                             'capacity_hidden']})
+        form.instance.capacity = capacity
 
         return super(create_wine, self).form_valid(form)
 
@@ -289,13 +318,24 @@ class create_wine(generic.CreateView):
         user_countries = Country.objects.filter(pk__in=user_countries_ids)
         countries = list(generic_countries.union(user_countries))
         countries.sort(key=Country.__str__)
-        ctx['countries'] = countries
+        ctx['countries'] = _get_user_data(Country, 'country', Country.__str__, self.request.user)
+        ctx['colors'] = _get_user_data(Color, 'color', Color.__str__, self.request.user)
+        ctx['capacities'] = _get_user_data(Capacity, 'capacity', Capacity.value, self.request.user)
 
         shop, created = Shop.objects.get_or_create(user=self.request.user)
         ctx['filled'] = shop.filled,
 
         ctx['title'] = 'Ajouter un vin'
         return ctx
+
+
+def _get_user_data(data, field, sortkey, user):
+    generic_objects = set(data.objects.filter(custom=False).all())
+    user_objects_ids = set(Wine.objects.filter(shop__user=user).values_list(field, flat=True).distinct())
+    user_objects = data.objects.filter(pk__in=user_objects_ids)
+    objects = list(generic_objects.union(user_objects))
+    objects.sort(key=sortkey)
+    return objects
 
 
 @login_required
@@ -367,7 +407,7 @@ def search(request):
         wine_objects = wine_objects.filter(get_query(query_what,
                                                      ['producer', 'country__name', 'region__name', 'area__name',
                                                       'color__name', 'varietal', 'classification', 'vintage',
-                                                      'capacity', ]))
+                                                      'capacity__volume', ]))
 
     results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in
                Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
@@ -416,7 +456,7 @@ def get_wine_shops(request):
         wine_objects = wine_objects.filter(get_query(query_what,
                                                      ['producer', 'country__name', 'region__name', 'area__name',
                                                       'color__name', 'varietal', 'classification', 'vintage',
-                                                      'capacity', ]))
+                                                      'capacity__volume', ]))
 
     results = [(shop, haversine.haversine(lng, lat, shop.longitude, shop.latitude)) for shop in
                Shop.objects.exclude(filled=False, longitude__isnull=True, latitude__isnull=True).all()]
@@ -492,7 +532,7 @@ def filtered_catalog(request, shop_id):
     if do_search:
         query = query.filter(get_query(query_what, ['producer', 'country__name', 'region__name', 'area__name',
                                                     'color__name', 'varietal', 'classification', 'vintage',
-                                                    'capacity', ]))
+                                                    'capacity__volume', ]))
     back = request.GET.get('back')
 
     if back == None:

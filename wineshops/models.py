@@ -57,10 +57,28 @@ class Area(models.Model):#  Saint-estèphe ...
             return ""
 
 class Color(models.Model):
-    name        = models.CharField(max_length = 20, unique = True)
+    name        = models.CharField(max_length = 20)
+    custom      = models.BooleanField(default=False)#  custom = False -> appear in combo box for everyone
 
     def __str__(self):
         return self.name
+
+class Capacity(models.Model):
+    volume      = models.FloatField(default = 75, verbose_name="Contenance", blank=True, null=True)
+    custom      = models.BooleanField(default=False)#  custom = False -> appear in combo box for everyone
+
+    def value(self):
+        if self.volume:
+            return self.volume
+        else:
+            return 0
+
+    def __str__(self):
+        if self.volume:
+            return str(self.volume)
+        else:
+            return ""
+
 
 class Wine(models.Model):
     shop        = models.ForeignKey(Shop)
@@ -70,9 +88,9 @@ class Wine(models.Model):
     area        = models.ForeignKey(Area, verbose_name="Appellations", blank=True, null=True)
     vintage     = models.IntegerField(blank = True, null=True, verbose_name="Millésime")
     classification = models.CharField(max_length = 50, blank = True, verbose_name="Classification" )
-    color       = models.ForeignKey(Color, verbose_name="Couleur")
+    color       = models.ForeignKey(Color, verbose_name="Couleur", blank=True, null=True)
     varietal    = models.CharField(max_length=250, blank=True, null=True, verbose_name="Cépage")
-    capacity    = models.IntegerField(default = 75, verbose_name="Contenance")
+    capacity    = models.ForeignKey(Capacity, verbose_name="Contenance", blank=True, null=True)
     price_min   = models.FloatField(blank = True, null=True, verbose_name="Prix minimum")
     price_max   = models.FloatField(blank = True, null=True, verbose_name="Prix maximum")
     in_stock    = models.BooleanField(default=True, verbose_name="En stock")

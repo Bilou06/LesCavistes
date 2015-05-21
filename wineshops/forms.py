@@ -24,4 +24,6 @@ class WineForm(ModelForm):
     country_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
     region_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
     area_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
+    color_hidden = forms.CharField(widget=forms.HiddenInput, required=False)
+    capacity_hidden = forms.FloatField(widget=forms.HiddenInput, required=False)
 

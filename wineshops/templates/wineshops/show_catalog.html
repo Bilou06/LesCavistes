@@ -121,11 +121,11 @@
                             <td class="field-area nowrap">{{ wine.country.name }}</td>
                             <td class="field-area nowrap">{{ wine.region.name }}</td>
                             <td class="field-area nowrap">{{ wine.area.name }}</td>
-                            <td class="field-color nowrap">{{ wine.color }}</td>
+                            <td class="field-color nowrap">{{ wine.color|default_if_none:"" }}</td>
                             <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>
                             <td class="field-classification">{{ wine.classification }}</td>
                             <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
-                            <td class="field-capacity">{{ wine.capacity|default_if_none:"" }}</td>
+                            <td class="field-capacity">{{ wine.capacity|floatformat|default_if_none:""  }}</td>
                             <td class="field-capacity">{{ wine.price_min|floatformat:2|default_if_none:"" }}</td>
                             <td class="field-capacity">{{ wine.price_max|floatformat:2|default_if_none:"" }}</td>
                         </tr>

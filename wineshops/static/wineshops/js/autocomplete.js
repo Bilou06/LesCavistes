@@ -47,6 +47,25 @@
                     }
                 })
             }
+
+            if ($(this.element).attr('id') == "id_color") {
+                this.element.children("option").each(function () {
+                    if (this.value == $('#former_color').val()) {
+                        this.selected = valid = true;
+                        input.val(this.text);
+                    }
+                })
+            }
+
+            if ($(this.element).attr('id') == "id_capacity") {
+                this.element.children("option").each(function () {
+                    if (this.value == $('#former_capacity').val()) {
+                        this.selected = valid = true;
+                        input.val(this.text);
+                    }
+                })
+            }
+
             this._updateOptions();
 
             this._on(this.input, {
@@ -202,11 +221,13 @@ function updateArea(region) {
 }
 
 
-var country_combo, region_combo, area_combo;
+var country_combo, region_combo, area_combo, color_combo, capacity_combo;
 $(function () {
     country_combo = $("#id_country").combobox();
     region_combo = $("#id_region").combobox();
     area_combo = $("#id_area").combobox();
+    color_combo = $("#id_color").combobox();
+    capacity_combo = $("#id_capacity").combobox();
     setHiddenFields();
 });
 
@@ -215,4 +236,7 @@ function setHiddenFields() {
     $("#id_country_hidden").val($("#id_country").next().find('input').val());
     $("#id_region_hidden").val($("#id_region").next().find('input').val());
     $("#id_area_hidden").val($("#id_area").next().find('input').val());
+    $("#id_color_hidden").val($("#id_color").next().find('input').val());
+    $("#id_capacity_hidden").val($("#id_capacity").next().find('input').val());
+
 };

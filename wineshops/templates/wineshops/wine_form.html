@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <label>Région :</label>
+                        <label>Vignoble :</label>
                     </th>
                     <td>
                         <select id="id_region" name="region">
@@ -65,7 +65,7 @@
                 </tr>
                 <tr>
                     <th>
-                        <label>Terroir :</label>
+                        <label>Appelation :</label>
                     </th>
                     <td>
                         <select id="id_area" name="area">
@@ -85,7 +85,16 @@
                 </tr>
                 <tr>
                     <th><label>Couleur :</label></th>
-                    <td>{{ form.color }}</td>
+                    <td>
+                        <select id="id_color" name="color">
+                            <option value="" selected="selected">---------</option>
+                            {% for color in colors %}
+                                <option value="{{ color.id }}">{{ color.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form.color_hidden }}
+                        <input type="hidden" id="former_color" value="{{ form.color.value }}">
+                    </td>
                     <td class="errorlist">{{ form.color.errors|first }}</td>
                 </tr>
                 <tr>
@@ -94,7 +103,16 @@
                 </tr>
                 <tr>
                     <th><label>Contenance :</label></th>
-                    <td>{{ form.capacity }}</td>
+                                        <td>
+                        <select id="id_capacity" name="capacity">
+                            <option value="" selected="selected">---------</option>
+                            {% for capacity in capacities %}
+                                <option value="{{ capacity.id }}">{{ capacity.volume|floatformat }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form.capacity_hidden }}
+                        <input type="hidden" id="former_capacity" value="{{ form.capacity.value }}">
+                    </td>
                     <td class="errorlist">{{ form.capacity.errors|first }}</td>
                 </tr>
                 <tr>

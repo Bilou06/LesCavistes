@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Shop, Country, Region, Area, Color, Wine
+from .models import Shop, Country, Region, Area, Color, Wine, Capacity
 
 
 class ShopAdmin(admin.ModelAdmin):
@@ -27,8 +27,17 @@ class AreaAdmin(admin.ModelAdmin):
         return obj.region.country
 
 admin.site.register(Area, AreaAdmin)
-admin.site.register(Color)
 
+class ColorAdmin(admin.ModelAdmin):
+    list_filter = ('custom', 'name',)
+
+admin.site.register(Color, ColorAdmin)
+
+class CapacityAdmin(admin.ModelAdmin):
+    list_filter = ('custom', )
+    list_display = ('custom', 'volume', )
+
+admin.site.register(Capacity, CapacityAdmin)
 
 class WineAdmin(admin.ModelAdmin):
     fieldsets = [

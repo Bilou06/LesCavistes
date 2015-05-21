@@ -13,7 +13,7 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.TextInput())
     first_name = forms.CharField(required=True, label='Prénom')
     last_name = forms.CharField(required=True, label='Nom')
-    captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'})
+    captcha = ReCaptchaField(attrs={'label' : 'Êtes-vous humain ?', 'theme' : 'clean'}, label='Êtes-vous humain ?')
     contract_check = forms.BooleanField(required = True)
 
     name        = forms.CharField(required=True, label="Dénomination sociale")

@@ -20,27 +20,27 @@
             <table>
                 <tbody>
                 <tr>
-                    <th><label>Identifiant :</label></th>
+                    <th><label>{{ form.username.label }} :</label></th>
                     <td>{{ form.username }}</td>
                     <td>{{ form.username.errors }}</td>
                 </tr>
                 <tr>
-                    <th><label>E-mail :</label></th>
+                    <th><label>{{ form.email.label }} :</label></th>
                     <td>{{ form.email }}</td>
                     <td>{{ form.email.errors }}</td>
                 </tr>
                 <tr>
-                    <th><label>Mot de passe :</label></th>
+                    <th><label>{{ form.password1.label }} :</label></th>
                     <td>{{ form.password1 }}</td>
                     <td>{{ form.password1.errors }}</td>
                 </tr>
                 <tr>
-                    <th><label>Confirmation du mot de passe :</label></th>
+                    <th><label>{{ form.password2.label }} :</label></th>
                     <td>{{ form.password2 }}</td>
                     <td>{{ form.password2.errors }}</td>
                 </tr>
                 <tr>
-                    <th><label>Êtes vous un être humain ?</label></th>
+                    <th><label>{{ form.captcha.label }} :</label></th>
                     <td>{{ form.captcha }}</td>
                     <td>{{ form.captcha.errors }}</td>
                 </tr>
