@@ -246,13 +246,23 @@ def edit_wine(request, wine_id):
         'capacities': _get_user_data(Capacity, 'capacity', Capacity.value, request.user),
         'filled': shop.filled,
     }
-    return render(request, 'wineshops/wine_form.html', context)
+    return render(request, 'wineshops/wine_form_update.html', context)
 
 
 class create_wine(generic.CreateView):
     form_class = WineForm
-    template_name = 'wineshops/wine_form.html'
-    success_url = '/wineshops/edit/catalog'
+    template_name = 'wineshops/wine_form_create.html'
+
+    button_create_and_return = "Enregister et retourner au catalogue"
+    button_create_and_again = "Enregister et ajouter un nouveau"
+
+    def get_success_url(self):
+        if self.request.POST.get('direction') == self.button_create_and_return:
+            return '/wineshops/edit/catalog'
+        elif self.request.POST.get('direction') == self.button_create_and_again:
+            return '/wineshops/create/wine/'
+        logger.warning('unexpected redirection value in create_wine :' + self.request.POST.get('direction'))
+        return '/wineshops/edit/catalog'
 
 
     def form_valid(self, form):
@@ -326,6 +336,9 @@ class create_wine(generic.CreateView):
         ctx['filled'] = shop.filled,
 
         ctx['title'] = 'Ajouter un vin'
+
+        ctx['button_create_and_return'] = self.button_create_and_return
+        ctx['button_create_and_again'] = self.button_create_and_again
         return ctx
 
 
