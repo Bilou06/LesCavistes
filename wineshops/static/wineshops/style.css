@@ -112,6 +112,19 @@
     width: 100%;
 }
 
+#cookie_banner {
+    opacity: 0.9;
+    background-color: #c6c6c6;
+    text-align: center;
+    position: fixed;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+}
+
+
+
+
 .errorlist {
     color: red;
 }

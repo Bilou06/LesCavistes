@@ -1,11 +1,14 @@
 {% load staticfiles %}
+{% load cookielaw_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="{% static 'wineshops/style.css' %}" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="{% static 'wineshops/style.css' %}"/>
     <link rel="shortcut icon" type="image/bmp" href="{% static 'wineshops/images/favicon.ico' %}"/>
+
+    <script type="text/javascript" src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
     <title>Les Cavistes</title>
 
     {% block extrastyle %}{% endblock %}
@@ -14,33 +17,41 @@
 </head>
 
 <body>
-    <div id="header">
-        <div id="logo">
-            <div id="logo_img">
-                <a href="/"> <img src="{% static 'wineshops/images/logo_127_159.png' %}"></a>
-            </div>
-        </div>
-        <div id="title">
-            <h1>Les Cavistes</h1>
-            <br/><br/>
-            Le vin qu'il vous faut, près de chez vous</div>
-        <div id="actions">
-            {% if user.is_authenticated %}
-                <a id="logout" class = "button" href="{% url 'user_profile:logout' %}">Déconnexion</a>
-                <a id="my_account" class = "button" href="{% url 'wineshops:edit' %}">Mon compte</a>
-            {% else %}
-                <a id="login" class = "button" href="{% url 'user_profile:login' %}">Connexion</a>
-                <a id="sign_up" class = "button" href="{% url 'user_profile:register'  %}">Ajoutez votre cave</a>
-            {% endif %}
+<div id="header">
+    <div id="logo">
+        <div id="logo_img">
+            <a href="/" onclick="Cookielaw.createCookielawCookie();"> <img
+                    src="{% static 'wineshops/images/logo_127_159.png' %}"></a>
         </div>
     </div>
-
-    <div id="content">
-        {% block content %}{% endblock %}
+    <div id="title">
+        <h1>Les Cavistes</h1>
+        <br/><br/>
+        Le vin qu'il vous faut, près de chez vous
     </div>
+    <div id="actions">
+        {% if user.is_authenticated %}
+            <a id="logout" class="button" onclick="Cookielaw.createCookielawCookie();"
+               href="{% url 'user_profile:logout' %}">Déconnexion</a>
+            <a id="my_account" class="button" onclick="Cookielaw.createCookielawCookie();"
+               href="{% url 'wineshops:edit' %}">Mon compte</a>
+        {% else %}
+            <a id="login" class="button" onclick="Cookielaw.createCookielawCookie();"
+               href="{% url 'user_profile:login' %}">Connexion</a>
+            <a id="sign_up" class="button" onclick="Cookielaw.createCookielawCookie();"
+               href="{% url 'user_profile:register' %}">Ajoutez votre cave</a>
+        {% endif %}
+    </div>
+</div>
 
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+<div id="cookie_banner">
+    {% cookielaw_banner %}
+</div>
 <div id="footer">
-contact blahblah
+    contact blahblah
 </div>
 </body>
 </html>

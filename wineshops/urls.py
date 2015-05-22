@@ -1,6 +1,7 @@
 __author__ = 'Sylvain'
 
 from django.conf.urls import url
+from django.conf.urls import handler404, handler500
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -29,3 +30,6 @@ urlpatterns = [
     # for apps
     url(r'getwineshops/$', views.get_wine_shops, name="getwineshops"),
 ]
+
+
+handler404 = views.error404

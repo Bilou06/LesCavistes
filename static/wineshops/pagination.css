@@ -1,0 +1,23 @@
+.page{
+      display: inline-block;
+  height: 16px;
+  margin: 1px;
+    font-size: 1em;
+    align-items: center;
+    margin-left: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+}
+
+.nolink{
+    font-weight: bold;
+}
+
+.link{
+    border: solid gray 1px;
+}
+
+a.page_link:visited{
+    color:black;
+}

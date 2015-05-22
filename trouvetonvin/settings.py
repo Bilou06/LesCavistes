@@ -25,9 +25,6 @@ SECRET_KEY = 'cm5uu!j@5e_70j8%bj4%pm=$^k+dxk9$drnds+mhcln$_@mij@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -39,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'captcha',
+    'cookielaw',
     'wineshops',
     'user_profile',
 )
@@ -66,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -105,7 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
+STATIC_ROOT = 'C:\\Users\\Sylvain\\workspace\\trouvetonvin\\static'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sylain.biehler@gmail.com'

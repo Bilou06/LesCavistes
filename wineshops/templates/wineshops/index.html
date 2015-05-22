@@ -16,7 +16,7 @@
 
 {% block content %}
     <div id="tfheader">
-        <form id="tfnewsearch" onsubmit="return mainSearch();" method="get" action="{% url 'wineshops:search' %}">
+        <form id="tfnewsearch" onsubmit="Cookielaw.createCookielawCookie();return mainSearch();" method="get" action="{% url 'wineshops:search' %}">
             <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120">
             <input type="text" id="tfq2b" class="tftextinput2" name="o" size="32" maxlength="120">
             <input type="hidden" id="id_latitude" name="lat">
