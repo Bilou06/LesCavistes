@@ -196,3 +196,7 @@ img {border : 0;}
 .list-market .apps a:hover {
     color: white;
 }
+
+div {
+  display: block;
+}

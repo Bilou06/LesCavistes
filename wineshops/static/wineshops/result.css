@@ -107,6 +107,7 @@ position: absolute;
     top: 10px;
     margin: 10px;
     width:400px;
+    display:inline-block;
 }
 
 .logo-shop {

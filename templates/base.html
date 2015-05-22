@@ -9,6 +9,7 @@
     <link rel="shortcut icon" type="image/bmp" href="{% static 'wineshops/images/favicon.ico' %}"/>
 
     <script type="text/javascript" src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+
     <title>Les Cavistes</title>
 
     {% block extrastyle %}{% endblock %}
@@ -47,11 +48,14 @@
 <div id="content">
     {% block content %}{% endblock %}
 </div>
-<div id="cookie_banner">
+
+</body>
+<footer>
+    <div id="cookie_banner">
     {% cookielaw_banner %}
 </div>
 <div id="footer">
     contact blahblah
 </div>
-</body>
+</footer>
 </html>
