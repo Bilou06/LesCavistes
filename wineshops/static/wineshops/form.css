@@ -1,28 +1,24 @@
 
-  th{
+th {
     text-align: right;
 }
 
-.center{
-    horiz-align: center;
-    text-align: center;
-}
-#fheader{
+#fheader {
     border: #A53F4F solid 3px;
-	clear: left;
-	padding: 1em;
+    clear: left;
+    padding: 1em;
     margin: 0 auto;
     width: 100%;
 }
 
-form{
-    padding:10px;
+form {
+    padding: 10px;
     text-align: left;
     display: inline-block;
 }
 
-.form-p{
-    width:100px;
+.form-p {
+    width: 100px;
 }
 
 .fclear {
@@ -30,8 +26,8 @@ form{
 }
 
 ol#toc {
-	height: 2em;
-	list-style: none;
+    height: 2em;
+    list-style: none;
     -webkit-align-items: center;
     align-items: center;
     -webkit-justify-content: center;
@@ -41,12 +37,12 @@ ol#toc {
 }
 
 ol#toc a {
-	color: #767676;
-	float: left;
-	line-height: 2em;
-	outline: none;
-	padding-right: 10px;
-	text-decoration: none;
+    color: #767676;
+    float: left;
+    line-height: 2em;
+    outline: none;
+    padding-right: 10px;
+    text-decoration: none;
 }
 
 ol#toc li.current {
@@ -54,22 +50,24 @@ ol#toc li.current {
 }
 
 ol#toc li.current a {
-	background-position: 100% -60px;
-	color: #fff;
-	font-weight: bold;
+    background-position: 100% -60px;
+    color: #fff;
+    font-weight: bold;
 }
 
 ol#toc li {
-	color:#202020;
-	float: left;
-	margin: 0 1px 0 0;
-	padding-left: 10px;
+    color: #202020;
+    float: left;
+    margin: 0 1px 0 0;
+    padding-left: 10px;
 }
 
 input[readonly], input[readonly="readonly"] {
-    color:gray;
+    color: gray;
 }
 
-#map{
+#map {
     display: inline-block;
 }
+
+

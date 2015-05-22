@@ -3,6 +3,7 @@
 
 {% block extrastyle %}
     <link rel="stylesheet" href="{% static 'wineshops/searchbox.css' %}"/>
+
 {% endblock %}
 
 {% block script %}
@@ -29,6 +30,26 @@
         </div>
     </div>
 
+    <div class="center">
+        <ul class="list-market">
 
+            <li class="apps"><a href="https://itunes.apple.com/fr/app/" itemprop="url" target="_blank"
+                                title="Retrouvez Les Cavistes sur mobiles et tablettes"><img
+                    src="{% static 'wineshops/images/picto-IOS.png' %}" alt=""></a></li>
+            <li class="apps"><a target="_blank" href="https://play.google.com/store/apps/&amp;hl=fr_FR" itemprop="url"
+                                title="Retrouvez Les Cavistes sur mobiles et tablettes"><img
+                    src="{% static 'wineshops/images/picto-android.png' %}" alt=""></a></li>
+            <li class="apps"><a target="_blank" href="http://apps.microsoft.com/windows/fr-fr/app/" itemprop="url"
+                                title="Retrouvez Les Cavistes sur mobiles et tablettes"><img
+                    src="{% static 'wineshops/images/picto-windows.png' %}" alt=""></a></li>
+            <li class="apps"><a target="_blank" href="http://www.windowsphone.com/fr-fr/store/app/" itemprop="url"
+                                title="Retrouvez Les Cavistes sur mobiles et tablettes"><img
+                    src="{% static 'wineshops/images/picto-windows-phone.png' %}" alt="Windows Phone"></a></li>
+            <li class="apps"><a target="_blank" href="http://appworld.blackberry.com/webstore/vendor/4334/?lang=fr"
+                                itemprop="url"
+                                title="Retrouvez Les Cavistes sur mobiles et tablettes"><img
+                    src="{% static 'wineshops/images/picto-black-berry.png' %}" alt=""></a></li>
+        </ul>
+    </div>
 
 {% endblock %}

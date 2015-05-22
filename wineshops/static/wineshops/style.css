@@ -149,3 +149,37 @@ h2 {
 
 a img {outline : none;}
 img {border : 0;}
+
+
+.center{
+    horiz-align: center;
+    text-align: center;
+}
+
+.list-market {
+    list-style-type: none;
+    margin-top: 300px;
+    vertical-align: middle;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.apps {
+    float: left; /*pour IE*/
+    margin: 2%;
+}
+
+.list-market .apps a {
+    display: block;
+    float: left;
+    line-height: 50px; /*hauteur de l'image de fond*/
+    color: #DCDCDC;
+    text-decoration: none;
+    text-align: center;
+}
+
+.list-market .apps a:hover {
+    color: white;
+}
