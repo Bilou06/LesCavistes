@@ -64,32 +64,7 @@
                                     <span class="info-shop">Infos</span>
 
                                     <div class="bloc-info-shop" style="display: none;">
-                                        <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.shop.image }}" alt="{{ shop.shop.name }}" title="{{ shop.shop.name }}"></div-->
-                                        <div class="coord-shop">
-                                            <h4>{{ shop.shop.name }}</h4>
-
-                                            <p>{{ shop.shop.address }} <br>
-                                                {{ shop.shop.zip_code|stringformat:"05d" }}&nbsp;-&nbsp;{{ shop.shop.city }}<br>
-                                                {% if shop.shop.phone %}{{ shop.shop.phone }}<br>{% endif %}
-                                            </p>
-                                        </div>
-                                        <div class="desc-shop">
-                                            <p>{{ shop.shop.description }}</p>
-                                        </div>
-                                        {% if shop.shop.mail %}
-                                            <div class="site-mail">
-                                                <a class="btn_base btn_white" href="mailto:{{ shop.shop.mail }}">Lui
-                                                    ecrire</a></div>
-                                        {% endif %}
-                                        {% if shop.shop.web %}
-                                            <div class="site-shop"><a
-                                                    href="{% if shop.shop.web|slice:":4" != 'http' %}http://{% endif %}{{ shop.shop.web }}"
-                                                    target="_blank"
-                                                    class="btn_base btn_white">Voir son site</a></div>
-                                        {% endif %}
-                                        <div class="map-shop"><a class="btn_base btn_blue"
-                                                                 href="https://maps.google.com/maps?q={{ shop.shop.address }}, {{ shop.shop.zip_code|stringformat:"05d" }} {{ shop.shop.city }}"
-                                                                 target="_blank">Voir sur la carte</a></div>
+                                        {% include 'wineshops/shop_card.html' %}
                                     </div>
                                 </div>
                             </td>

@@ -18,20 +18,26 @@
 
 {% block content %}
     <div id="tfheader">
-        <div style="height: 200px; width: 40%; display:inline-block" >
+        <div style="height: 200px; width: 40%; display:inline-block">
             <a id="back" class="button" href="{{ back_url }}">Retour à la liste</a>
+
             <div style="position: relative; top: 100px;">
-            <form id="tftopsearch" method="get" action="/wineshops/catalog/{{ shop_id }}/">
-                <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
-                       value="{{ query_what }}">
-                <input type="hidden" name="back" value="{{ back_url }}">
-                <input type="submit" value=">" class="tfbutton2">
-            </form>
-                </div>
+                <form id="tftopsearch" method="get" action="/wineshops/catalog/{{ shop_id }}/">
+                    <input type="text" id="tfq1b" class="tftextinput1" name="q" size="32" maxlength="120"
+                           value="{{ query_what }}">
+                    <input type="hidden" name="back" value="{{ back_url }}">
+                    <input type="submit" value=">" class="tfbutton2">
+                </form>
+            </div>
         </div>
 
         <div class="bloc-id-shop">
-            <!-- div class="logo-shop"><img src="/imagesmagasins/photos/{{ shop.image }}" alt="{{ shop.name }}" title="{{ shop.name }}"></div-->
+        {% if shop.image %}
+            <div class="logo-shop"><img style="width: 100px;"
+                                        src="/media/{{ shop.image }}"
+                                        alt="{{ shop.name }}"
+                                        title="{{ shop.name }}"></div>
+        {% endif %}
             <div class="coord-shop">
                 <h4>{{ shop.name }}</h4>
 
@@ -43,22 +49,26 @@
             <div class="desc-shop">
                 <p>{{ shop.description }}</p>
             </div>
-            {% if shop.mail %}
-                <div class="site-mail">
-                    <a class="btn_base btn_white" href="mailto:{{ shop.mail }}">Lui
-                        ecrire</a></div>
-            {% endif %}
-            {% if shop.web %}
-                <div class="site-shop"><a
-                        href="{% if shop.web|slice:":4" != 'http' %}http://{% endif %}{{ shop.web }}"
-                        target="_blank"
-                        class="btn_base btn_white">Voir son site</a></div>
-            {% endif %}
-            <div class="map-shop"><a class="btn_base btn_blue"
-                                     href="https://maps.google.com/maps?q={{ shop.address }}, {{ shop.zip_code|stringformat:"05d" }} {{ shop.city }}"
-                                     target="_blank">Voir sur la carte</a></div>
+            <div style="display:inline-block; clear:both; width:100%">
+                {% if shop.mail %}
+                    <div class="site-mail">
+                        <a class="btn_base btn_white" href="mailto:{{ shop.mail }}">Lui
+                            ecrire</a></div>
+                {% endif %}
+                {% if shop.web %}
+                    <div class="site-shop"><a
+                            href="{% if shop.web|slice:":4" != 'http' %}http://{% endif %}{{ shop.web }}"
+                            target="_blank"
+                            class="btn_base btn_white">Voir son site</a></div>
+                {% endif %}
+                <div class="map-shop"><a class="btn_base btn_blue"
+                                         href="https://maps.google.com/maps?q={{ shop.address }}, {{ shop.zip_code|stringformat:"05d" }} {{ shop.city }}"
+                                         target="_blank">Voir sur la carte</a></div>
+            </div>
         </div>
+
     </div>
+
 
 
 
@@ -125,7 +135,7 @@
                             <td class="field-varietal nowrap">{{ wine.varietal|default_if_none:"" }}</td>
                             <td class="field-classification">{{ wine.classification }}</td>
                             <td class="field-vintage">{{ wine.vintage|default_if_none:"" }}</td>
-                            <td class="field-capacity">{{ wine.capacity|floatformat|default_if_none:""  }}</td>
+                            <td class="field-capacity">{{ wine.capacity|floatformat|default_if_none:"" }}</td>
                             <td class="field-capacity">{{ wine.price_min|floatformat:2|default_if_none:"" }}</td>
                             <td class="field-capacity">{{ wine.price_max|floatformat:2|default_if_none:"" }}</td>
                         </tr>

@@ -78,27 +78,32 @@ def edit_user(request):
 def edit_wineshop(request):
     shop, created = Shop.objects.get_or_create(user=request.user)
     if request.method == 'POST':
-        form = WineshopForm(request.POST, instance=shop)
-        if form.is_valid():
-            form.instance.filled = True
-            form.save()
+        wineForm = WineshopForm(request.POST, instance=shop)
+        image = request.FILES.get('image')
+
+        wineForm.image = image
+        if wineForm.is_valid():
+            wineForm.instance.image = image
+            wineForm.instance.filled = True
+            wineForm.save()
             return HttpResponseRedirect('/wineshops/edit/wineshop')  # Redirect after POST
     else:
 
         if not shop.filled:
             userProfile = UserProfile.objects.get(user=request.user)
-            form = WineshopForm(instance=shop, initial={
+            wineForm = WineshopForm(instance=shop, initial={
                 'name': userProfile.name,
                 'address': userProfile.address,
                 'zip_code': userProfile.zip_code,
                 'city': userProfile.city,
                 'country': userProfile.country,
-                'mail': userProfile.user.email})
+                'mail': userProfile.user.email,
+                })
         else:
-            form = WineshopForm(instance=shop)
+            wineForm = WineshopForm(instance=shop)
 
     return render(request, 'wineshops/edit_wineshop.html', {
-        'form': form,
+        'form': wineForm,
         'filled': shop.filled
     })
 

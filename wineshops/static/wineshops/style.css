@@ -1,4 +1,8 @@
 
+body{
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 #header {
     background-color: #A53F4F;
     color: white;
@@ -169,6 +173,14 @@ img {border : 0;}
     text-align: center;
 }
 
+.makert-div{
+        horiz-align: center;
+    text-align: center;
+        width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .list-market {
     list-style-type: none;
     margin-top: 300px;
@@ -176,6 +188,10 @@ img {border : 0;}
     width: 800px;
     margin-left: auto;
     margin-right: auto;
+
+    position: fixed;
+    bottom: 20px;
+
 }
 
 

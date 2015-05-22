@@ -17,7 +17,7 @@
                 <ul>
                     {% for wine in wines %}
                         <li>
-                            <a href="/wineshops/edit/wine/{{ wine.id }}/"> {{ wine.area }} {{ wine.producer }} </a>
+                            <a href="/wineshops/edit/wine/{{ wine.id }}/"> {{ wine.producer }} {{ wine.area }} {{ wine.region }} {{ wine.country }} {{ wine.color }} </a>
                         </li>
 
                     {% endfor %}
