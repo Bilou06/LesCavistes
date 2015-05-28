@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from io import StringIO
-from PIL.Image import Image
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFit
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from imagekit.processors import ResizeToFit, Transpose
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -12,7 +9,6 @@ def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
-MAXWIDTH=100
 
 class Shop(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nom du magasin", null=True)
@@ -33,7 +29,7 @@ class Shop(models.Model):
 
     image = ProcessedImageField(upload_to=user_directory_path,
                                 default='media/None/default.png',
-                                processors=[ResizeToFit(height=100, width=100,upscale=False)],
+                                processors=[Transpose(), ResizeToFit(height=100, width=100,upscale=False)],
                                            format='JPEG',
                                            options={'quality': 60},
                              verbose_name='Image', blank=True, null=True)
