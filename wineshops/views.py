@@ -493,6 +493,7 @@ def get_wine_shops(request):
                 'lat': a[0].latitude,
                 'lng': a[0].longitude,
                 'dist': "%.1f" % a[1],
+                'img':a[0].image.name,
                 'nb': wine_objects.filter(in_stock=True, shop_id=a[0].id).count(),
                 'price': wine_objects.filter(in_stock=True, shop_id=a[0].id).aggregate(Min('price_min'),
                                                                                        Max('price_max')),

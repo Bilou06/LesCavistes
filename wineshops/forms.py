@@ -50,8 +50,8 @@ class WineshopForm(ModelForm):
             if not (sub.lower() in ['gif', 'jpeg', 'pjpeg', 'png', 'jpg']):
                 raise forms.ValidationError(u"Format d'image invalide : veuillez séléctionner un fichier .gif, .jpg, .jpeg, .pjpeg, ou .png." )
 
-            if len(image) > 1*1024*1024:
-                raise ValidationError("Image trop volumineuse ( maximum 1mb )")
+            #if len(image) > 1*1024*1024:
+            #    raise ValidationError("Image trop volumineuse ( maximum 1mb )")
 
             return image
 

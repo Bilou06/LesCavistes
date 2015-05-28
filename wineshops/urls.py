@@ -30,7 +30,7 @@ urlpatterns = [
     # for apps
     url(r'getwineshops/$', views.get_wine_shops, name="getwineshops"),
     url(r'getwines/$', views.get_wines, name="getwines"),
-    url(r'getwineshopimage/(?P<shop_id>[0-9]+)/$', views.get_wineshop_image, name="getwineshopimage"),
+    url(r'getwineshopimage/(?P<shop_id>[0-9]+)/.*$', views.get_wineshop_image, name="getwineshopimage"),
 ]
 
 
