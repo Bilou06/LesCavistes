@@ -2,6 +2,7 @@
 import ast
 
 from operator import itemgetter
+from PIL.Image import Image
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views import generic
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
@@ -11,6 +12,7 @@ from django.db.models import Max, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template import RequestContext
 from django.template import Context, loader
+from rest_framework import status
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, renderer_classes
@@ -22,6 +24,7 @@ from .forms import *
 from .models import Country, Region, Area, Color, Capacity
 from user_profile.forms import EditUserForm, EditUserProfileForm
 from .searchEngine import get_query
+from .renderers import JPEGRenderer
 
 import urllib
 import json
@@ -456,7 +459,7 @@ def search(request):
 @renderer_classes((JSONRenderer,))
 def get_wine_shops(request):
     """
-    A view that returns the count of active users in JSON.
+    A view that returns the wine shops
     """
 
     try:
@@ -502,6 +505,70 @@ def get_wine_shops(request):
     per_page = 10
     results = results[already_loaded: already_loaded + per_page]
     return Response([nb_results] + results)
+
+
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def get_wines(request):
+    """
+    A view that returns the wine shops
+    """
+
+    try:
+        query_what = request.GET.get('q')
+        shop_id = int(request.GET.get('shop'))
+        already_loaded = int(request.GET['c'])
+    except ValueError:
+        logger.warning(ValueError)
+        return HttpResponse(json.dumps([]), content_type='application/json')
+
+    do_search = (len(query_what) != 0)
+
+    wine_objects = Wine.objects.filter(shop_id=shop_id).filter(in_stock=True)
+    if do_search:
+        wine_objects = wine_objects.filter(get_query(query_what,
+                                                     ['producer', 'country__name', 'region__name', 'area__name',
+                                                      'color__name', 'varietal', 'classification', 'vintage',
+                                                      'capacity__volume', ]))
+
+    wine_objects = wine_objects.order_by('country__name', 'region__name', 'area__name', 'producer')
+
+    results = [{'producer': a.producer,
+                'country': a.country.name if a.country else "",
+                'region': a.region.name if a.region else "",
+                'area': a.area.name if a.area else "",
+                'classification': a.classification,
+                'color': a.color.name if a.color else "",
+                'varietal': a.varietal,
+                'vintage': a.vintage,
+                'capacity': a.capacity.volume if a.capacity else 0,
+                'price_min': a.price_min,
+                'price_max': a.price_max,
+                } for a in wine_objects]
+
+    nb_results = len(results)
+    per_page = 10
+    results = results[already_loaded: already_loaded + per_page]
+    return Response([nb_results] + results)
+
+
+
+
+@api_view(['GET'])
+@renderer_classes((JPEGRenderer,))
+def get_wineshop_image(request, shop_id):
+    """
+    A view that returns the shop image
+    """
+    shop = get_object_or_404(Shop, id=shop_id)
+
+    if shop.image:
+        image_data = shop.image.read()
+        return Response(image_data)
+    else:
+        return Response(None, status=status.HTTP_404_NOT_FOUND)
 
 
 def regions(request):

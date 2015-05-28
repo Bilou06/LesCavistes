@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+from io import StringIO
+from PIL.Image import Image
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,6 +11,8 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
+
+MAXWIDTH=100
 
 class Shop(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nom du magasin", null=True)
@@ -21,13 +28,47 @@ class Shop(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     filled = models.BooleanField(default=False)
-    image = models.ImageField(upload_to=user_directory_path, default='media/None/default.png',
-                              verbose_name='Image', blank=True, null=True)
+    #image = models.ImageField(upload_to=user_directory_path, default='media/None/default.png',
+    #                          verbose_name='Image', blank=True, null=True)
+
+    image = ProcessedImageField(upload_to=user_directory_path,
+                                default='media/None/default.png',
+                                processors=[ResizeToFill(100, 100)],
+                                           format='JPEG',
+                                           options={'quality': 60},
+                             verbose_name='Image', blank=True, null=True)
 
     def __str__(self):
         if self.name:
             return self.name
         return ''
+
+    # img is a InMemoryUploadedFile, received from a post upload
+    def set_image(self, img):
+        s= img.size();
+        ratio = MAXWIDTH/s[0];
+        if(ratio <1):
+            self.image = img
+            self.__scale_image(self.image, (s[0]*ratio, s[1]*ratio))
+        else:
+            super().set_image(self, img)
+
+    def __scale_image(self, image, size):
+        image.file.seek(0) # just in case
+        img = Image.open(StringIO(image.file.read()))
+        img.thumbnail(size, Image.ANTIALIAS)
+        imageString = StringIO()
+        img.save(imageString, img.format)
+
+        # for some reason content_type is e.g. 'images/jpeg' instead of 'image/jpeg'
+        c_type = image.file.content_type.replace('images', 'image')
+        imf = InMemoryUploadedFile(imageString, None, image.name, c_type, imageString.len, None)
+        imf.seek(0)
+        image.save(
+                image.name,
+                imf,
+                save=False
+            )
 
 
 class Country(models.Model):  # France, ...
