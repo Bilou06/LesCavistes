@@ -87,6 +87,10 @@ def edit_wineshop(request):
         wineForm.image = image
         if wineForm.is_valid():
             wineForm.instance.image = image
+            wineForm.instance.image_ldpi = image
+            wineForm.instance.image_mdpi = image
+            wineForm.instance.image_hdpi = image
+            wineForm.instance.image_xhdpi = image
             wineForm.instance.filled = True
             wineForm.save()
             return HttpResponseRedirect('/wineshops/edit/wineshop')  # Redirect after POST
@@ -559,15 +563,26 @@ def get_wines(request):
 
 @api_view(['GET'])
 @renderer_classes((JPEGRenderer,))
-def get_wineshop_image(request, shop_id):
+def get_wineshop_image(request, shop_id, dpi):
     """
     A view that returns the shop image
     """
     shop = get_object_or_404(Shop, id=shop_id)
 
     if shop.image:
-        image_data = shop.image.read()
-        return Response(image_data)
+        try:
+            if dpi=="ldpi":
+                image_data = shop.image_ldpi.read()
+            elif dpi=="mdpi":
+                image_data = shop.image_mdpi.read()
+            elif dpi=="hdpi":
+                image_data = shop.image_hdpi.read()
+            elif dpi=="xhdpi":
+                image_data = shop.image_xhdpi.read()
+            return Response(image_data)
+        except:
+            image_data = shop.image.read()
+            return Response(image_data)
     else:
         return Response(None, status=status.HTTP_404_NOT_FOUND)
 

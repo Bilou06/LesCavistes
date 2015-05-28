@@ -4,10 +4,31 @@ from imagekit.processors import ResizeToFit, Transpose
 from django.db import models
 from django.contrib.auth.models import User
 
-def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
+def user_directory_path(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+# due to limitations in makemigrations, I must declare each function in the body
+def user_directory_path_ldpi(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<dpi>/<filename>
+        return 'user_{0}/ldpi/{1}'.format(instance.user.id, filename)
+
+def user_directory_path_mdpi(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<dpi>/<filename>
+        return 'user_{0}/mdpi/{1}'.format(instance.user.id, filename)
+
+def user_directory_path_mdpi(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<dpi>/<filename>
+        return 'user_{0}/mdpi/{1}'.format(instance.user.id, filename)
+
+def user_directory_path_hdpi(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<dpi>/<filename>
+        return 'user_{0}/hdpi/{1}'.format(instance.user.id, filename)
+
+def user_directory_path_xhdpi(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<dpi>/<filename>
+        return 'user_{0}/xhdpi/{1}'.format(instance.user.id, filename)
 
 
 class Shop(models.Model):
@@ -24,15 +45,41 @@ class Shop(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     filled = models.BooleanField(default=False)
-    #image = models.ImageField(upload_to=user_directory_path, default='media/None/default.png',
-    #                          verbose_name='Image', blank=True, null=True)
 
     image = ProcessedImageField(upload_to=user_directory_path,
                                 default='media/None/default.png',
-                                processors=[Transpose(), ResizeToFit(height=100, width=100,upscale=False)],
-                                           format='JPEG',
-                                           options={'quality': 60},
-                             verbose_name='Image', blank=True, null=True)
+                                processors=[Transpose(), ResizeToFit(height=100, width=100, upscale=False)],
+                                format='JPEG',
+                                options={'quality': 60},
+                                verbose_name='Image', blank=True, null=True)
+
+    image_ldpi = ProcessedImageField(upload_to=user_directory_path_ldpi,
+                                     default='media/None/default.png',
+                                     processors=[Transpose(), ResizeToFit(height=75, width=75, upscale=False)],
+                                     format='JPEG',
+                                     options={'quality': 60},
+                                     verbose_name='Image', blank=True, null=True)
+
+    image_mdpi = ProcessedImageField(upload_to=user_directory_path_mdpi,
+                                     default='media/None/default.png',
+                                     processors=[Transpose(), ResizeToFit(height=100, width=100, upscale=False)],
+                                     format='JPEG',
+                                     options={'quality': 60},
+                                     verbose_name='Image', blank=True, null=True)
+
+    image_hdpi = ProcessedImageField(upload_to=user_directory_path_hdpi,
+                                     default='media/None/default.png',
+                                     processors=[Transpose(), ResizeToFit(height=150, width=150, upscale=False)],
+                                     format='JPEG',
+                                     options={'quality': 60},
+                                     verbose_name='Image', blank=True, null=True)
+
+    image_xhdpi = ProcessedImageField(upload_to=user_directory_path_xhdpi,
+                                      default='media/None/default.png',
+                                      processors=[Transpose(), ResizeToFit(height=200, width=200, upscale=False)],
+                                      format='JPEG',
+                                      options={'quality': 60},
+                                      verbose_name='Image', blank=True, null=True)
 
     def __str__(self):
         if self.name:
